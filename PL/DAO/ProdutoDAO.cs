@@ -6,21 +6,8 @@ using System.Text;
 
 namespace PL.DAO
 {
-    public class ProdutoDAO<T> : IProdutoDAO<T>
+    public class ProdutoDAO
     {
-        List<T> IRepositorio<T>.ExibirTodos()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Gravar(T obj)
-        {
-            throw new NotImplementedException();
-        }
-
-        DataTable IRepositorio<T>.Consultar(string nome)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

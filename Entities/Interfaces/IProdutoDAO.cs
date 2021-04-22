@@ -6,7 +6,7 @@ using System.Text;
 namespace Entities.Interfaces
 {
 
-    public interface IProdutoDAO<T> : IRepositorio<T>
+    public interface IProdutoDAO
     {
        
     }

@@ -1,6 +1,9 @@
 ﻿using BLL;
 using Entities.Models;
+using PL;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ConsoleTests
 {
@@ -8,33 +11,26 @@ namespace ConsoleTests
     {
         static void Main(string[] args)
         {
-            // apenas para testes
-            AdmFacade _adm = new AdmFacade();
+            SecondHandContext context = new SecondHandContext();
 
-            _adm.Add(new Grupo()
+            #region testando conteudo de cada "tabela"
+            List<Produto> prod = context.Produtos.ToList();
+            List<Categoria> cate = context.Categorias.ToList();
+
+            foreach (Produto p in prod)
             {
-                Nome = "Grupo campeao",
-                Integrantes = "<matr1, nome1> , <matr2,nome2>,...",
-                GitHub = "http://github.com/meuprojetoPrivado",
-                Comentarios = "Teste de insercao"
-            });
-
-            _adm.Add(new Grupo()
-            {
-                Nome = "Grupo dois",
-                Integrantes = "<matr2.1, nome2.1> , <matr2.2,nome2.2>",
-                GitHub = "http://github.com/projeto2Privado",
-                Comentarios = "So para teste nao faz sentido dois grupos"
-            });
-
-            foreach (Grupo g in _adm.GetGrupos())
-            {
-                Console.WriteLine("Nome: {0}\n\tid: {1}\n\tComponentes: {2}\n\tComentarios: {3}\n",
-                    g.Nome, g.GrupoId, g.Integrantes, g.Comentarios);
-
+                Console.WriteLine("{0}  {1}  {2}  {3}  {4}  {5}  {6}",
+                                    p.ProdutoId, p.Name, p.Descricao, p.Estado, p.Valor, p.Vendedor, p.CategoriaID);
             }
+            Console.WriteLine("\n\n");
 
-
+            foreach (Categoria c in cate)
+            {
+                Console.WriteLine("{0}  {1}",
+                                    c.CategoriaId, c.Name);
+            }
+            Console.WriteLine("\n\n");
+            #endregion
         }
     }
 }
