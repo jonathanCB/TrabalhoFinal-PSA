@@ -9,7 +9,7 @@ using PL;
 namespace PL.Migrations
 {
     [DbContext(typeof(SecondHandContext))]
-    [Migration("20210422121326_SecondHand")]
+    [Migration("20210422122440_SecondHand")]
     partial class SecondHand
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
