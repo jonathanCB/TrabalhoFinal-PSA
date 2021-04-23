@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PL.Migrations
 {
@@ -29,6 +30,8 @@ namespace PL.Migrations
                     Descricao = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Estado = table.Column<int>(type: "int", nullable: false),
                     Valor = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    DataEntrada = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DataVenda = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Vendedor = table.Column<int>(type: "int", nullable: false),
                     CategoriaID = table.Column<int>(type: "int", nullable: false)
                 },

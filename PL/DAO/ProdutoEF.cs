@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Text;
+using System.Linq;
 
 namespace PL.DAO
 {
@@ -16,11 +17,12 @@ namespace PL.DAO
             context = new SecondHandContext();
         }
 
-        public List<VendedorStatusVenda> vendedorStatusProduto()
-            {
+        public List<VendProdStatusVenda> vendedorProdStatus()
+        {
+            
 
-
-                return null;
-            }
+            return null;
+            
+        }
     }
 }
