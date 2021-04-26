@@ -1,5 +1,8 @@
-﻿using Entities.Models;
+﻿using Entities.Interfaces;
+using Entities.Models;
+using Entities.ViewModels;
 using PL;
+using PL.DAO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,29 +10,18 @@ using System.Text;
 
 namespace BLL
 {
-    public class AdmFacade
+    public class BusinesFacade
     {
+        private readonly IProdutoDAO dao;
 
-        // atencao...
-        //      - apenas um exemplo
-        //      - implementar DAO para acesso ao DB
-        //      - "tentar" usar DI
-        public void Add(Grupo g)
+        public BusinesFacade()
         {
-            using (var _context = new SecondHandContext() )
-           {
-                _context.Add(g);
-                _context.SaveChanges();
-            }
-
+            this.dao = new ProdutoEF();
         }
 
-        public List<Grupo> GetGrupos()
+        public List<VendProdStatusVenda> relProdStatus(int id)
         {
-            SecondHandContext _context = new SecondHandContext();
-            var grupos = _context.Grupo.ToList();
-           
-            return grupos;
+            return null;
         }
     }
 }
