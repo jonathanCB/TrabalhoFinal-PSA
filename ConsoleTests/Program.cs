@@ -9,7 +9,7 @@ namespace ConsoleTests
         static void Main(string[] args)
         {
             // apenas para testes
-            AdmFacade _adm = new AdmFacade();
+            Facade _adm = new Facade();
 
             _adm.Add(new Grupo()
             {
