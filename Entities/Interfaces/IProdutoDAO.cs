@@ -9,6 +9,7 @@ namespace Entities.Interfaces
 
     public interface IProdutoDAO
     {
-        public List<VendProdStatusVenda> vendedorProdStatus();
+        public List<VendProdStatusVenda> VendedorProdStatus();
+        public List<ItenPorCateg> ItenCategorias(String cat);
     }
 }

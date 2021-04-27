@@ -35,65 +35,59 @@ namespace ConsoleTests
 
             #region testando consultas da entrega 1            
 
-            Console.WriteLine("itens a venda de uma determinada categoria");
-            int cat = 1;
+            Console.WriteLine("itens a venda de uma determinada categoria = Celular");
+            String cat = "Celular";
 
             var consulta1 = context.Produtos
                             .Where(p => p.Estado == StatusProduto.Status.Disponivel)
-                            .Where(p => p.CategoriaID == cat)
+                            .Where(p => p.Categoria.ToUpper() == cat.ToUpper())
                             .Select(p => new
                             {
-                                p.ProdutoId,
                                 p.Name,
                                 p.Descricao,
-                                p.Estado,
                                 p.Valor,
                                 p.Vendedor,
-                                p.CategoriaID
+                                p.Categoria
                             });
 
             foreach (var p in consulta1)
             {
-                Console.WriteLine("ProdutoId:{0}  Name:{1}  Descricao:{2}  Estado:{3}  Valor:{4}  Vendedor:{5}  CategoriaID:{6}",
-                                    p.ProdutoId, p.Name, p.Descricao, 
-                                    p.Estado, p.Valor, p.Vendedor, p.CategoriaID);
+                Console.WriteLine("Name:{0}  Descricao:{1}  Valor:{2}  Vendedor:{3}  Categoria:{4}",
+                                    p.Name, p.Descricao, p.Valor, p.Vendedor, p.Categoria);
             }
 
 
             Console.WriteLine("\n\n");
 
 
-            Console.WriteLine("itens a venda dada uma palavra chave e uma categoria");
-            cat = 9;
+            Console.WriteLine("itens a venda dada uma palavra chave e uma categoria = Instrumentos Musicais e yamaha");
+            cat = "Instrumentos Musicais";
             String palChave = "yamaha";
 
             var consulta2 = context.Produtos
                             .Where(p => p.Estado == StatusProduto.Status.Disponivel)
-                            .Where(p => p.CategoriaID == cat)
+                            .Where(p => p.Categoria.ToUpper() == cat.ToUpper())
                             .Where(p => p.Name.ToUpper().Contains(palChave.ToUpper()) || p.Descricao.ToUpper().Contains(palChave.ToUpper()))
                             .Select(p => new
                             {
-                                p.ProdutoId,
                                 p.Name,
                                 p.Descricao,
-                                p.Estado,
                                 p.Valor,
                                 p.Vendedor,
-                                p.CategoriaID
+                                p.Categoria
                             });
 
             
             foreach (var p in consulta2)
             {                
-                Console.WriteLine("ProdutoId:{0}  Name:{1}  Descricao:{2}  Estado:{3}  Valor:{4}  Vendedor:{5}  CategoriaID:{6}",
-                                    p.ProdutoId, p.Name, p.Descricao,
-                                    p.Estado, p.Valor, p.Vendedor, p.CategoriaID);
+                Console.WriteLine("Name:{0}  Descricao:{1}  Valor:{2}  Vendedor:{3}  Categoria:{4}",
+                                    p.Name, p.Descricao, p.Valor, p.Vendedor, p.Categoria);
             }
 
             Console.WriteLine("\n\n");
 
 
-            Console.WriteLine("itens a venda dentro de uma faixa de valores");
+            Console.WriteLine("itens a venda dentro de uma faixa de valores = 290.0 e 500.0");
             decimal valIni = 290.0m;
             decimal valFin = 500.0m;
 
@@ -102,57 +96,46 @@ namespace ConsoleTests
                             .Where(p => p.Valor >= valIni && p.Valor <=valFin)
                             .Select(p => new
                             {
-                                p.ProdutoId,
                                 p.Name,
                                 p.Descricao,
-                                p.Estado,
                                 p.Valor,
                                 p.Vendedor,
-                                p.CategoriaID
+                                p.Categoria
                             });
 
             foreach (var p in consulta3)
             {
-                Console.WriteLine("ProdutoId:{0}  Name:{1}  Descricao:{2}  Estado:{3}  Valor:{4}  Vendedor:{5}  CategoriaID:{6}",
-                                    p.ProdutoId, p.Name, p.Descricao,
-                                    p.Estado, p.Valor, p.Vendedor, p.CategoriaID);
+                Console.WriteLine("Name:{0}  Descricao:{1}  Valor:{2}  Vendedor:{3}  Categoria:{4}",
+                                    p.Name, p.Descricao, p.Valor, p.Vendedor, p.Categoria);
             }
 
 
             Console.WriteLine("\n\n");
 
+            
+            Console.WriteLine("4 - Itens anunciados por um determinado vendedor = 1, agrupados pelo status da venda");
+                int vend = 1;
 
-            Console.WriteLine("itens anunciados por um determinado vendedor, agrupados pelo status da venda");
-            int vend = 1;
-
-            var consulta4 = from p in context.Produtos
+                var consulta4 = (from p in context.Produtos
                             where p.Vendedor == vend
-                            group p by p.Estado into grp
                             select new
                             {
-                                est = grp.Key,
-                                produ = grp
-                                
-                            };
+                                p.Name,
+                                p.Estado
+                            }).OrderByDescending(e => e.Estado);
 
-            foreach (var result in consulta4)
-            {
-                Console.WriteLine("VendedorID:{0}    Estado:{1}",vend, result.est);
-                
-                foreach (Produto p in result.produ)
+                foreach (var result in consulta4)
                 {
-                    Console.WriteLine("ProdutoId:{0}  Name:{1}  Descricao:{2}  Valor:{3}  Vendedor:{4}  CategoriaID:{5}",
-                                    p.ProdutoId, p.Name, p.Descricao, p.Valor, p.Vendedor, p.CategoriaID);
+                    Console.WriteLine("VendedorID: {0}\nProduto: {1}\nEstado: {2}\n", 
+                                        vend, result.Name, result.Estado);
                 }
-            }
-
 
             Console.WriteLine("\n\n");
+            
 
-
-            Console.WriteLine("número total de itens vendidos num período e o valor total destas vendas");
-            DateTime dtIni = new DateTime(2020,04,01,00,00,00);
-            DateTime dtFin = new DateTime(2020, 05, 01, 00, 00, 00);
+            Console.WriteLine("número total de itens vendidos num período e o valor total destas vendas = 2020,04,01 a 2020,05,01");
+            DateTime dtIni = new DateTime(2020,04,01);
+            DateTime dtFin = new DateTime(2020,05,01);
 
             var consulta5 = from p in context.Produtos
                             where p.Estado == StatusProduto.Status.Vendido

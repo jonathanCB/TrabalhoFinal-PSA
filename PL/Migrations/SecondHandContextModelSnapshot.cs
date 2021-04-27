@@ -27,7 +27,9 @@ namespace PL.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.HasKey("CategoriaId");
 
@@ -36,12 +38,16 @@ namespace PL.Migrations
 
             modelBuilder.Entity("Entities.Models.Produto", b =>
                 {
-                    b.Property<int>("ProdutoId")
+                    b.Property<long>("ProdutoId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CategoriaID")
+                    b.Property<string>("Categoria")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("CategoriaId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DataEntrada")
@@ -51,36 +57,38 @@ namespace PL.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Descricao")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<int>("Estado")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
 
                     b.Property<decimal>("Valor")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("Vendedor")
-                        .HasColumnType("int");
+                    b.Property<long>("Vendedor")
+                        .HasColumnType("bigint");
 
                     b.HasKey("ProdutoId");
 
-                    b.HasIndex("CategoriaID");
+                    b.HasIndex("CategoriaId");
 
                     b.ToTable("Produtos");
                 });
 
             modelBuilder.Entity("Entities.Models.Produto", b =>
                 {
-                    b.HasOne("Entities.Models.Categoria", "Categoria")
+                    b.HasOne("Entities.Models.Categoria", "CategoriaID")
                         .WithMany("Produtos")
-                        .HasForeignKey("CategoriaID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CategoriaId");
 
-                    b.Navigation("Categoria");
+                    b.Navigation("CategoriaID");
                 });
 
             modelBuilder.Entity("Entities.Models.Categoria", b =>

@@ -19,9 +19,14 @@ namespace BLL
             this.dao = new ProdutoEF();
         }
 
-        public List<VendProdStatusVenda> relProdStatus(int id)
+        public List<VendProdStatusVenda> RelProdStatus(int id)
         {
             return null;
+        }
+
+        public List<ItenPorCateg> RelItenPorCateg(String id)
+        {
+            return dao.ItenCategorias(id);
         }
     }
 }
