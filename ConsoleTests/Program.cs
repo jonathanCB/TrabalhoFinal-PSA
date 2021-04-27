@@ -40,7 +40,7 @@ namespace ConsoleTests
 
             var consulta1 = context.Produtos
                             .Where(p => p.Estado == StatusProduto.Status.Disponivel)
-                            .Where(p => p.CategoriaID == cat)
+                            .Where(p => p.CategoriaID.CategoriaId == cat)
                             .Select(p => new
                             {
                                 p.ProdutoId,
@@ -69,7 +69,7 @@ namespace ConsoleTests
 
             var consulta2 = context.Produtos
                             .Where(p => p.Estado == StatusProduto.Status.Disponivel)
-                            .Where(p => p.CategoriaID == cat)
+                            .Where(p => p.CategoriaID.CategoriaId == cat)
                             .Where(p => p.Name.ToUpper().Contains(palChave.ToUpper()) || p.Descricao.ToUpper().Contains(palChave.ToUpper()))
                             .Select(p => new
                             {

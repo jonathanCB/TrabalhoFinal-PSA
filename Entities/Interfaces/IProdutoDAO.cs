@@ -1,4 +1,5 @@
-﻿using Entities.ViewModels;
+﻿using Entities.Models;
+using Entities.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -9,6 +10,8 @@ namespace Entities.Interfaces
 
     public interface IProdutoDAO
     {
-        public List<VendProdStatusVenda> vendedorProdStatus();
+        public List<VendProdStatusVenda> VendedorProdStatus();
+        public List<ItenPorCateg> ItenCategorias(String cat);
+
     }
 }

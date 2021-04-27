@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Text;
 using System.Linq;
+using Entities.Models;
 
 namespace PL.DAO
 {
@@ -17,12 +18,32 @@ namespace PL.DAO
             context = new SecondHandContext();
         }
 
-        public List<VendProdStatusVenda> vendedorProdStatus()
+        public List<VendProdStatusVenda> VendedorProdStatus()
         {
 
 
             return null;
 
         }
+
+        //"itens a venda de uma determinada categoria"
+        public List<ItenPorCateg> ItenCategorias(String cat)
+        {
+            IEnumerable<ItenPorCateg> consulta1 = (IEnumerable<ItenPorCateg>)context.Produtos
+                        .Where(p => p.Estado == StatusProduto.Status.Disponivel)
+                        .Where(p => p.Categoria.ToUpper() == cat.ToUpper())
+                        .Select(p => new
+                        {
+                            p.ProdutoId,
+                            p.Name,
+                            p.Descricao,
+                            p.Valor,
+                            p.Vendedor,
+                            p.Categoria
+                        });
+
+            return consulta1.ToList();
+        }
+
     }
 }
