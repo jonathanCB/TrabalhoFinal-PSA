@@ -32,3 +32,9 @@ INSERT INTO [dbo].[Produtos] ([ProdutoId], [Name], [Descricao], [Estado], [Valor
 INSERT INTO [dbo].[Produtos] ([ProdutoId], [Name], [Descricao], [Estado], [Valor], [DataEntrada], [DataVenda], [Vendedor], [CategoriaID]) VALUES (17, N'quadro romero brito', N'um horro nao aguento mais olhar pra isso',1 ,0.99, N'2020-02-05 00:00:00' ,N'2020-03-15 00:00:00',4 ,5)
 INSERT INTO [dbo].[Produtos] ([ProdutoId], [Name], [Descricao], [Estado], [Valor], [DataEntrada], [DataVenda], [Vendedor], [CategoriaID]) VALUES (18, N'console play 2', N'novinho 15 anos de uso',0 ,156.30, N'2020-04-05 00:00:00' , null, 1 ,4)
 SET IDENTITY_INSERT [dbo].[Produtos] OFF
+
+SET IDENTITY_INSERT [dbo].[Vendedores] ON
+INSERT INTO [dbo].[Vendedores] ([VendedorId], [Name], [Cpf], [Endereco]) VALUES (1, N'Renata Alcantara Carvalheira', N'542.851.320-95', N'376 Koelpin Expressway Suite 261 - Cleveland, TN / 81837')
+INSERT INTO [dbo].[Vendedores] ([VendedorId], [Name], [Cpf], [Endereco]) VALUES (2, N'Nataniel Martinho Soveral', N'767.143.770-02', N'83787 Natalia Crossroad Suite 193 - Ontario, NC / 79681')
+INSERT INTO [dbo].[Vendedores] ([VendedorId], [Name], [Cpf], [Endereco]) VALUES (3, N'Alisha Assunção Mieiro', N'917.509.950-00', N'13238 Torp Port Apt. 161 - Charleston, NJ / 56031')
+SET IDENTITY_INSERT [dbo].[Produtos] OFF
