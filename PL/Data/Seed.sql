@@ -12,10 +12,16 @@ INSERT INTO [dbo].[Categorias] ([CategoriaId], [Name]) VALUES (9, N'Instrumentos
 INSERT INTO [dbo].[Categorias] ([CategoriaId], [Name]) VALUES (10, N'TV')
 SET IDENTITY_INSERT [dbo].[Categorias] OFF
 
+SET IDENTITY_INSERT [dbo].[Vendedores] ON
+INSERT INTO [dbo].[Vendedores] ([VendedorId], [Name], [Cpf], [Endereco]) VALUES (1, N'Renata Alcantara Carvalheira', N'542.851.320-95', N'376 Koelpin Expressway Suite 261 - Cleveland, TN / 81837')
+INSERT INTO [dbo].[Vendedores] ([VendedorId], [Name], [Cpf], [Endereco]) VALUES (2, N'Nataniel Martinho Soveral', N'767.143.770-02', N'83787 Natalia Crossroad Suite 193 - Ontario, NC / 79681')
+INSERT INTO [dbo].[Vendedores] ([VendedorId], [Name], [Cpf], [Endereco]) VALUES (3, N'Alisha Assunção Mieiro', N'917.509.950-00', N'13238 Torp Port Apt. 161 - Charleston, NJ / 56031')
+SET IDENTITY_INSERT [dbo].[Vendedores] OFF
+
 SET IDENTITY_INSERT [dbo].[Produtos] ON
 INSERT INTO [dbo].[Produtos] ([ProdutoId], [Name], [Descricao], [Estado], [Valor], [DataEntrada], [DataVenda], [Vendedor], [Categoria]) VALUES (1, N'samsung s10 plus', N'celular com 1 ano de uso',0 ,499.0, N'2020-04-15 00:00:00', null, 1 ,N'Celular')
 INSERT INTO [dbo].[Produtos] ([ProdutoId], [Name], [Descricao], [Estado], [Valor], [DataEntrada], [DataVenda], [Vendedor], [Categoria]) VALUES (2, N'TV lg 50 polegadas', N'tv plasma em bom estado',0 ,499.0, N'2020-04-12 00:00:00' , null, 2 ,N'TV')
-INSERT INTO [dbo].[Produtos] ([ProdutoId], [Name], [Descricao], [Estado], [Valor], [DataEntrada], [DataVenda], [Vendedor], [Categoria]) VALUES (3, N'sony cyber shot', N'camera para video e fotos digital',1 ,199.99, N'2020-03-15 00:00:00' ,N'2020-04-15 00:00:00',1 ,2)
+INSERT INTO [dbo].[Produtos] ([ProdutoId], [Name], [Descricao], [Estado], [Valor], [DataEntrada], [DataVenda], [Vendedor], [Categoria]) VALUES (3, N'sony cyber shot', N'camera para video e fotos digital',1 ,199.99, N'2020-03-15 00:00:00' ,N'2020-04-15 00:00:00',1 ,N'Camera')
 INSERT INTO [dbo].[Produtos] ([ProdutoId], [Name], [Descricao], [Estado], [Valor], [DataEntrada], [DataVenda], [Vendedor], [Categoria]) VALUES (4, N'Kit Acessórios P/ Banheiro Aco Inox 5 Pecas', N'O Kit e composto pelos seguintes materiais: 01 Porta Toalha de banho (47 cm), 01 Porta Toalha de Rosto, 01 Saboneteira, 01 Papeleira, 01 Cabide duplo, Fixacao dupla: Acompanha parafusos e buchas',0 ,39.90, N'2020-04-01 00:00:00' , null,2 ,N'Banheiro')
 INSERT INTO [dbo].[Produtos] ([ProdutoId], [Name], [Descricao], [Estado], [Valor], [DataEntrada], [DataVenda], [Vendedor], [Categoria]) VALUES (5, N'quadro floresta', N'pintado a mao con tinta invisivel',1 ,10.0, N'2020-04-15 00:00:00' ,N'2020-05-15 00:00:00',3 ,N'Arte')
 INSERT INTO [dbo].[Produtos] ([ProdutoId], [Name], [Descricao], [Estado], [Valor], [DataEntrada], [DataVenda], [Vendedor], [Categoria]) VALUES (6, N'console xbox one', N'1tb de armazenamento 2 anos de uso',0 ,499.99, N'2019-04-15 00:00:00' , null, 1 ,N'Video game')

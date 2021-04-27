@@ -10,7 +10,7 @@ using PL;
 namespace PL.Migrations
 {
     [DbContext(typeof(SecondHandContext))]
-    [Migration("20210427124321_SecondHandDB")]
+    [Migration("20210427131936_SecondHandDB")]
     partial class SecondHandDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -77,11 +77,37 @@ namespace PL.Migrations
                     b.Property<long>("Vendedor")
                         .HasColumnType("bigint");
 
+                    b.Property<int?>("VendedorId")
+                        .HasColumnType("int");
+
                     b.HasKey("ProdutoId");
 
                     b.HasIndex("CategoriaId");
 
+                    b.HasIndex("VendedorId");
+
                     b.ToTable("Produtos");
+                });
+
+            modelBuilder.Entity("Entities.Models.Vendedor", b =>
+                {
+                    b.Property<int>("VendedorId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Cpf")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Endereco")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("VendedorId");
+
+                    b.ToTable("Vendedores");
                 });
 
             modelBuilder.Entity("Entities.Models.Produto", b =>
@@ -90,10 +116,19 @@ namespace PL.Migrations
                         .WithMany("Produtos")
                         .HasForeignKey("CategoriaId");
 
+                    b.HasOne("Entities.Models.Vendedor", null)
+                        .WithMany("Produtos")
+                        .HasForeignKey("VendedorId");
+
                     b.Navigation("CategoriaID");
                 });
 
             modelBuilder.Entity("Entities.Models.Categoria", b =>
+                {
+                    b.Navigation("Produtos");
+                });
+
+            modelBuilder.Entity("Entities.Models.Vendedor", b =>
                 {
                     b.Navigation("Produtos");
                 });

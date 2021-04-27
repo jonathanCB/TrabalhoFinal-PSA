@@ -12,7 +12,15 @@ namespace ConsoleTests
     {
         static void Main(string[] args)
         {
+
             SecondHandContext context = new SecondHandContext();
+
+
+            #region Criação
+
+
+            #endregion
+
 
             #region testando conteudo de cada "tabela"
             List<Produto> prod = context.Produtos.ToList();
@@ -160,6 +168,8 @@ namespace ConsoleTests
             Console.WriteLine("\n\n");
 
             #endregion
+
+
         }
     }
 }

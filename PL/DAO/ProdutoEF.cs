@@ -44,5 +44,6 @@ namespace PL.DAO
 
             return consulta1.ToList();
         }
+
     }
 }

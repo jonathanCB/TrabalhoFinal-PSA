@@ -9,7 +9,7 @@ using static Entities.Models.StatusProduto;
 namespace Entities.Models
 {
     public class Produto
-    {
+    {      
 
         [Required]
         [Display(Name = "ID do Produto")]
