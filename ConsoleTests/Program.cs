@@ -2,6 +2,7 @@
 using Entities.Models;
 using Entities.ViewModels;
 using PL;
+using PL.DAO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +15,23 @@ namespace ConsoleTests
         {
 
             SecondHandContext context = new SecondHandContext();
-
+            BusinesFacade _bll = new BusinesFacade();
 
             #region Criação
+            Produto produtoNovo = new Produto()
+            {
+                Name = "coca-cola",
+                Descricao = "refri",
+                Categoria = "Tv",
+                DataEntrada = new DateTime(2020, 04, 01),
+                Estado = StatusProduto.Status.Disponivel,
+                Valor = 200.0m,
+                UsuarioId = 1
+            };
 
+            _bll.NovoProduto(produtoNovo);
+
+            Console.WriteLine(produtoNovo.ProdutoId+" "+produtoNovo.Descricao);
 
             #endregion
 
@@ -125,7 +139,7 @@ namespace ConsoleTests
                 int vend = 1;
 
                 var consulta4 = (from p in context.Produtos
-                            where p.Vendedor == vend
+                            where p.UsuarioId == vend
                             select new
                             {
                                 p.Name,
@@ -168,7 +182,14 @@ namespace ConsoleTests
             Console.WriteLine("\n\n");
 
             #endregion
+            ProdutoEF _prods = new ProdutoEF();
 
+            var resultadoo = _prods.ItenCategorias("Celular");
+
+            foreach (var p in resultadoo)
+            {
+                Console.WriteLine(p.Descricao);
+            }
 
         }
     }

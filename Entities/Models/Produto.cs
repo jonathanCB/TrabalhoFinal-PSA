@@ -32,12 +32,15 @@ namespace Entities.Models
         public decimal Valor { get; set; }
 
         [Display(Name = "Data de Anuncio")]
+        [DataType(DataType.Date)]
         public DateTime DataEntrada { get; set; }
 
         [Display(Name = "Data da Venda")]
+        [DataType(DataType.Date)]
         public DateTime? DataVenda { get; set; }
 
-        public long Vendedor { get; set; }
+        public long UsuarioId { get; set; }
+        public Usuario Vendedor { get; set; }
 
         [Required]
         [Display(Name = "Categoria")]

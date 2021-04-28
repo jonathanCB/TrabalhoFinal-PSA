@@ -27,23 +27,20 @@ namespace PL.DAO
         }
 
         //"itens a venda de uma determinada categoria"
-        public List<ItenPorCateg> ItenCategorias(String cat) 
+        public List<Produto> ItenCategorias(String cat) 
         {
-            IEnumerable<ItenPorCateg> consulta1 = (IEnumerable<ItenPorCateg>)context.Produtos
-                        .Where(p => p.Estado == StatusProduto.Status.Disponivel)
-                        .Where(p => p.Categoria.ToUpper() == cat.ToUpper())
-                        .Select(p => new
-                        {
-                            p.ProdutoId,
-                            p.Name,
-                            p.Descricao,
-                            p.Valor,
-                            p.Vendedor,
-                            p.Categoria
-                        });
+            var consulta1 = context.Produtos
+                         .Where(p => p.Estado == StatusProduto.Status.Disponivel)
+                         .Where(p => p.Categoria.ToUpper() == cat.ToUpper())
+                         .Select(p => p);
 
             return consulta1.ToList();
         }
 
+        public void NovoProduto(Produto prod)
+        {
+            context.Produtos.Add(prod);
+            context.SaveChanges();
+        }
     }
 }
