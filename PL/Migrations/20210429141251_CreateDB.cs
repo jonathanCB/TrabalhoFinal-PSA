@@ -46,7 +46,7 @@ namespace PL.Migrations
                     DataEntrada = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DataVenda = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UsuarioId = table.Column<long>(type: "bigint", nullable: false),
-                    VendedorUsuarioId = table.Column<int>(type: "int", nullable: true),
+                    UsuarioId1 = table.Column<int>(type: "int", nullable: true),
                     Categoria = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CategoriaId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -60,8 +60,8 @@ namespace PL.Migrations
                         principalColumn: "CategoriaId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Produtos_Usuarios_VendedorUsuarioId",
-                        column: x => x.VendedorUsuarioId,
+                        name: "FK_Produtos_Usuarios_UsuarioId1",
+                        column: x => x.UsuarioId1,
                         principalTable: "Usuarios",
                         principalColumn: "UsuarioId",
                         onDelete: ReferentialAction.Restrict);
@@ -73,9 +73,9 @@ namespace PL.Migrations
                 column: "CategoriaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Produtos_VendedorUsuarioId",
+                name: "IX_Produtos_UsuarioId1",
                 table: "Produtos",
-                column: "VendedorUsuarioId");
+                column: "UsuarioId1");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

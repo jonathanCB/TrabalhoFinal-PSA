@@ -72,17 +72,17 @@ namespace PL.Migrations
                     b.Property<long>("UsuarioId")
                         .HasColumnType("bigint");
 
+                    b.Property<int?>("UsuarioId1")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("Valor")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<int?>("VendedorUsuarioId")
-                        .HasColumnType("int");
 
                     b.HasKey("ProdutoId");
 
                     b.HasIndex("CategoriaId");
 
-                    b.HasIndex("VendedorUsuarioId");
+                    b.HasIndex("UsuarioId1");
 
                     b.ToTable("Produtos");
                 });
@@ -108,13 +108,13 @@ namespace PL.Migrations
                         .WithMany("Produtos")
                         .HasForeignKey("CategoriaId");
 
-                    b.HasOne("Entities.Models.Usuario", "Vendedor")
+                    b.HasOne("Entities.Models.Usuario", "Usuario")
                         .WithMany("Produtos")
-                        .HasForeignKey("VendedorUsuarioId");
+                        .HasForeignKey("UsuarioId1");
 
                     b.Navigation("CategoriaID");
 
-                    b.Navigation("Vendedor");
+                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("Entities.Models.Categoria", b =>
