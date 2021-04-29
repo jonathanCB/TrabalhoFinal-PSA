@@ -26,17 +26,6 @@ namespace PL.DAO
 
         }
 
-        //"2.1 - Itens a venda de uma determinada categoria"
-        public List<Produto> ItenCategorias(String cat)
-        {
-            var consulta1 = context.Produtos
-                         .Where(p => p.Estado == StatusProduto.Status.Disponivel)
-                         .Where(p => p.Categoria.ToUpper() == cat.ToUpper())
-                         .Select(p => p);
-
-            return consulta1.ToList();
-        }
-
         //Listar todos os produtos do banco:
         public List<Produto> ListaProdutos()
         {
@@ -90,6 +79,24 @@ namespace PL.DAO
                             .Where(p => p.UsuarioId == vend)
                             .Select(p => p).OrderByDescending(e => e.Estado);
             return consulta4.ToList();
+        }
+
+        //Consulta 5
+        public List<Produto> ItensPorIntervaloDeTempo(DateTime dtIni, DateTime dtFin)
+        {
+
+            var consulta5_0 = from p in context.Produtos
+                            where p.Estado == StatusProduto.Status.Vendido
+                            where p.DataVenda >= dtIni && p.DataVenda <= dtFin
+                            select p.Valor;
+
+            var consulta5_1 = from p in consulta5_0
+                              group p by 1 into grp
+                              select new
+                              {
+                                  quanti = grp.Count(),
+                                  total = grp.Sum()
+                              };
         }
     }
 }

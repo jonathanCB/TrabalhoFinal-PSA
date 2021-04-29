@@ -98,40 +98,20 @@ namespace ConsoleTests
             Console.WriteLine("\n\n");
             #endregion
 
-            Console.WriteLine("número total de itens vendidos num período e o valor total destas vendas = 2020,04,01 a 2020,05,01");
+            #region Consulta 5 - Número total de itens vendidos num período e o valor total destas vendas);
+            Console.WriteLine("5 - Número total de itens vendidos num período e o valor total destas vendas\n");
             DateTime dtIni = new DateTime(2020, 04, 01);
             DateTime dtFin = new DateTime(2020, 05, 01);
+            Console.WriteLine("Itens vendidos entre '{0}' e '{1}'\n", dtIni, dtFin);
 
-            var consulta5 = from p in context.Produtos
-                            where p.Estado == StatusProduto.Status.Vendido
-                            where p.DataVenda >= dtIni && p.DataVenda <= dtFin
-                            select p.Valor;
-
-            var consulta5_1 = from p in consulta5
-                              group p by 1 into grp
-                              select new
-                              {
-                                  quanti = grp.Count(),
-                                  total = grp.Sum()
-                              };
-
-
-            foreach (var p in consulta5_1)
+            foreach (Produto p in _bll.ItensPorIntervaloDeTempo(dtIni, dtFin))
             {
-                Console.WriteLine("quantidade de produtos vendidos:{0}    valor total:{1}",
-                                    p.quanti, p.total);
+                Console.WriteLine("Produto: {0}\nDescrição: {1}\nStatus: {2}\nValor: {3}\n" +
+                                    "Categoria: {4}\n",
+                                    p.Name, p.Descricao, p.Estado, p.Valor, p.Categoria);
             }
-
             Console.WriteLine("\n\n");
-
-            ProdutoEF _prods = new ProdutoEF();
-
-            var resultadoo = _prods.ItenCategorias("Celular");
-
-            foreach (var p in resultadoo)
-            {
-                Console.WriteLine(p.Descricao);
-            }
+            #endregion
         }
     }
 }

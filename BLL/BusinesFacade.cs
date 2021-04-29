@@ -60,6 +60,10 @@ namespace BLL
             return dao.ItensPorVendedor(vend);
         }
 
-
+        //Consulta 5
+        public List<Produto> ItensPorIntervaloDeTempo(DateTime dtIni, DateTime dtFin)
+        {
+            return dao.ItensPorIntervaloDeTempo(dtIni, dtFin);
+        }
     }
 }
