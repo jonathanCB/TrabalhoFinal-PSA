@@ -42,9 +42,24 @@ namespace BLL
             return dao.ItensPorCategoria(cat);
         }
 
+        //Consulta 2
         public List<Produto> ItensPalChavCat(String palChave, String cat)
         {
             return dao.ItensPalChavCat(palChave, cat);
         }
+
+        //Consulta 3
+        public List<Produto> FaixaDeValores(decimal valIni, decimal valFin)
+        {
+            return dao.FaixaDeValores(valIni, valFin);
+        }
+
+        //Consulta 4
+        public List<Produto> ItensPorVendedor(int vend)
+        {
+            return dao.ItensPorVendedor(vend);
+        }
+
+
     }
 }

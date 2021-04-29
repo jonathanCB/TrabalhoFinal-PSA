@@ -69,52 +69,34 @@ namespace ConsoleTests
             Console.WriteLine("\n\n");
             #endregion
 
-            #region Consulta 3 - itens a venda dentro de uma faixa de valores
+            #region Consulta 3 - Itens a venda dentro de uma faixa de valores
             Console.WriteLine("3 - Itens a venda dentro de uma faixa de valores\n");
             decimal valIni = 290.0m;
             decimal valFin = 500.0m;
+            Console.WriteLine("Faixa de valores\nDe: [{0}] a: [{1}]\n", valIni, valFin);
 
-            var consulta3 = context.Produtos
-                            .Where(p => p.Estado == StatusProduto.Status.Disponivel)
-                            .Where(p => p.Valor >= valIni && p.Valor <= valFin)
-                            .Select(p => new
-                            {
-                                p.Name,
-                                p.Descricao,
-                                p.Valor,
-                                p.UsuarioId,
-                                p.Categoria
-                            });
-
-            foreach (var p in consulta3)
+            foreach (Produto p in _bll.FaixaDeValores(valIni, valFin))
             {
-                Console.WriteLine("Name:{0}  Descricao:{1}  Valor:{2}  Vendedor:{3}  Categoria:{4}",
-                                    p.Name, p.Descricao, p.Valor, p.UsuarioId, p.Categoria);
+                Console.WriteLine("Produto: {0}\nDescrição: {1}\nStatus: {2}\nValor: {3}\n" +
+                                    "Categoria: {4}\n",
+                                    p.Name, p.Descricao, p.Estado, p.Valor, p.Categoria);
             }
-
-
             Console.WriteLine("\n\n");
+            #endregion
 
+            #region Consulta 4 - Itens anunciados por um determinado vendedor agrupados pelo status da venda
+            Console.WriteLine("4 - Itens anunciados por um determinado vendedor agrupados pelo status da venda\n");
+            int vend = 2;
+            Console.WriteLine("ID do vendedor: {0}\n", vend);
 
-            Console.WriteLine("4 - Itens anunciados por um determinado vendedor = 1, agrupados pelo status da venda");
-            int vend = 1;
-
-            var consulta4 = (from p in context.Produtos
-                             where p.UsuarioId == vend
-                             select new
-                             {
-                                 p.Name,
-                                 p.Estado
-                             }).OrderByDescending(e => e.Estado);
-
-            foreach (var result in consulta4)
+            foreach (Produto p in _bll.ItensPorVendedor(vend))
             {
-                Console.WriteLine("VendedorID: {0}\nProduto: {1}\nEstado: {2}\n",
-                                    vend, result.Name, result.Estado);
+                Console.WriteLine("Produto: {0}\nDescrição: {1}\nStatus: {2}\nValor: {3}\n" +
+                                    "Categoria: {4}\n",
+                                    p.Name, p.Descricao, p.Estado, p.Valor, p.Categoria);
             }
-
             Console.WriteLine("\n\n");
-
+            #endregion
 
             Console.WriteLine("número total de itens vendidos num período e o valor total destas vendas = 2020,04,01 a 2020,05,01");
             DateTime dtIni = new DateTime(2020, 04, 01);

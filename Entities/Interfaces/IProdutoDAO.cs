@@ -16,5 +16,7 @@ namespace Entities.Interfaces
         public void NovoProduto(Produto prod);
         public List<Produto> ItensPorCategoria(String cat);
         public List<Produto> ItensPalChavCat(String palChave, String cat);
+        public List<Produto> FaixaDeValores(decimal valIni, decimal valFin);
+        public List<Produto> ItensPorVendedor(int vend);
     }
 }

@@ -56,8 +56,8 @@ namespace PL.DAO
         public List<Produto> ItensPorCategoria(String cat)
         {
             var consulta1 = context.Produtos
-                         .Where(p => p.Categoria.ToUpper() == cat.ToUpper())
-                         .Select(p => p);
+                            .Where(p => p.Categoria.ToUpper() == cat.ToUpper())
+                            .Select(p => p);
 
             return consulta1.ToList();
         }
@@ -71,6 +71,25 @@ namespace PL.DAO
                             .Select(p => p);
 
             return consulta2.ToList();
+        }
+
+        //Consulta 3
+        public List<Produto> FaixaDeValores(decimal valIni, decimal valFin)
+        {
+            var consulta3 = context.Produtos
+                            .Where(p => p.Estado == StatusProduto.Status.Disponivel)
+                            .Where(p => p.Valor >= valIni && p.Valor <= valFin)
+                            .Select(p => p);
+            return consulta3.ToList();
+        }
+
+        //Consulta 4
+        public List<Produto> ItensPorVendedor(int vend)
+        {
+            var consulta4 = context.Produtos
+                            .Where(p => p.UsuarioId == vend)
+                            .Select(p => p).OrderByDescending(e => e.Estado);
+            return consulta4.ToList();
         }
     }
 }
