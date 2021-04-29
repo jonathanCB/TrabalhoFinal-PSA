@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PL.Migrations
 {
-    public partial class CriacaoDB : Migration
+    public partial class CreateDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -21,18 +21,16 @@ namespace PL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Vendedores",
+                name: "Usuarios",
                 columns: table => new
                 {
-                    VendedorId = table.Column<int>(type: "int", nullable: false)
+                    UsuarioId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Cpf = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Endereco = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Vendedores", x => x.VendedorId);
+                    table.PrimaryKey("PK_Usuarios", x => x.UsuarioId);
                 });
 
             migrationBuilder.CreateTable(
@@ -47,10 +45,10 @@ namespace PL.Migrations
                     Valor = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     DataEntrada = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DataVenda = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Vendedor = table.Column<long>(type: "bigint", nullable: false),
+                    UsuarioId = table.Column<long>(type: "bigint", nullable: false),
+                    VendedorUsuarioId = table.Column<int>(type: "int", nullable: true),
                     Categoria = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CategoriaId = table.Column<int>(type: "int", nullable: true),
-                    VendedorId = table.Column<int>(type: "int", nullable: true)
+                    CategoriaId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -62,10 +60,10 @@ namespace PL.Migrations
                         principalColumn: "CategoriaId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Produtos_Vendedores_VendedorId",
-                        column: x => x.VendedorId,
-                        principalTable: "Vendedores",
-                        principalColumn: "VendedorId",
+                        name: "FK_Produtos_Usuarios_VendedorUsuarioId",
+                        column: x => x.VendedorUsuarioId,
+                        principalTable: "Usuarios",
+                        principalColumn: "UsuarioId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -75,9 +73,9 @@ namespace PL.Migrations
                 column: "CategoriaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Produtos_VendedorId",
+                name: "IX_Produtos_VendedorUsuarioId",
                 table: "Produtos",
-                column: "VendedorId");
+                column: "VendedorUsuarioId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -89,7 +87,7 @@ namespace PL.Migrations
                 name: "Categorias");
 
             migrationBuilder.DropTable(
-                name: "Vendedores");
+                name: "Usuarios");
         }
     }
 }

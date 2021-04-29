@@ -10,8 +10,8 @@ using PL;
 namespace PL.Migrations
 {
     [DbContext(typeof(SecondHandContext))]
-    [Migration("20210427202302_CriacaoDB")]
-    partial class CriacaoDB
+    [Migration("20210429132526_CreateDB")]
+    partial class CreateDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -71,43 +71,37 @@ namespace PL.Migrations
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
 
+                    b.Property<long>("UsuarioId")
+                        .HasColumnType("bigint");
+
                     b.Property<decimal>("Valor")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<long>("Vendedor")
-                        .HasColumnType("bigint");
-
-                    b.Property<int?>("VendedorId")
+                    b.Property<int?>("VendedorUsuarioId")
                         .HasColumnType("int");
 
                     b.HasKey("ProdutoId");
 
                     b.HasIndex("CategoriaId");
 
-                    b.HasIndex("VendedorId");
+                    b.HasIndex("VendedorUsuarioId");
 
                     b.ToTable("Produtos");
                 });
 
-            modelBuilder.Entity("Entities.Models.Vendedor", b =>
+            modelBuilder.Entity("Entities.Models.Usuario", b =>
                 {
-                    b.Property<int>("VendedorId")
+                    b.Property<int>("UsuarioId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Cpf")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Endereco")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("VendedorId");
+                    b.HasKey("UsuarioId");
 
-                    b.ToTable("Vendedores");
+                    b.ToTable("Usuarios");
                 });
 
             modelBuilder.Entity("Entities.Models.Produto", b =>
@@ -116,11 +110,13 @@ namespace PL.Migrations
                         .WithMany("Produtos")
                         .HasForeignKey("CategoriaId");
 
-                    b.HasOne("Entities.Models.Vendedor", null)
+                    b.HasOne("Entities.Models.Usuario", "Vendedor")
                         .WithMany("Produtos")
-                        .HasForeignKey("VendedorId");
+                        .HasForeignKey("VendedorUsuarioId");
 
                     b.Navigation("CategoriaID");
+
+                    b.Navigation("Vendedor");
                 });
 
             modelBuilder.Entity("Entities.Models.Categoria", b =>
@@ -128,7 +124,7 @@ namespace PL.Migrations
                     b.Navigation("Produtos");
                 });
 
-            modelBuilder.Entity("Entities.Models.Vendedor", b =>
+            modelBuilder.Entity("Entities.Models.Usuario", b =>
                 {
                     b.Navigation("Produtos");
                 });

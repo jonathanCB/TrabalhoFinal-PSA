@@ -40,7 +40,7 @@ namespace Entities.Models
         public DateTime? DataVenda { get; set; }
 
         public long UsuarioId { get; set; }
-        public Usuario Vendedor { get; set; }
+        public Usuario Usuario { get; set; }
 
         [Required]
         [Display(Name = "Categoria")]
