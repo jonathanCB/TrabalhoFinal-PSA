@@ -24,9 +24,16 @@ namespace BLL
             return null;
         }
 
-        public List<ItenPorCateg> RelItenPorCateg(String id)
+        public List<Produto> RelItenPorCateg(String id)
         {
             return dao.ItenCategorias(id);
         }
+
+        public void NovoProduto(Produto prod)
+        {
+            dao.NovoProduto(prod);
+        }
+
+
     }
 }
