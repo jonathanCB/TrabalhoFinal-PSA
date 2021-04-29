@@ -13,103 +13,64 @@ namespace ConsoleTests
     {
         static void Main(string[] args)
         {
-
             SecondHandContext context = new SecondHandContext();
             BusinesFacade _bll = new BusinesFacade();
 
-            #region Criação
-            Produto produtoNovo = new Produto()
-            {
-                Name = "coca-cola",
-                Descricao = "refri",
-                Categoria = "Tv",
-                DataEntrada = new DateTime(2020, 04, 01),
-                Estado = StatusProduto.Status.Disponivel,
-                Valor = 200.0m,
-                UsuarioId = 2
-            };
-
-            _bll.NovoProduto(produtoNovo);
-
-            Console.WriteLine(produtoNovo.ProdutoId + " " + produtoNovo.Descricao);
-
-            #endregion
-
-
-            #region testando conteudo de cada "tabela"
-            List<Produto> prod = context.Produtos.ToList();
-            List<Categoria> cate = context.Categorias.ToList();
-
-            foreach (Produto p in prod)
+            #region Todos os produtos da tabela
+            
+            foreach (Produto p in _bll.listaDeProdutos())
             {
                 Console.WriteLine("{0}  {1}  {2}  {3}  {4}  {5}  {6}",
                                     p.ProdutoId, p.Name, p.Descricao, p.Estado, p.Valor, p.UsuarioId, p.CategoriaID);
             }
-            Console.WriteLine("\n\n");
+            #endregion
 
-            foreach (Categoria c in cate)
+            #region Criação de um produto
+            /*Produto produtoNovo = new Produto()
             {
-                Console.WriteLine("{0}  {1}",
-                                    c.CategoriaId, c.Name);
+                Name = "Placa de video RTX 3070",
+                Descricao = "Placa nvidia serie RTX",
+                Categoria = "Informatica",
+                DataEntrada = new DateTime(2020, 10, 10),
+                Estado = StatusProduto.Status.Disponivel,
+                Valor = 6300.0m,
+                UsuarioId = 1
+            };
+            _bll.NovoProduto(produtoNovo);*/
+            Console.WriteLine("\n\n");
+            #endregion
+
+            #region Consulta 1 - Itens a venda de uma determinada categoria
+            Console.WriteLine("1 - Itens a venda de uma determinada categoria:\n");
+            String cat = "Celular";
+            Console.WriteLine("Categoria pesquisada: '{0}'\n", cat);
+
+            foreach (Produto p in _bll.ItensPorCategoria(cat))
+            {
+                Console.WriteLine("Produto: {0}\nDescrição: {1}\nStatus: {2}\nValor: {3}\n" +
+                                    "Categoria: {4}\n",
+                                    p.Name, p.Descricao, p.Estado, p.Valor, p.Categoria);
             }
             Console.WriteLine("\n\n");
             #endregion
 
-            #region testando consultas da entrega 1            
+            #region Consulta 2 - Itens a venda dada uma palavra chave e uma categoria
+            Console.WriteLine("2 - Itens a venda dada uma palavra chave e uma categoria:\n");
+            cat = "TV";
+            String palChave = "tv";
+            Console.WriteLine("Categoria pesquisada: '{0}', Palavra chave: {1}\n", cat, palChave);
 
-            Console.WriteLine("itens a venda de uma determinada categoria = Celular");
-            String cat = "Celular";
-
-            var consulta1 = context.Produtos
-                            .Where(p => p.Estado == StatusProduto.Status.Disponivel)
-                            .Where(p => p.Categoria.ToUpper() == cat.ToUpper())
-                            .Select(p => new
-                            {
-                                p.Name,
-                                p.Descricao,
-                                p.Valor,
-                                p.UsuarioId,
-                                p.Categoria
-                            });
-
-            foreach (var p in consulta1)
+            foreach (Produto p in _bll.ItensPalChavCat(palChave, cat))
             {
-                Console.WriteLine("Name:{0}  Descricao:{1}  Valor:{2}  Vendedor:{3}  Categoria:{4}",
-                                    p.Name, p.Descricao, p.Valor, p.UsuarioId, p.Categoria);
+                Console.WriteLine("Produto: {0}\nDescrição: {1}\nStatus: {2}\nValor: {3}\n" +
+                                    "Categoria: {4}\n",
+                                    p.Name, p.Descricao, p.Estado, p.Valor, p.Categoria);
             }
-
-
             Console.WriteLine("\n\n");
+            #endregion
 
-
-            Console.WriteLine("itens a venda dada uma palavra chave e uma categoria = Instrumentos Musicais e yamaha");
-            cat = "Instrumentos Musicais";
-            String palChave = "yamaha";
-
-            var consulta2 = context.Produtos
-                            .Where(p => p.Estado == StatusProduto.Status.Disponivel)
-                            .Where(p => p.Categoria.ToUpper() == cat.ToUpper())
-                            .Where(p => p.Name.ToUpper().Contains(palChave.ToUpper()) || p.Descricao.ToUpper().Contains(palChave.ToUpper()))
-                            .Select(p => new
-                            {
-                                p.Name,
-                                p.Descricao,
-                                p.Valor,
-                                p.UsuarioId,
-                                p.Categoria
-                            });
-
-
-            foreach (var p in consulta2)
-            {
-                Console.WriteLine("Name:{0}  Descricao:{1}  Valor:{2}  Vendedor:{3}  Categoria:{4}",
-                                    p.Name, p.Descricao, p.Valor, p.UsuarioId, p.Categoria);
-            }
-
-            Console.WriteLine("\n\n");
-
-
-            Console.WriteLine("itens a venda dentro de uma faixa de valores = 290.0 e 500.0");
+            #region Consulta 3 - itens a venda dentro de uma faixa de valores
+            Console.WriteLine("3 - Itens a venda dentro de uma faixa de valores\n");
             decimal valIni = 290.0m;
             decimal valFin = 500.0m;
 
@@ -181,7 +142,6 @@ namespace ConsoleTests
 
             Console.WriteLine("\n\n");
 
-            #endregion
             ProdutoEF _prods = new ProdutoEF();
 
             var resultadoo = _prods.ItenCategorias("Celular");
@@ -190,7 +150,6 @@ namespace ConsoleTests
             {
                 Console.WriteLine(p.Descricao);
             }
-
         }
     }
 }

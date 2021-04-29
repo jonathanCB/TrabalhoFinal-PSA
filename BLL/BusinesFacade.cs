@@ -19,21 +19,32 @@ namespace BLL
             this.dao = new ProdutoEF();
         }
 
-        public List<VendProdStatusVenda> RelProdStatus(int id)
+        /*public List<VendProdStatusVenda> RelProdStatus(int id)
         {
             return null;
-        }
+        }*/
 
-        public List<Produto> RelItenPorCateg(String id)
+        //Todos os produtos do banco:
+        public List<Produto> listaDeProdutos()
         {
-            return dao.ItenCategorias(id);
+            return dao.ListaProdutos();
         }
 
+        //Mandar um produto para o ProdutoEF na camada de persistência e salvar no banco
         public void NovoProduto(Produto prod)
         {
             dao.NovoProduto(prod);
         }
 
+        //Consulta 1
+        public List<Produto> ItensPorCategoria(String cat)
+        {
+            return dao.ItensPorCategoria(cat);
+        }
 
+        public List<Produto> ItensPalChavCat(String palChave, String cat)
+        {
+            return dao.ItensPalChavCat(palChave, cat);
+        }
     }
 }
