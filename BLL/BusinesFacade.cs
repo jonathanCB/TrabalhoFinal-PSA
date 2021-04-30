@@ -14,26 +14,56 @@ namespace BLL
     {
         private readonly IProdutoDAO dao;
 
+        //construtor busines facade
         public BusinesFacade()
         {
             this.dao = new ProdutoEF();
         }
 
-        public List<VendProdStatusVenda> RelProdStatus(int id)
+        #region consultas em produtos
+
+        //Todos os produtos do banco:
+        public List<Produto> ListaDeProdutos()
         {
-            return null;
+            return dao.ListaDeProdutos();
         }
 
-        public List<Produto> RelItenPorCateg(String id)
+        //Salva um produto novo no banco
+        public void CadNovoProduto(Produto prod)
         {
-            return dao.ItenCategorias(id);
+            dao.CadastroNovoProduto(prod);
         }
 
-        public void NovoProduto(Produto prod)
+        //relatorio de itens por uma determinada categoria
+        public List<Produto> ItensPorCategoria(String cat)
         {
-            dao.NovoProduto(prod);
+            return dao.ItensPorCategoria(cat);
         }
 
-        
+        //relatorio de itens por uma determinada categoria e palavra
+        public List<Produto> ItensPalChavCat(String palChave, String cat)
+        {
+            return dao.ItensPalChavCat(palChave, cat);
+        }
+
+        //relatorio de itens por uma determinada faixa de valores
+        public List<Produto> ItensFaixaDeValores(decimal valIni, decimal valFin)
+        {
+            return dao.ItensFaixaDeValores(valIni, valFin);
+        }
+
+        //relatorio de itens por um determinado usuario
+        public List<Produto> ItensPorStatusUsu(long usu)
+        {
+            return dao.ItensPorStatusUsu(usu);
+        }
+
+        ////relatorio do total de vendas em um determinado periodo de tempo
+        public List<String> TotalVendaPeriodo(DateTime dtIni, DateTime dtFin)
+        {
+            return dao.NroTotalVendaPeriodo(dtIni, dtFin);
+        }
+        #endregion
+
     }
 }
