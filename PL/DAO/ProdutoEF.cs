@@ -20,10 +20,7 @@ namespace PL.DAO
 
         public List<VendProdStatusVenda> VendedorProdStatus()
         {
-
-
             return null;
-
         }
 
         //"itens a venda de uma determinada categoria"

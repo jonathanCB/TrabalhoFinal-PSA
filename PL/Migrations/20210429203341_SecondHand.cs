@@ -21,16 +21,16 @@ namespace PL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Vendedores",
+                name: "Usuarios",
                 columns: table => new
                 {
-                    UsuarioId = table.Column<int>(type: "int", nullable: false)
+                    UsuarioId = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Vendedores", x => x.UsuarioId);
+                    table.PrimaryKey("PK_Usuarios", x => x.UsuarioId);
                 });
 
             migrationBuilder.CreateTable(
@@ -45,8 +45,7 @@ namespace PL.Migrations
                     Valor = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     DataEntrada = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DataVenda = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UsuarioId = table.Column<long>(type: "bigint", nullable: false),
-                    VendedorUsuarioId = table.Column<int>(type: "int", nullable: true),
+                    UsuarioID = table.Column<long>(type: "bigint", nullable: false),
                     Categoria = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CategoriaId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -60,11 +59,11 @@ namespace PL.Migrations
                         principalColumn: "CategoriaId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Produtos_Vendedores_VendedorUsuarioId",
-                        column: x => x.VendedorUsuarioId,
-                        principalTable: "Vendedores",
+                        name: "FK_Produtos_Usuarios_UsuarioID",
+                        column: x => x.UsuarioID,
+                        principalTable: "Usuarios",
                         principalColumn: "UsuarioId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -73,9 +72,9 @@ namespace PL.Migrations
                 column: "CategoriaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Produtos_VendedorUsuarioId",
+                name: "IX_Produtos_UsuarioID",
                 table: "Produtos",
-                column: "VendedorUsuarioId");
+                column: "UsuarioID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -87,7 +86,7 @@ namespace PL.Migrations
                 name: "Categorias");
 
             migrationBuilder.DropTable(
-                name: "Vendedores");
+                name: "Usuarios");
         }
     }
 }

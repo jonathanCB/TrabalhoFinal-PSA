@@ -14,6 +14,7 @@ namespace Entities.Models
         [Required]
         [StringLength(30, MinimumLength = 3)]
         public string Name { get; set; }
+
         public virtual ICollection<Produto> Produtos { get; set; }
     }
 }

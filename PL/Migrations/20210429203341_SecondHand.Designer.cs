@@ -10,7 +10,7 @@ using PL;
 namespace PL.Migrations
 {
     [DbContext(typeof(SecondHandContext))]
-    [Migration("20210428233912_SecondHand")]
+    [Migration("20210429203341_SecondHand")]
     partial class SecondHand
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -71,37 +71,35 @@ namespace PL.Migrations
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
 
-                    b.Property<long>("UsuarioId")
+                    b.Property<long>("UsuarioID")
                         .HasColumnType("bigint");
 
                     b.Property<decimal>("Valor")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("VendedorUsuarioId")
-                        .HasColumnType("int");
-
                     b.HasKey("ProdutoId");
 
                     b.HasIndex("CategoriaId");
 
-                    b.HasIndex("VendedorUsuarioId");
+                    b.HasIndex("UsuarioID");
 
                     b.ToTable("Produtos");
                 });
 
             modelBuilder.Entity("Entities.Models.Usuario", b =>
                 {
-                    b.Property<int>("UsuarioId")
+                    b.Property<long>("UsuarioId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UsuarioId");
 
-                    b.ToTable("Vendedores");
+                    b.ToTable("Usuarios");
                 });
 
             modelBuilder.Entity("Entities.Models.Produto", b =>
@@ -110,13 +108,15 @@ namespace PL.Migrations
                         .WithMany("Produtos")
                         .HasForeignKey("CategoriaId");
 
-                    b.HasOne("Entities.Models.Usuario", "Vendedor")
+                    b.HasOne("Entities.Models.Usuario", "Usuario")
                         .WithMany("Produtos")
-                        .HasForeignKey("VendedorUsuarioId");
+                        .HasForeignKey("UsuarioID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("CategoriaID");
 
-                    b.Navigation("Vendedor");
+                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("Entities.Models.Categoria", b =>

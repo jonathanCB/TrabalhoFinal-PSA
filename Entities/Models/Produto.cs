@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -25,12 +26,13 @@ namespace Entities.Models
         [StringLength(1000, MinimumLength = 10)]
         public string Descricao { get; set; }
 
+        [Required]
         public Status Estado { get; set; }
 
         [Required]
         [Display(Name = "Valor do Produto")]
         public decimal Valor { get; set; }
-
+                
         [Display(Name = "Data de Anuncio")]
         [DataType(DataType.Date)]
         public DateTime DataEntrada { get; set; }
@@ -39,8 +41,9 @@ namespace Entities.Models
         [DataType(DataType.Date)]
         public DateTime? DataVenda { get; set; }
 
-        public long UsuarioId { get; set; }
-        public Usuario Vendedor { get; set; }
+        [Required]
+        [Display(Name = "ID do Usuario")]
+        public long UsuarioID { get; set; }
 
         [Required]
         [Display(Name = "Categoria")]
@@ -48,5 +51,7 @@ namespace Entities.Models
         public String Categoria { get; set; }
 
         public virtual Categoria CategoriaID { get; set; }
+
+        public virtual Usuario Usuario { get; set; }
     }
 }

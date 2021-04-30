@@ -17,6 +17,7 @@ namespace ConsoleTests
             SecondHandContext context = new SecondHandContext();
             BusinesFacade _bll = new BusinesFacade();
 
+
             #region Criação
             Produto produtoNovo = new Produto()
             {
@@ -26,7 +27,7 @@ namespace ConsoleTests
                 DataEntrada = new DateTime(2020, 04, 01),
                 Estado = StatusProduto.Status.Disponivel,
                 Valor = 200.0m,
-                UsuarioId = 1
+                UsuarioID = 1
             };
 
             _bll.NovoProduto(produtoNovo);
@@ -43,7 +44,7 @@ namespace ConsoleTests
             foreach (Produto p in prod)
             {
                 Console.WriteLine("{0}  {1}  {2}  {3}  {4}  {5}  {6}",
-                                    p.ProdutoId, p.Name, p.Descricao, p.Estado, p.Valor, p.Vendedor, p.CategoriaID);
+                                    p.ProdutoId, p.Name, p.Descricao, p.Estado, p.Valor, p.Usuario, p.Categoria);
             }
             Console.WriteLine("\n\n");
 
@@ -68,14 +69,14 @@ namespace ConsoleTests
                                 p.Name,
                                 p.Descricao,
                                 p.Valor,
-                                p.Vendedor,
+                                p.Usuario,
                                 p.Categoria
                             });
 
             foreach (var p in consulta1)
             {
                 Console.WriteLine("Name:{0}  Descricao:{1}  Valor:{2}  Vendedor:{3}  Categoria:{4}",
-                                    p.Name, p.Descricao, p.Valor, p.Vendedor, p.Categoria);
+                                    p.Name, p.Descricao, p.Valor, p.Usuario, p.Categoria);
             }
 
 
@@ -95,7 +96,7 @@ namespace ConsoleTests
                                 p.Name,
                                 p.Descricao,
                                 p.Valor,
-                                p.Vendedor,
+                                p.Usuario,
                                 p.Categoria
                             });
 
@@ -103,7 +104,7 @@ namespace ConsoleTests
             foreach (var p in consulta2)
             {                
                 Console.WriteLine("Name:{0}  Descricao:{1}  Valor:{2}  Vendedor:{3}  Categoria:{4}",
-                                    p.Name, p.Descricao, p.Valor, p.Vendedor, p.Categoria);
+                                    p.Name, p.Descricao, p.Valor, p.Usuario, p.Categoria);
             }
 
             Console.WriteLine("\n\n");
@@ -121,14 +122,14 @@ namespace ConsoleTests
                                 p.Name,
                                 p.Descricao,
                                 p.Valor,
-                                p.Vendedor,
+                                p.Usuario,
                                 p.Categoria
                             });
 
             foreach (var p in consulta3)
             {
                 Console.WriteLine("Name:{0}  Descricao:{1}  Valor:{2}  Vendedor:{3}  Categoria:{4}",
-                                    p.Name, p.Descricao, p.Valor, p.Vendedor, p.Categoria);
+                                    p.Name, p.Descricao, p.Valor, p.Usuario, p.Categoria);
             }
 
 
@@ -139,7 +140,7 @@ namespace ConsoleTests
                 int vend = 1;
 
                 var consulta4 = (from p in context.Produtos
-                            where p.UsuarioId == vend
+                            where p.UsuarioID == vend
                             select new
                             {
                                 p.Name,
