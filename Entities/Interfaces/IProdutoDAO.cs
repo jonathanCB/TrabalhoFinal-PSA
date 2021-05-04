@@ -10,8 +10,6 @@ namespace Entities.Interfaces
 
     public interface IProdutoDAO
     {
-        public List<VendProdStatusVenda> VendedorProdStatus();
-        //public List<Produto> ItenCategorias(String cat);
         public List<Produto> ListaProdutos();
         public void NovoProduto(Produto prod);
         public List<Produto> ItensPorCategoria(String cat);

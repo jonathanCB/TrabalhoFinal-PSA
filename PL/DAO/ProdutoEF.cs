@@ -18,14 +18,6 @@ namespace PL.DAO
             context = new SecondHandContext();
         }
 
-        public List<VendProdStatusVenda> VendedorProdStatus()
-        {
-
-
-            return null;
-
-        }
-
         //Listar todos os produtos do banco:
         public List<Produto> ListaProdutos()
         {
