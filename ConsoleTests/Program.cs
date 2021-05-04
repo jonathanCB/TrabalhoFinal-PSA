@@ -25,7 +25,7 @@ namespace ConsoleTests
             }
             #endregion
 
-            #region Criação de um produto
+            #region Para criar um produto basta tirar os comentários
             /*Produto produtoNovo = new Produto()
             {
                 Name = "Placa de video RTX 3070",
@@ -104,11 +104,10 @@ namespace ConsoleTests
             DateTime dtFin = new DateTime(2020, 05, 01);
             Console.WriteLine("Itens vendidos entre '{0}' e '{1}'\n", dtIni, dtFin);
 
-            foreach (Produto p in _bll.ItensPorIntervaloDeTempo(dtIni, dtFin))
+            foreach (ItensPorIntervaloDeTempo i in _bll.ItensPorIntervaloDeTempo(dtIni, dtFin))
             {
-                Console.WriteLine("Produto: {0}\nDescrição: {1}\nStatus: {2}\nValor: {3}\n" +
-                                    "Categoria: {4}\n",
-                                    p.Name, p.Descricao, p.Estado, p.Valor, p.Categoria);
+                Console.WriteLine("Número total de itens vendidos: {0}\nValor total destas vendas: {1}\n",
+                                    i.numTotalItensVendidos, i.valorTotalVendas);
             }
             Console.WriteLine("\n\n");
             #endregion

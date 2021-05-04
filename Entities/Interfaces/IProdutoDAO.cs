@@ -18,6 +18,6 @@ namespace Entities.Interfaces
         public List<Produto> ItensPalChavCat(String palChave, String cat);
         public List<Produto> FaixaDeValores(decimal valIni, decimal valFin);
         public List<Produto> ItensPorVendedor(int vend);
-        public List<Produto> ItensPorIntervaloDeTempo(DateTime dtIni, DateTime dtFin);
+        public List<ItensPorIntervaloDeTempo> ItensPorIntervaloDeTempo(DateTime dtIni, DateTime dtFin);
     }
 }

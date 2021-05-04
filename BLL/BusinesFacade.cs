@@ -61,7 +61,7 @@ namespace BLL
         }
 
         //Consulta 5
-        public List<Produto> ItensPorIntervaloDeTempo(DateTime dtIni, DateTime dtFin)
+        public List<ItensPorIntervaloDeTempo> ItensPorIntervaloDeTempo(DateTime dtIni, DateTime dtFin)
         {
             return dao.ItensPorIntervaloDeTempo(dtIni, dtFin);
         }

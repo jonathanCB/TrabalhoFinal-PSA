@@ -82,7 +82,7 @@ namespace PL.DAO
         }
 
         //Consulta 5
-        public List<Produto> ItensPorIntervaloDeTempo(DateTime dtIni, DateTime dtFin)
+        public List<ItensPorIntervaloDeTempo> ItensPorIntervaloDeTempo(DateTime dtIni, DateTime dtFin)
         {
 
             var consulta5_0 = from p in context.Produtos
@@ -92,11 +92,12 @@ namespace PL.DAO
 
             var consulta5_1 = from p in consulta5_0
                               group p by 1 into grp
-                              select new
+                              select new ItensPorIntervaloDeTempo
                               {
-                                  quanti = grp.Count(),
-                                  total = grp.Sum()
+                                  valorTotalVendas = grp.Sum(),
+                                  numTotalItensVendidos = grp.Count()
                               };
+            return consulta5_1.ToList();
         }
     }
 }
