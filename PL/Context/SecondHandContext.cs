@@ -11,6 +11,10 @@ namespace PL
         public SecondHandContext() : base()
         {
         }
+        /*public SecondHandContext(DbContextOptions<SecondHandContext> options)
+            : base(options)
+        {
+        }*/
 
         public DbSet<Produto> Produtos { get; set; }
         public DbSet<Categoria> Categorias { get; set; }

@@ -13,7 +13,7 @@ namespace ConsoleTests
     {
         static void Main(string[] args)
         {
-            SecondHandContext context = new SecondHandContext();
+            //SecondHandContext context = new SecondHandContext();
             BusinesFacade _bll = new BusinesFacade();
 
             #region Todos os produtos da tabela

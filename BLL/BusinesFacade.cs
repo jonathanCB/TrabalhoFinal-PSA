@@ -13,6 +13,7 @@ namespace BLL
     public class BusinesFacade
     {
         private readonly IProdutoDAO dao;
+        //private readonly SecondHandContext context;
 
         public BusinesFacade()
         {

@@ -18,6 +18,11 @@ namespace PL.DAO
             context = new SecondHandContext();
         }
 
+        /*public ProdutoEF(SecondHandContext _context)
+        {
+            context = _context;
+        }*/
+
         //Listar todos os produtos do banco:
         public List<Produto> ListaProdutos()
         {
