@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using Entities.Models;
 using PL;
 using BLL;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SecondHandWeb.Controllers
 {
+    [Authorize]
     public class ProdutoController : Controller
     {
         private readonly SecondHandContext _context;
@@ -25,6 +27,7 @@ namespace SecondHandWeb.Controllers
             _context = new SecondHandContext();
         }
 
+        [AllowAnonymous]
         // GET: Produto
         //public async Task<IActionResult> Index()
         public IActionResult Index()
@@ -36,6 +39,7 @@ namespace SecondHandWeb.Controllers
             //return View(await _context.Produtos.ToListAsync());
         }
 
+        [AllowAnonymous]
         // GET: Produto/Details/5
         public async Task<IActionResult> Details(long? id)
         {
