@@ -18,26 +18,51 @@ namespace SecondHandWeb.Controllers
         private readonly SecondHandContext _context;
         BusinesFacade _bll = new BusinesFacade();
 
-        /*public ProdutoController(SecondHandContext context)
-        {
-            _context = context;            
-        }*/
+        /*-------------------- TESTE PARA PEGAR USUÁRIO LOGADO -------------------------
+        private readonly UserManager<Usuario> _userManager;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        ------------------------------------------------------------------------------*/
+
         public ProdutoController()
         {
             _context = new SecondHandContext();
         }
+
+        /*-------------------- TESTE PARA PEGAR USUÁRIO LOGADO (CONSTRUTOR) ------------
+        public ProdutoController(UserManager<Usuario> userManager, IHttpContextAccessor httpContextAccessor)
+        {
+            _userManager = userManager;
+            _httpContextAccessor = httpContextAccessor;
+
+            _context = new SecondHandContext();
+        }
+        ------------------------------------------------------------------------------*/
 
         [AllowAnonymous]
         // GET: Produto
         //public async Task<IActionResult> Index()
         public IActionResult Index()
         {
-            List<Produto> produtos =  _bll.listaDeProdutos();
+
+            List<Produto> produtos = _bll.listaDeProdutos();
+            //List<Produto> produtos = _bll.ItensPorVendedor();
             return View(produtos);
-
-
-            //return View(await _context.Produtos.ToListAsync());
         }
+
+        /*-------------------- TESTE PARA PEGAR USUÁRIO LOGADO -------------------------
+        public async Task<IActionResult> IndexAsync()
+        {
+            Usuario user = await GetUser();
+
+            List<Produto> produtos = _bll.ItensPorVendedor(user.UsuarioId);
+            return View(produtos);
+        }
+        public async Task<Usuario> GetUser()
+        {
+            var user = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
+            return user;
+        }
+        ------------------------------------------------------------------------------*/
 
         [AllowAnonymous]
         // GET: Produto/Details/5
