@@ -66,5 +66,12 @@ namespace BLL
         {
             return dao.ItensPorIntervaloDeTempo(dtIni, dtFin);
         }
+
+        //Details
+        public Produto ItemPorId(long vend)
+        {
+            return dao.ItemPorId(vend);
+        }
+        
     }
 }

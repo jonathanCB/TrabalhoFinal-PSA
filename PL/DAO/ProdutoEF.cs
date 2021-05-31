@@ -96,5 +96,14 @@ namespace PL.DAO
                               };
             return consulta5_1.ToList();
         }
+
+        //Details
+        public Produto ItemPorId(long ProdutoID)
+        {
+            var consulta1 = context.Produtos
+                            .FirstOrDefault(m => m.ProdutoId == ProdutoID);
+
+            return consulta1;
+        }
     }
 }

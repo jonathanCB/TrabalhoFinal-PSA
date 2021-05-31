@@ -38,15 +38,13 @@ namespace SecondHandWeb.Controllers
 
         [AllowAnonymous]
         // GET: Produto/Details/5
-        public async Task<IActionResult> Details(long? id)
+        public IActionResult Details(long? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
-            var produto = await _context.Produtos
-                .FirstOrDefaultAsync(m => m.ProdutoId == id);
+            var produto = _bll.ItemPorId((long)id);
             if (produto == null)
             {
                 return NotFound();
@@ -164,6 +162,7 @@ namespace SecondHandWeb.Controllers
             return _context.Produtos.Any(e => e.ProdutoId == id);
         }
 
+        //Pegando o usuário logado.
         public async Task<IActionResult> dadosUsuario()
         {
             var usuario = await _userManager.GetUserAsync(User);

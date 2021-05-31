@@ -17,5 +17,6 @@ namespace Entities.Interfaces
         public List<Produto> FaixaDeValores(decimal valIni, decimal valFin);
         public List<Produto> ItensPorVendedor(int vend);
         public List<ItensPorIntervaloDeTempo> ItensPorIntervaloDeTempo(DateTime dtIni, DateTime dtFin);
+        public Produto ItemPorId(long vend); 
     }
 }
