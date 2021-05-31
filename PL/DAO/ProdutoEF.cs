@@ -97,13 +97,34 @@ namespace PL.DAO
             return consulta5_1.ToList();
         }
 
-        //Details
+        //Item por id. É utilizando no método Details e no método [GET] Edit.
         public Produto ItemPorId(long ProdutoID)
         {
             var consulta1 = context.Produtos
                             .FirstOrDefault(m => m.ProdutoId == ProdutoID);
 
             return consulta1;
+        }
+
+        //Recebe o produto atualizado para salvar no banco.
+        public void AtualizaProduto(Produto prod)
+        {
+            context.Update(prod);
+            context.SaveChangesAsync();
+        }
+
+        //Deletar produto do banco
+        public void DeletaProduto(long id)
+        {
+            var produto = context.Produtos.Find(id);
+            context.Produtos.Remove(produto);
+            context.SaveChangesAsync();
+        }
+
+        //Verificar se o produto existe:
+        public bool ProdutoExiste(long id)
+        {
+            return context.Produtos.Any(e => e.ProdutoId == id);
         }
     }
 }

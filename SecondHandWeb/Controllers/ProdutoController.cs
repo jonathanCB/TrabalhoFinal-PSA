@@ -16,13 +16,11 @@ namespace SecondHandWeb.Controllers
     [Authorize]
     public class ProdutoController : Controller
     {
-        private readonly SecondHandContext _context;
         public readonly UserManager<Usuario> _userManager;
         BusinesFacade _bll = new BusinesFacade();
 
         public ProdutoController(UserManager<Usuario> userManager)
         {
-            _context = new SecondHandContext();
             _userManager = userManager;
         }
 
@@ -70,22 +68,21 @@ namespace SecondHandWeb.Controllers
             produto.Vendedor = usuario.UserName;
             if (ModelState.IsValid)
             {
-                _context.Add(produto);
-                await _context.SaveChangesAsync();
+                _bll.NovoProduto(produto);
                 return RedirectToAction(nameof(Index));
             }
             return View(produto);
         }
 
         // GET: Produto/Edit/5
-        public async Task<IActionResult> Edit(long? id)
+        public IActionResult Edit(long? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var produto = await _context.Produtos.FindAsync(id);
+            var produto = _bll.ItemPorId((long)id);
             if (produto == null)
             {
                 return NotFound();
@@ -98,7 +95,7 @@ namespace SecondHandWeb.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("ProdutoId,Name,Descricao,Estado,Valor,DataEntrada,DataVenda,UsuarioId,Categoria")] Produto produto)
+        public IActionResult Edit(long id, [Bind("ProdutoId,Name,Descricao,Valor,DataEntrada,UsuarioId,Categoria")] Produto produto)
         {
             if (id != produto.ProdutoId)
             {
@@ -109,8 +106,7 @@ namespace SecondHandWeb.Controllers
             {
                 try
                 {
-                    _context.Update(produto);
-                    await _context.SaveChangesAsync();
+                    _bll.AtualizaProduto(produto);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -129,15 +125,14 @@ namespace SecondHandWeb.Controllers
         }
 
         // GET: Produto/Delete/5
-        public async Task<IActionResult> Delete(long? id)
+        public IActionResult Delete(long? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var produto = await _context.Produtos
-                .FirstOrDefaultAsync(m => m.ProdutoId == id);
+            var produto = _bll.ItemPorId((long)id);
             if (produto == null)
             {
                 return NotFound();
@@ -149,17 +144,15 @@ namespace SecondHandWeb.Controllers
         // POST: Produto/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(long id)
+        public IActionResult DeleteConfirmed(long id)
         {
-            var produto = await _context.Produtos.FindAsync(id);
-            _context.Produtos.Remove(produto);
-            await _context.SaveChangesAsync();
+            _bll.DeletaProduto(id);
             return RedirectToAction(nameof(Index));
         }
 
         private bool ProdutoExists(long id)
         {
-            return _context.Produtos.Any(e => e.ProdutoId == id);
+            return _bll.ProdutoExiste(id);
         }
 
         //Pegando o usuário logado.

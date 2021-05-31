@@ -67,11 +67,28 @@ namespace BLL
             return dao.ItensPorIntervaloDeTempo(dtIni, dtFin);
         }
 
-        //Details
-        public Produto ItemPorId(long vend)
+        //Item por id. É utilizando no método Details e no método [GET] Edit.
+        public Produto ItemPorId(long id)
         {
-            return dao.ItemPorId(vend);
+            return dao.ItemPorId(id);
         }
-        
+
+        //Recebe o produto atualizado para salvar no banco.
+        public void AtualizaProduto(Produto prod)
+        {
+            dao.AtualizaProduto(prod);
+        }
+
+        //Deletar um produto do banco.
+        public void DeletaProduto(long id)
+        {
+            dao.DeletaProduto(id);
+        }
+
+        //Método para verificar se um produto existe.
+        public bool ProdutoExiste(long id)
+        {
+            return dao.ProdutoExiste(id);
+        }
     }
 }
