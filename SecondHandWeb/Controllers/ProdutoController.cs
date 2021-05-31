@@ -9,6 +9,7 @@ using Entities.Models;
 using PL;
 using BLL;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace SecondHandWeb.Controllers
 {
@@ -16,27 +17,14 @@ namespace SecondHandWeb.Controllers
     public class ProdutoController : Controller
     {
         private readonly SecondHandContext _context;
+        public readonly UserManager<Usuario> _userManager;
         BusinesFacade _bll = new BusinesFacade();
 
-        /*-------------------- TESTE PARA PEGAR USUÁRIO LOGADO -------------------------
-        private readonly UserManager<Usuario> _userManager;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        ------------------------------------------------------------------------------*/
-
-        public ProdutoController()
+        public ProdutoController(UserManager<Usuario> userManager)
         {
             _context = new SecondHandContext();
-        }
-
-        /*-------------------- TESTE PARA PEGAR USUÁRIO LOGADO (CONSTRUTOR) ------------
-        public ProdutoController(UserManager<Usuario> userManager, IHttpContextAccessor httpContextAccessor)
-        {
             _userManager = userManager;
-            _httpContextAccessor = httpContextAccessor;
-
-            _context = new SecondHandContext();
         }
-        ------------------------------------------------------------------------------*/
 
         [AllowAnonymous]
         // GET: Produto
@@ -45,24 +33,8 @@ namespace SecondHandWeb.Controllers
         {
 
             List<Produto> produtos = _bll.listaDeProdutos();
-            //List<Produto> produtos = _bll.ItensPorVendedor();
             return View(produtos);
         }
-
-        /*-------------------- TESTE PARA PEGAR USUÁRIO LOGADO -------------------------
-        public async Task<IActionResult> IndexAsync()
-        {
-            Usuario user = await GetUser();
-
-            List<Produto> produtos = _bll.ItensPorVendedor(user.UsuarioId);
-            return View(produtos);
-        }
-        public async Task<Usuario> GetUser()
-        {
-            var user = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
-            return user;
-        }
-        ------------------------------------------------------------------------------*/
 
         [AllowAnonymous]
         // GET: Produto/Details/5
@@ -96,6 +68,8 @@ namespace SecondHandWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ProdutoId,Name,Descricao,Estado,Valor,DataEntrada,DataVenda,UsuarioId,Categoria")] Produto produto)
         {
+            var usuario = await _userManager.GetUserAsync(HttpContext.User);
+            produto.Vendedor = usuario.UserName;
             if (ModelState.IsValid)
             {
                 _context.Add(produto);
@@ -188,6 +162,16 @@ namespace SecondHandWeb.Controllers
         private bool ProdutoExists(long id)
         {
             return _context.Produtos.Any(e => e.ProdutoId == id);
+        }
+
+        public async Task<IActionResult> dadosUsuario()
+        {
+            var usuario = await _userManager.GetUserAsync(User);
+
+            ViewBag.Id = usuario.Id;
+            ViewBag.UserName = usuario.UserName;
+
+            return View();
         }
     }
 }

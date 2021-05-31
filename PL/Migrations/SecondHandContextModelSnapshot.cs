@@ -50,6 +50,9 @@ namespace PL.Migrations
                     b.Property<int?>("CategoriaId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Comprador")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("DataEntrada")
                         .HasColumnType("datetime2");
 
@@ -77,6 +80,9 @@ namespace PL.Migrations
 
                     b.Property<decimal>("Valor")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Vendedor")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ProdutoId");
 
@@ -154,9 +160,6 @@ namespace PL.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
-
-                    b.Property<int>("UsuarioId")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

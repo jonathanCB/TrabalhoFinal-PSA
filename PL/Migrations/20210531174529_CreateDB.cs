@@ -26,7 +26,6 @@ namespace PL.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    UsuarioId = table.Column<int>(type: "int", nullable: false),
                     CPF = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Nome = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: true),
                     CEP = table.Column<string>(type: "nvarchar(9)", maxLength: 9, nullable: true),
@@ -182,10 +181,12 @@ namespace PL.Migrations
                     Valor = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     DataEntrada = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DataVenda = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UsuarioId = table.Column<long>(type: "bigint", nullable: false),
                     UsuarioId1 = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    UsuarioId = table.Column<long>(type: "bigint", nullable: false),
                     Categoria = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CategoriaId = table.Column<int>(type: "int", nullable: true)
+                    CategoriaId = table.Column<int>(type: "int", nullable: true),
+                    Vendedor = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Comprador = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

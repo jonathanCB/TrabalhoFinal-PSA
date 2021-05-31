@@ -6,8 +6,6 @@ namespace Entities.Models
 {
     public class Usuario : IdentityUser
     {
-        public int UsuarioId { get; set; }
-
         [MaxLength(50)]
         [Display(Name = "CPF")]
         public string CPF { get; set; }

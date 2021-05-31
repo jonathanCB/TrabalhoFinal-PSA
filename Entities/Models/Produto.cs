@@ -39,8 +39,9 @@ namespace Entities.Models
         [DataType(DataType.Date)]
         public DateTime? DataVenda { get; set; }
 
-        public long UsuarioId { get; set; }
+        //public long UsuarioId { get; set; }
         public Usuario Usuario { get; set; }
+        public long UsuarioId { get; set; }
 
         [Required]
         [Display(Name = "Categoria")]
@@ -48,5 +49,7 @@ namespace Entities.Models
         public String Categoria { get; set; }
 
         public virtual Categoria CategoriaID { get; set; }
+        public String Vendedor { get; set; }
+        public String Comprador { get; set; }
     }
 }
