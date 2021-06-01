@@ -131,6 +131,11 @@ namespace BLL
             _ProdutoDAO.editProduto(prod);
         }
 
+        public List<Produto> ItensDoComprador(String usu)
+        {
+            return _ProdutoDAO.ItensDoComprador(usu);
+        }
+
         #endregion
 
         #region consultas em imagem

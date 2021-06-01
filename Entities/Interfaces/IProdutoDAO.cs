@@ -57,7 +57,8 @@ namespace Entities.Interfaces
         public IQueryable<TotalVendaPorPeriodo> NroTotalVendaPeriodo(DateTime dtIni, DateTime dtFin);
 
         //recebe um produto e salva as modificacoes
-        public void editProduto(Produto prod);        
+        public void editProduto(Produto prod);
 
+        public List<Produto> ItensDoComprador(String usu);
     }
 }

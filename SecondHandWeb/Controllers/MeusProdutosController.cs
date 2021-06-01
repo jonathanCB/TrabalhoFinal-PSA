@@ -37,7 +37,7 @@ namespace SecondHandWeb.Controllers
         {
             var usuario = await _userManager.GetUserAsync(HttpContext.User);
             String usu = _businesFacade.getUserID(usuario.UserName);
-            return View(_businesFacade.ItensPorStatusUsu(usu));
+            return View(_businesFacade.ItensDoComprador(usu));
         }
 
         [Authorize]

@@ -46,9 +46,13 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Categoria.Name)
         </dd>
+        <dd>
+
+        </dd>
+
     </dl>
 </div>
-<div>    
+<div>
     <a asp-action="Index">Back to List</a>
 </div>
 
@@ -56,8 +60,6 @@
 <div class="row">
     <h3>Imagens</h3>
     <div class="col-md-4">
-
-        
         @foreach (Entities.Models.Imagem im in Model.Imagens)
         {
 
@@ -66,6 +68,8 @@
                      src=@Url.Action("GetImage", "ProdutosDisponiveis", new { id=im.ImagemId})
                      alt=@im.ImageMimeType>
             </div>}
-
     </div>
 </div>
+<a asp-action="Compra" asp-route-id="@Model.ProdutoId">Comprar</a>
+
+
