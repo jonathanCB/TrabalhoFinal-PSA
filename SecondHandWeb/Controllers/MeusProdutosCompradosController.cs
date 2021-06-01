@@ -1,4 +1,4 @@
-﻿ using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,16 +15,16 @@ using Microsoft.AspNetCore.Http;
 
 namespace SecondHandWeb.Controllers
 {
-    public class MeusProdutosController : Controller
+    public class MeusProdutosCompradosController : Controller
     {
         private readonly BusinesFacade _businesFacade;
         private readonly SecondHandContext _ct;
         public readonly UserManager<ApplicationUser> _userManager;
         private IWebHostEnvironment _environment;
 
-        public MeusProdutosController(BusinesFacade businesFacade, SecondHandContext ff,
+        public MeusProdutosCompradosController(BusinesFacade businesFacade, SecondHandContext ff,
                                    UserManager<ApplicationUser> userManager, IWebHostEnvironment environment)
-        {           
+        {
             _businesFacade = businesFacade;
             _environment = environment;
             _userManager = userManager;
@@ -37,7 +37,7 @@ namespace SecondHandWeb.Controllers
         {
             var usuario = await _userManager.GetUserAsync(HttpContext.User);
             String usu = _businesFacade.getUserID(usuario.UserName);
-            return View(_businesFacade.ItensPorStatusUsu(usu));
+            return View(_businesFacade.ItensDoComprador(usu));
         }
 
         [Authorize]
@@ -85,7 +85,7 @@ namespace SecondHandWeb.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Name,Descricao,Estado,Valor,DataEntrada,UsuarioIDVendedor,NomeVendedor,CategoriaID")] Produto produto)
-        { 
+        {
 
             if (ModelState.IsValid)
             {
@@ -218,3 +218,4 @@ namespace SecondHandWeb.Controllers
         }
     }
 }
+
