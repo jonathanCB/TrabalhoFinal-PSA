@@ -6,43 +6,49 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Entities.Models;
-using PL;
+using PL.Context;
 using BLL;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace SecondHandWeb.Controllers
 {
-    [Authorize]
-    public class ProdutoController : Controller
+    public class ProdutoesController : Controller
     {
-        public readonly UserManager<Usuario> _userManager;
-        BusinesFacade _bll = new BusinesFacade();
+        private readonly SecondHandContext _context;
+        private readonly BusinesFacade _businesFacade;
+        public readonly UserManager<ApplicationUser> _userManager;
+        private IWebHostEnvironment _environment;
 
-        public ProdutoController(UserManager<Usuario> userManager)
+        public ProdutoesController(SecondHandContext context, BusinesFacade businesFacade,
+                                   UserManager<ApplicationUser> userManager, IWebHostEnvironment environment)
         {
+            _context = context;
+            _businesFacade = businesFacade;
+            _environment = environment;
             _userManager = userManager;
         }
 
+        // GET: Produtoes
         [AllowAnonymous]
-        // GET: Produto
-        //public async Task<IActionResult> Index()
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-
-            List<Produto> produtos = _bll.listaDeProdutos();
-            return View(produtos);
+            return View(_businesFacade.ItensDisponiveis());
         }
 
+        // GET: Produtoes/Details/5
         [AllowAnonymous]
-        // GET: Produto/Details/5
-        public IActionResult Details(long? id)
+        public IActionResult Details(long id)
         {
-            if (id == null)
+            if (id == 0)
             {
                 return NotFound();
             }
-            var produto = _bll.ItemPorId((long)id);
+
+            var produto = _businesFacade.ItemPorId((long)id);
             if (produto == null)
             {
                 return NotFound();
@@ -51,38 +57,43 @@ namespace SecondHandWeb.Controllers
             return View(produto);
         }
 
-        // GET: Produto/Create
+        [Authorize]
+        // GET: Produtoes/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Produto/Create
+        [Authorize]
+        // POST: Produtoes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProdutoId,Name,Descricao,Estado,Valor,DataEntrada,DataVenda,UsuarioId,Categoria")] Produto produto)
+        public async Task<IActionResult> Create([Bind("ProdutoId,Name,Descricao,Valor,DataEntrada,Categoria")] Produto produto)
         {
-            var usuario = await _userManager.GetUserAsync(HttpContext.User);
-            produto.Vendedor = usuario.UserName;
             if (ModelState.IsValid)
             {
-                _bll.NovoProduto(produto);
+                var usuario = await _userManager.GetUserAsync(HttpContext.User);
+                produto.UsuarioIDVendedor = _businesFacade.getUserID(usuario.UserName);
+
+                _businesFacade.CadNovoProduto(produto);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(produto);
         }
 
-        // GET: Produto/Edit/5
-        public IActionResult Edit(long? id)
+        [Authorize]
+        // GET: Produtoes/Edit/5
+        public async Task<IActionResult> Edit(long? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var produto = _bll.ItemPorId((long)id);
+            var produto = await _context.Produtos.FindAsync(id);
             if (produto == null)
             {
                 return NotFound();
@@ -90,12 +101,13 @@ namespace SecondHandWeb.Controllers
             return View(produto);
         }
 
-        // POST: Produto/Edit/5
+        [Authorize]
+        // POST: Produtoes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(long id, [Bind("ProdutoId,Name,Descricao,Valor,DataEntrada,UsuarioId,Categoria")] Produto produto)
+        public async Task<IActionResult> Edit(long id, [Bind("ProdutoId,Name,Descricao,Estado,Valor,DataEntrada,DataVenda,UsuarioID,Categoria")] Produto produto)
         {
             if (id != produto.ProdutoId)
             {
@@ -106,7 +118,8 @@ namespace SecondHandWeb.Controllers
             {
                 try
                 {
-                    _bll.AtualizaProduto(produto);
+                    _context.Update(produto);
+                    await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -124,15 +137,17 @@ namespace SecondHandWeb.Controllers
             return View(produto);
         }
 
-        // GET: Produto/Delete/5
-        public IActionResult Delete(long? id)
+        [Authorize]
+        // GET: Produtoes/Delete/5
+        public async Task<IActionResult> Delete(long? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var produto = _bll.ItemPorId((long)id);
+            var produto = await _context.Produtos
+                .FirstOrDefaultAsync(m => m.ProdutoId == id);
             if (produto == null)
             {
                 return NotFound();
@@ -141,29 +156,55 @@ namespace SecondHandWeb.Controllers
             return View(produto);
         }
 
-        // POST: Produto/Delete/5
+        [Authorize]
+        // POST: Produtoes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(long id)
+        public async Task<IActionResult> DeleteConfirmed(long id)
         {
-            _bll.DeletaProduto(id);
+            var produto = await _context.Produtos.FindAsync(id);
+            _context.Produtos.Remove(produto);
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ProdutoExists(long id)
         {
-            return _bll.ProdutoExiste(id);
+            return _businesFacade.existe(id);
         }
 
-        //Pegando o usuário logado.
-        public async Task<IActionResult> dadosUsuario()
+        //dados do usuario
+        public async Task<IActionResult> DadosUsuario()
         {
-            var usuario = await _userManager.GetUserAsync(User);
+            var usuario = await _userManager.GetUserAsync(HttpContext.User);
 
             ViewBag.Id = usuario.Id;
             ViewBag.UserName = usuario.UserName;
 
             return View();
+
         }
+
+        public ActionResult GetImage(int id)
+        {
+            Imagem im = _businesFacade.GetImagem(id);
+            if (im != null)
+            {
+                return File(im.ImageFile, im.ImageMimeType);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        public IActionResult LoadFiles(long ProdutoId, List<IFormFile> files)
+        {
+            _businesFacade.CadImagem(ProdutoId, files);
+
+            return View("Details", _businesFacade.ItemPorId(ProdutoId));
+        }
+
+
     }
 }

@@ -181,28 +181,49 @@ namespace PL.Migrations
                     Valor = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     DataEntrada = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DataVenda = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UsuarioId1 = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    UsuarioId = table.Column<long>(type: "bigint", nullable: false),
-                    Categoria = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CategoriaId = table.Column<int>(type: "int", nullable: true),
-                    Vendedor = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Comprador = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    UsuarioIDVendedor = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NomeVendedor = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UsuarioIDComprador = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NomeComprador = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CategoriaID = table.Column<int>(type: "int", nullable: false),
+                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Produtos", x => x.ProdutoId);
                     table.ForeignKey(
-                        name: "FK_Produtos_AspNetUsers_UsuarioId1",
-                        column: x => x.UsuarioId1,
+                        name: "FK_Produtos_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Produtos_Categorias_CategoriaId",
-                        column: x => x.CategoriaId,
+                        name: "FK_Produtos_Categorias_CategoriaID",
+                        column: x => x.CategoriaID,
                         principalTable: "Categorias",
                         principalColumn: "CategoriaId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Imagem",
+                columns: table => new
+                {
+                    ImagemId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ImageFile = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    ImageMimeType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProdutoId = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Imagem", x => x.ImagemId);
+                    table.ForeignKey(
+                        name: "FK_Imagem_Produtos_ProdutoId",
+                        column: x => x.ProdutoId,
+                        principalTable: "Produtos",
+                        principalColumn: "ProdutoId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -245,14 +266,19 @@ namespace PL.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Produtos_CategoriaId",
-                table: "Produtos",
-                column: "CategoriaId");
+                name: "IX_Imagem_ProdutoId",
+                table: "Imagem",
+                column: "ProdutoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Produtos_UsuarioId1",
+                name: "IX_Produtos_ApplicationUserId",
                 table: "Produtos",
-                column: "UsuarioId1");
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Produtos_CategoriaID",
+                table: "Produtos",
+                column: "CategoriaID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -273,10 +299,13 @@ namespace PL.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Produtos");
+                name: "Imagem");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Produtos");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
