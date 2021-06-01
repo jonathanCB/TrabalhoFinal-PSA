@@ -1,10 +1,10 @@
 ﻿@model Entities.Models.Produto
 
 @{
-    ViewData["Title"] = "Detalhes do Produto";
+    ViewData["Title"] = "Details";
 }
 
-<h1>Detalhes do Produto</h1>
+<h1>Details</h1>
 
 <div>
     <h4>Produto</h4>
@@ -23,6 +23,12 @@
             @Html.DisplayFor(model => model.Descricao)
         </dd>
         <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Estado)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Estado)
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Valor)
         </dt>
         <dd class="col-sm-10">
@@ -35,10 +41,10 @@
             @Html.DisplayFor(model => model.DataEntrada)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.NomeVendedor)
+            @Html.DisplayNameFor(model => model.DataVenda)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.NomeVendedor)
+            @Html.DisplayFor(model => model.DataVenda)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Categoria)
@@ -46,30 +52,30 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Categoria.Name)
         </dd>
-        <dd>
-
-        </dd>
-
     </dl>
 </div>
 <div>
-    <a asp-action="Index">Back to List</a>
+    @if (Model.Estado != Entities.Models.StatusProduto.Status.Vendido)
+    {
+        <a asp-action="Edit" asp-route-id="@Model.ProdutoId">Edit</a>
+    }
+<a asp-action="Index">Back to List</a>
 </div>
 
 
 <div class="row">
     <h3>Imagens</h3>
     <div class="col-md-4">
+
+
         @foreach (Entities.Models.Imagem im in Model.Imagens)
         {
 
             <div class="form-group">
                 <img width="300"
-                     src=@Url.Action("GetImage", "ProdutosDisponiveis", new { id=im.ImagemId})
+                     src=@Url.Action("GetImage", "MeusProdutos", new { id=im.ImagemId})
                      alt=@im.ImageMimeType>
             </div>}
+
     </div>
 </div>
-<a asp-action="Compra" asp-route-id="@Model.ProdutoId">Comprar</a>
-
-

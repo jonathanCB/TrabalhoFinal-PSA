@@ -74,18 +74,32 @@ namespace SecondHandWeb.Controllers
             }
 
             return View(produto);
-        }      
+        }
 
         // GET: ProdutosDisponiveis/Compra/
-        [AllowAnonymous]
-        public IActionResult Compra(long id)
+        [Authorize]
+        public async Task<IActionResult> CompraAsync(long id)
         {
             if (id == 0)
             {
                 return NotFound();
             }
+            //Pegando o usuário logado:
+            var usuario = await _userManager.GetUserAsync(HttpContext.User);
 
+            //Pegando o produto que está sendo comprado:
             var produto = _businesFacade.ItemPorId((long)id);
+
+            //Colocando o nome e o id do comprador no produto:
+            produto.NomeComprador = usuario.UserName;
+            produto.UsuarioIDComprador = usuario.Id;
+
+            //Alterando estado do produto para 'vendido':
+            produto.Estado = StatusProduto.Status.Vendido;
+
+            //Salvando produto:
+            _businesFacade.editProduto(produto);
+
             if (produto == null)
             {
                 return NotFound();

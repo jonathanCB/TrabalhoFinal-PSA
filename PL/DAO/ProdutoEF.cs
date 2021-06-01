@@ -178,6 +178,16 @@ namespace PL.DAO
 
             return consulta5_1;
         }
-        
+
+        //recebe um id do comprador e retorna uma lista de todos os produtos ordenados pelo status
+        public List<Produto> ItensDoComprador(String usu)
+        {
+            var consulta4 = _context.Produtos
+                            .Where(p => p.UsuarioIDComprador == usu)
+                            .Select(p => p).OrderByDescending(e => e.Estado);
+
+            return consulta4.ToList();
+        }
+
     }
 }

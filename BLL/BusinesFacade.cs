@@ -6,6 +6,7 @@ using PL.DAO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace BLL
 {
@@ -27,6 +28,10 @@ namespace BLL
             _CategoriaDAO = Cdao;
         }
         
+        /*public List<VendProdStatusVenda> RelProdStatus(int id)
+        {
+            return null;
+        }*/
 
         #region consultas em produtos
 
@@ -124,6 +129,11 @@ namespace BLL
         public void editProduto(Produto prod)
         {
             _ProdutoDAO.editProduto(prod);
+        }
+
+        public List<Produto> ItensDoComprador(String usu)
+        {
+            return _ProdutoDAO.ItensDoComprador(usu);
         }
 
         #endregion
