@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using static Entities.Models.StatusProduto;
 
 namespace Entities.Models
 {
     public class Produto
-    {      
+    {
 
         [Required]
         [Display(Name = "ID do Produto")]
@@ -32,7 +31,7 @@ namespace Entities.Models
         [Required]
         [Display(Name = "Valor do Produto")]
         public decimal Valor { get; set; }
-                
+
         [Display(Name = "Data de Anuncio")]
         [DataType(DataType.Date)]
         public DateTime DataEntrada { get; set; }
@@ -42,16 +41,25 @@ namespace Entities.Models
         public DateTime? DataVenda { get; set; }
 
         [Required]
-        [Display(Name = "ID do Usuario")]
-        public long UsuarioID { get; set; }
+        [Display(Name = "ID do Usuario Vendedor")]
+        public String UsuarioIDVendedor { get; set; }
+
+        [Required]
+        [Display(Name = "Email do Vendedor")]
+        public String NomeVendedor { get; set; }
+
+        [Display(Name = "ID do Usuario Comprador")]
+        public String UsuarioIDComprador { get; set; }
+                
+        [Display(Name = "Nome do Comprador")]
+        public String NomeComprador { get; set; }
 
         [Required]
         [Display(Name = "Categoria")]
-        [RegularExpression(@"^[A-Z]+[a-zA-Z]*$")]
-        public String Categoria { get; set; }
+        public int CategoriaID { get; set; }
 
-        public virtual Categoria CategoriaID { get; set; }
+        public virtual Categoria Categoria { get; set; }
+        public virtual ICollection<Imagem> Imagens { get; set; }
 
-        public virtual Usuario Usuario { get; set; }
     }
 }

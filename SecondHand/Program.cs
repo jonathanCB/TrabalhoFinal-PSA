@@ -1,7 +1,9 @@
 ﻿using BLL;
+using Entities.Interfaces;
 using Entities.Models;
 using Entities.ViewModels;
-using PL;
+using Ninject;
+using PL.Context;
 using PL.DAO;
 using System;
 using System.Collections.Generic;
@@ -11,12 +13,18 @@ namespace ConsoleTests
 {
     class Program
     {
+
         static void Main(string[] args)
         {
 
-            SecondHandContext context = new SecondHandContext();
-            BusinesFacade _bll = new BusinesFacade();
+            SecondHandContext context = new();
 
+            //injetando dependencia com ninject
+            Ninject.IKernel inject = new StandardKernel();
+            inject.Bind<IProdutoDAO>().To<ProdutoEF>();
+            var obj = inject.Get<BusinesFacade>();
+
+            BusinesFacade _bll = obj;
 
             #region Criação
 
@@ -24,11 +32,11 @@ namespace ConsoleTests
             {
                 Name = "prod teste",
                 Descricao = "produto para testar a criação no bando de dados",
-                Categoria = "Tv",
+                CategoriaID = 1,
                 DataEntrada = new DateTime(2020, 04, 01),
                 Estado = StatusProduto.Status.Disponivel,
                 Valor = 200.0m,
-                UsuarioID = 1
+                UsuarioIDVendedor = "c0f2a95a-d441-423f-b369-746d098c18a9"
             };
 
             _bll.CadNovoProduto(produtoNovo);
@@ -50,8 +58,8 @@ namespace ConsoleTests
             foreach (Produto p in _bll.ListaDeProdutos())
             {
                 Console.WriteLine("{0}  {1}  {2}  {3}  {4}  {5}  {6}",
-                                    p.ProdutoId, p.Name, p.Descricao, p.Estado, 
-                                    p.Valor, p.UsuarioID, p.Categoria);
+                                    p.ProdutoId, p.Name, p.Descricao, p.Estado,
+                                    p.Valor, p.UsuarioIDVendedor, p.Categoria);
             }
             Console.WriteLine("\n\n");
 
@@ -61,7 +69,7 @@ namespace ConsoleTests
             #region Testando todas as consultas da entrega 1
 
             Console.WriteLine("1 - Itens a venda de uma determinada categoria:\n");
-            String cat = "Celular";
+            String cat = "TV";
             Console.WriteLine("Categoria pesquisada: '{0}'\n", cat);
 
             foreach (Produto p in _bll.ItensPorCategoria(cat))
@@ -70,9 +78,9 @@ namespace ConsoleTests
                                     "Categoria: {4}\n",
                                     p.Name, p.Descricao, p.Estado, p.Valor, p.Categoria);
             }
-            Console.WriteLine("\n\n");  
+            Console.WriteLine("\n\n");
 
-            
+
             Console.WriteLine("2 - Itens a venda dada uma palavra chave e uma categoria:\n");
             cat = "TV";
             String palChave = "tv";
@@ -84,9 +92,9 @@ namespace ConsoleTests
                                     "Categoria: {4}\n",
                                     p.Name, p.Descricao, p.Estado, p.Valor, p.Categoria);
             }
-            Console.WriteLine("\n\n");            
+            Console.WriteLine("\n\n");
 
-            
+
             Console.WriteLine("3 - Itens a venda dentro de uma faixa de valores\n");
             decimal valIni = 290.0m;
             decimal valFin = 500.0m;
@@ -98,11 +106,11 @@ namespace ConsoleTests
                                     "Categoria: {4}\n",
                                     p.Name, p.Descricao, p.Estado, p.Valor, p.Categoria);
             }
-            Console.WriteLine("\n\n");            
+            Console.WriteLine("\n\n");
 
-            
+
             Console.WriteLine("4 - Itens anunciados por um determinado vendedor agrupados pelo status da venda\n");
-            int vend = 2;
+            String vend = "c0f2a95a-d441-423f-b369-746d098c18a9";
             Console.WriteLine("ID do vendedor: {0}\n", vend);
 
             foreach (Produto p in _bll.ItensPorStatusUsu(vend))
@@ -111,17 +119,18 @@ namespace ConsoleTests
                                     "Categoria: {4}\n",
                                     p.Name, p.Descricao, p.Estado, p.Valor, p.Categoria);
             }
-            Console.WriteLine("\n\n");            
+            Console.WriteLine("\n\n");
 
-            
+
             Console.WriteLine("5 - Número total de itens vendidos num período e o valor total destas vendas\n");
             DateTime dtIni = new DateTime(2020, 04, 01);
             DateTime dtFin = new DateTime(2020, 05, 01);
             Console.WriteLine("Entre as datas de '{0}' e '{1}'\n", dtIni, dtFin);
 
-            foreach (String p in _bll.TotalVendaPeriodo(dtIni, dtFin))
+            foreach (TotalVendaPorPeriodo i in _bll.TotalVendaPeriodo(dtIni, dtFin))
             {
-                Console.WriteLine(p);
+                Console.WriteLine("Número total de itens vendidos: {0}\nValor total destas vendas: {1}\n",
+                                    i.numVendasPeriodo, i.valorVendasPeriodo);
             }
             Console.WriteLine("\n\n");
 
