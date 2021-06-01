@@ -1,7 +1,7 @@
 ﻿using Entities.Interfaces;
 using Entities.Models;
 using Entities.ViewModels;
-using PL;
+using Microsoft.AspNetCore.Http;
 using PL.DAO;
 using System;
 using System.Collections.Generic;
@@ -12,83 +12,169 @@ namespace BLL
 {
     public class BusinesFacade
     {
-        private readonly IProdutoDAO dao;
-        //private readonly SecondHandContext context;
+        private readonly IProdutoDAO _ProdutoDAO;
+        private readonly IImagemDAO _ImagemDAO;
+        private readonly IApplicationUserDAO _ApplicationUserDAO;
+        private readonly ICategoriaDAO _CategoriaDAO;
 
-        public BusinesFacade()
+        //construtor busines facade
+
+        public BusinesFacade(IProdutoDAO Pdao, IImagemDAO Idao, 
+                                IApplicationUserDAO Adao, ICategoriaDAO Cdao)
         {
-            this.dao = new ProdutoEF();
+            _ProdutoDAO = Pdao;
+            _ImagemDAO = Idao;
+            _ApplicationUserDAO = Adao;
+            _CategoriaDAO = Cdao;
         }
-
+        
         /*public List<VendProdStatusVenda> RelProdStatus(int id)
         {
             return null;
         }*/
 
+        #region consultas em produtos
+
         //Todos os produtos do banco:
-        public List<Produto> listaDeProdutos()
+        public List<Produto> ListaDeProdutos()
         {
-            return dao.ListaProdutos();
+            return _ProdutoDAO.ListaDeProdutos();
         }
 
-        //Mandar um produto para o ProdutoEF na camada de persistência e salvar no banco
-        public void NovoProduto(Produto prod)
+        //retorna uma lista IQuerable com todos os produtos disponiveis para venda no banco de dados
+        public IQueryable<Produto> IQuerDeProdutosDisponiveis()
         {
-            dao.NovoProduto(prod);
+            return _ProdutoDAO.IQuerDeProdutosDisponiveis();
         }
 
-        //Consulta 1
+        //Salva um produto novo no banco
+        public void CadNovoProduto(Produto prod)
+        {
+            _ProdutoDAO.CadastroNovoProduto(prod);
+        }
+
+        //Recebe um id e deleta o produto
+        public void deletaProduto(long ProdutoID)
+        {
+            _ProdutoDAO.deletaProduto(ProdutoID);
+        }
+
+        //Recebe um id e informa se o produto existe ou nao
+        public Boolean existe(long ProdutoID)
+        {
+            return _ProdutoDAO.existe(ProdutoID);
+        }
+
+        //Recebe um ID de produto e retorna o mesmo
+        public Produto ItemPorId(long ProdutoID)
+        {
+            return _ProdutoDAO.ItemPorId(ProdutoID);
+        }
+
+        //relatorio de itens disponiveis para venda
+        public List<Produto> ItensDisponiveis()
+        {
+            return _ProdutoDAO.ItensDisponiveis();
+        }
+
+        //relatorio de itens por uma determinada categoria
         public List<Produto> ItensPorCategoria(String cat)
         {
-            return dao.ItensPorCategoria(cat);
+            return _ProdutoDAO.ItensPorCategoria(cat);
         }
 
-        //Consulta 2
+        //relatorio de itens disponiveis por uma determinada categoria
+        public IQueryable<Produto> ItensPorCategoriaDisponiveis(String cat)
+        {
+            return _ProdutoDAO.ItensPorCategoriaDisponiveis(cat);
+        }
+
+        //relatorio de itens por uma determinada categoria e palavra
         public List<Produto> ItensPalChavCat(String palChave, String cat)
         {
-            return dao.ItensPalChavCat(palChave, cat);
+            return _ProdutoDAO.ItensPalChavCat(palChave, cat);
         }
 
-        //Consulta 3
-        public List<Produto> FaixaDeValores(decimal valIni, decimal valFin)
+        //recebe uma palavra chave e retorna um produto
+        public List<Produto> ItensPalChav(string palChave)
         {
-            return dao.FaixaDeValores(valIni, valFin);
+            return _ProdutoDAO.ItensPalChav(palChave);
         }
 
-        //Consulta 4
-        public List<Produto> ItensPorVendedor(int vend)
+        //recebe uma palavra chave e retorna produtos disponiveis
+        public IQueryable<Produto> ItensPalChavDisponiveis(string palChave)
         {
-            return dao.ItensPorVendedor(vend);
+            return _ProdutoDAO.ItensPalChavDisponiveis(palChave);
         }
 
-        //Consulta 5
-        public List<ItensPorIntervaloDeTempo> ItensPorIntervaloDeTempo(DateTime dtIni, DateTime dtFin)
+        //relatorio de itens por uma determinada faixa de valores
+        public List<Produto> ItensFaixaDeValores(decimal valIni, decimal valFin)
         {
-            return dao.ItensPorIntervaloDeTempo(dtIni, dtFin);
+            return _ProdutoDAO.ItensFaixaDeValores(valIni, valFin);
         }
 
-        //Item por id. É utilizando no método Details e no método [GET] Edit.
-        public Produto ItemPorId(long id)
+        //relatorio de itens por um determinado usuario
+        public List<Produto> ItensPorStatusUsu(String usu)
         {
-            return dao.ItemPorId(id);
+            return _ProdutoDAO.ItensPorStatusUsu(usu);
         }
 
-        //Recebe o produto atualizado para salvar no banco.
-        public void AtualizaProduto(Produto prod)
+        //relatorio do total de vendas em um determinado periodo de tempo
+        public IQueryable<TotalVendaPorPeriodo> TotalVendaPeriodo(DateTime dtIni, DateTime dtFin)
         {
-            dao.AtualizaProduto(prod);
+            return _ProdutoDAO.NroTotalVendaPeriodo(dtIni, dtFin);
         }
 
-        //Deletar um produto do banco.
-        public void DeletaProduto(long id)
+        //recebe um produto e salva as modificacoes
+        public void editProduto(Produto prod)
         {
-            dao.DeletaProduto(id);
+            _ProdutoDAO.editProduto(prod);
         }
 
-        //Método para verificar se um produto existe.
-        public bool ProdutoExiste(long id)
+        #endregion
+
+        #region consultas em imagem
+
+        //Salva uma imagens novo no banco
+        public void CadImagem(long ProdutoId, List<IFormFile> files)
         {
-            return dao.ProdutoExiste(id);
+            _ImagemDAO.LoadFiles(ProdutoId,files);
         }
+
+        //recebe um id de imagem e retorna o resultado
+        public Imagem GetImagem(int ImagemId)
+        {
+            return _ImagemDAO.GetImagem(ImagemId);
+        }              
+        
+
+            #endregion
+
+        #region consultas em application user
+
+            //retorna o id de um usuario
+            public String getUserID(String userName)
+        {
+            return _ApplicationUserDAO.getUserID(userName);
+        }
+
+        #endregion
+
+        #region consultas em categorias
+
+        //retorna o nome de todas as categorias de produtos cadastrados
+        public IQueryable<String> categoriasNomes()
+        {
+            return _CategoriaDAO.categoriasNomes();
+        }
+
+        //retorna um IEnumerable de categorias
+        public IEnumerable<Categoria> categoriasIEnumerable()
+        {
+            return _CategoriaDAO.categoriasIEnumerable();
+        }
+
+        #endregion
+
     }
 }

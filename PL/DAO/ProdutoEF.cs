@@ -1,130 +1,183 @@
 ﻿using Entities.Interfaces;
+using Entities.Models;
 using Entities.ViewModels;
+using Microsoft.EntityFrameworkCore;
+using PL.Context;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Text;
 using System.Linq;
-using Entities.Models;
 
 namespace PL.DAO
 {
     public class ProdutoEF : IProdutoDAO
     {
-        private readonly SecondHandContext context;
+        private readonly SecondHandContext _context;
 
-        public ProdutoEF()
+        //construtor produtos entity framework        
+        
+        public ProdutoEF(SecondHandContext context)
         {
-            context = new SecondHandContext();
+            _context = context;
+        }        
+
+        //Recebe um id e informa se o produto existe ou nao
+        public Boolean existe(long ProdutoID)
+        {
+            return _context.Produtos.Any(e => e.ProdutoId == ProdutoID);
         }
 
-        /*public ProdutoEF(SecondHandContext _context)
+        //Recebe um id e deleta o produto
+        public void deletaProduto(long ProdutoID)
         {
-            context = _context;
-        }*/
-
-        //Listar todos os produtos do banco:
-        public List<Produto> ListaProdutos()
-        {
-            List<Produto> prod = context.Produtos.ToList();
-            //List<Categoria> cate = context.Categorias.ToList();
-            return prod;
+            var produto = _context.Produtos.Find(ProdutoID);
+            _context.Produtos.Remove(produto);
+            _context.SaveChanges();
         }
 
-        //Recebendo um novo produto e salvando no BD.               
-        public void NovoProduto(Produto prod)
+        //recebe um produto novo e salva no bando de dados
+        public void CadastroNovoProduto(Produto prod)
         {
-            context.Produtos.Add(prod);
-            context.SaveChanges();
+            prod.Estado = StatusProduto.Status.Disponivel;
+
+            _context.Produtos.Add(prod);
+            _context.SaveChanges();
         }
 
-        //Consulta 1
-        public List<Produto> ItensPorCategoria(String cat)
+        //recebe um produto e salva as modificacoes
+        public void editProduto(Produto prod)
         {
-            var consulta1 = context.Produtos
-                            .Where(p => p.Categoria.ToUpper() == cat.ToUpper())
+            _context.Update(prod);
+            _context.SaveChanges();
+        }
+
+        //relatorio de itens disponiveis para venda
+        public List<Produto> ItensDisponiveis()
+        {
+            var consulta1 = _context.Produtos
+                            .Where(p => p.Estado == StatusProduto.Status.Disponivel)
                             .Select(p => p);
 
             return consulta1.ToList();
         }
 
-        //Consulta 2
-        public List<Produto> ItensPalChavCat(String palChave, String cat)
+        //recebe um id de produto e retorna o mesmo
+        public Produto ItemPorId(long ProdutoID)
         {
-            var consulta2 = context.Produtos
-                            .Where(p => p.Categoria.ToUpper() == cat.ToUpper())
+            var consulta1 = _context.Produtos
+                            .Include("Imagens")
+                            .FirstOrDefault(m => m.ProdutoId == ProdutoID);
+
+            return consulta1;
+        }
+
+        //retorna uma lista com todos os produtos no banco de dados
+        public List<Produto> ListaDeProdutos()
+        {
+            List<Produto> prod = _context.Produtos.ToList();
+            return prod;
+        }
+
+        //retorna uma lista IQuerable com todos os produtos disponiveis para venda no banco de dados
+        public IQueryable<Produto> IQuerDeProdutosDisponiveis()
+        {
+            IQueryable<Produto> prod = _context.Produtos
+                                        .Where(p => p.Estado == StatusProduto.Status.Disponivel)
+                                        .Select(p => p);
+            return prod;
+        }
+
+        //recebe uma categoria e retorna todos os produtos dessa categoria
+        public List<Produto> ItensPorCategoria(String cat)
+        {
+            var consulta1 = _context.Produtos
+                            .Where(x => x.Categoria.Name == cat);
+
+            return consulta1.ToList();
+        }
+
+        //recebe uma categoria e retorna todos os produtos dessa categoria
+        public IQueryable<Produto> ItensPorCategoriaDisponiveis(String cat)
+        {
+            var consulta1 = _context.Produtos
+                            .Where(x => x.Estado == StatusProduto.Status.Disponivel)
+                            .Where(x => x.Categoria.Name == cat)
+                            .Select(p => p);
+
+            return consulta1;
+        }
+
+        //recebe uma categoria e uma palavra chave e retorna uma lista desses produtos
+        public List<Produto> ItensPalChavCat(string palChave, String cat)
+        {
+            var consulta2 = _context.Produtos
+                            .Where(p => p.Categoria.Name == cat)
                             .Where(p => p.Name.ToUpper().Contains(palChave.ToUpper()) || p.Descricao.ToUpper().Contains(palChave.ToUpper()))
                             .Select(p => p);
 
             return consulta2.ToList();
         }
 
-        //Consulta 3
-        public List<Produto> FaixaDeValores(decimal valIni, decimal valFin)
+        //recebe uma palavra chave e retorna um produto
+        public List<Produto> ItensPalChav(string palChave)
         {
-            var consulta3 = context.Produtos
+            var consulta2 = _context.Produtos
+                            .Where(p => p.Name.ToUpper().Contains(palChave.ToUpper()))
+                            .Select(p => p);
+
+            return consulta2.ToList();
+        }
+
+        //recebe uma palavra chave e retorna produtos disponiveis
+        public IQueryable<Produto> ItensPalChavDisponiveis(string palChave)
+        {
+            var consulta2 = _context.Produtos
+                            .Where(p => p.Estado == StatusProduto.Status.Disponivel)
+                            .Where(p => p.Name.ToUpper().Contains(palChave.ToUpper()))
+                            .Select(p => p);
+
+            return consulta2;
+        }
+
+        //recebe dois valores e retorna uma lista de produtos dentro desses valores
+        public List<Produto> ItensFaixaDeValores(decimal valIni, decimal valFin)
+        {
+            var consulta3 = _context.Produtos
                             .Where(p => p.Estado == StatusProduto.Status.Disponivel)
                             .Where(p => p.Valor >= valIni && p.Valor <= valFin)
                             .Select(p => p);
+
             return consulta3.ToList();
         }
 
-        //Consulta 4
-        public List<Produto> ItensPorVendedor(int vend)
+        //recebe um id de usuario e retorna uma lista de todos os produtos ordenados pelo status
+        public List<Produto> ItensPorStatusUsu(String usu)
         {
-            var consulta4 = context.Produtos
-                            .Where(p => p.UsuarioId == vend)
+            var consulta4 = _context.Produtos
+                            .Where(p => p.UsuarioIDVendedor == usu)
                             .Select(p => p).OrderByDescending(e => e.Estado);
+
             return consulta4.ToList();
         }
 
-        //Consulta 5
-        public List<ItensPorIntervaloDeTempo> ItensPorIntervaloDeTempo(DateTime dtIni, DateTime dtFin)
+        //recebe duas datas e retorna o numero de itens vendidos
+        //bem como o total da soma do valor desses produtos
+        public IQueryable<TotalVendaPorPeriodo> NroTotalVendaPeriodo(DateTime dtIni, DateTime dtFin)
         {
-
-            var consulta5_0 = from p in context.Produtos
+            var consulta5 = from p in _context.Produtos
                             where p.Estado == StatusProduto.Status.Vendido
                             where p.DataVenda >= dtIni && p.DataVenda <= dtFin
                             select p.Valor;
 
-            var consulta5_1 = from p in consulta5_0
+            var consulta5_1 = from p in consulta5
                               group p by 1 into grp
-                              select new ItensPorIntervaloDeTempo
+                              select new TotalVendaPorPeriodo
                               {
-                                  valorTotalVendas = grp.Sum(),
-                                  numTotalItensVendidos = grp.Count()
-                              };
-            return consulta5_1.ToList();
-        }
+                                  numVendasPeriodo = grp.Count(),
+                                  valorVendasPeriodo = grp.Sum()
+                              };            
 
-        //Item por id. É utilizando no método Details e no método [GET] Edit.
-        public Produto ItemPorId(long ProdutoID)
-        {
-            var consulta1 = context.Produtos
-                            .FirstOrDefault(m => m.ProdutoId == ProdutoID);
-
-            return consulta1;
+            return consulta5_1;
         }
-
-        //Recebe o produto atualizado para salvar no banco.
-        public void AtualizaProduto(Produto prod)
-        {
-            context.Update(prod);
-            context.SaveChangesAsync();
-        }
-
-        //Deletar produto do banco
-        public void DeletaProduto(long id)
-        {
-            var produto = context.Produtos.Find(id);
-            context.Produtos.Remove(produto);
-            context.SaveChangesAsync();
-        }
-
-        //Verificar se o produto existe:
-        public bool ProdutoExiste(long id)
-        {
-            return context.Produtos.Any(e => e.ProdutoId == id);
-        }
+        
     }
 }

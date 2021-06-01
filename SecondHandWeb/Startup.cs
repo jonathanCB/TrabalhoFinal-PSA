@@ -1,9 +1,8 @@
-using BLL;
+     using BLL;
 using Entities.Interfaces;
 using Entities.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
@@ -11,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using PL;
+using PL.Context;
 using PL.DAO;
 using SecondHandWeb.Data;
 using System;
@@ -33,22 +32,46 @@ namespace SecondHandWeb
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<SecondHandContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    Configuration.GetConnectionString("SecondHandContext")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddSingleton<SecondHandContext, SecondHandContext>();
-
-            /*services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();*/
+            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<SecondHandContext>();
             services.AddControllersWithViews();
 
-            services.AddDefaultIdentity<Usuario>(options => options.SignIn.RequireConfirmedAccount = true)
-            .AddEntityFrameworkStores<SecondHandContext>();
+            //Interface e repositorio injecao dependencia
+            services.AddTransient<BusinesFacade, BusinesFacade>();
+            services.AddTransient<IProdutoDAO, ProdutoEF>();
+            services.AddTransient<IImagemDAO, ImagemEF>();
+            services.AddTransient<IApplicationUserDAO, ApplicationUserEF>();
+            services.AddTransient<ICategoriaDAO, CategoriaEF>();
 
-            services.AddSingleton<BusinesFacade, BusinesFacade>();
-            services.AddSingleton<IProdutoDAO, ProdutoEF>();
+            services.AddControllersWithViews();
+            services.AddRazorPages();
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Password settings.
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 3;
+                options.Password.RequiredUniqueChars = 1;
+
+                // Lockout settings.
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                options.Lockout.MaxFailedAccessAttempts = 5;
+                options.Lockout.AllowedForNewUsers = true;
+
+                // User settings.
+                options.User.AllowedUserNameCharacters =
+                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                options.User.RequireUniqueEmail = false;
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

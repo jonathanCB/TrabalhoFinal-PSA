@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using static Entities.Models.StatusProduto;
 
 namespace Entities.Models
@@ -25,6 +25,7 @@ namespace Entities.Models
         [StringLength(1000, MinimumLength = 10)]
         public string Descricao { get; set; }
 
+        [Required]
         public Status Estado { get; set; }
 
         [Required]
@@ -39,17 +40,26 @@ namespace Entities.Models
         [DataType(DataType.Date)]
         public DateTime? DataVenda { get; set; }
 
-        //public long UsuarioId { get; set; }
-        public Usuario Usuario { get; set; }
-        public long UsuarioId { get; set; }
+        [Required]
+        [Display(Name = "ID do Usuario Vendedor")]
+        public String UsuarioIDVendedor { get; set; }
+
+        [Required]
+        [Display(Name = "Email do Vendedor")]
+        public String NomeVendedor { get; set; }
+
+        [Display(Name = "ID do Usuario Comprador")]
+        public String UsuarioIDComprador { get; set; }
+                
+        [Display(Name = "Nome do Comprador")]
+        public String NomeComprador { get; set; }
 
         [Required]
         [Display(Name = "Categoria")]
-        [RegularExpression(@"^[A-Z]+[a-zA-Z]*$")]
-        public String Categoria { get; set; }
+        public int CategoriaID { get; set; }
 
-        public virtual Categoria CategoriaID { get; set; }
-        public String Vendedor { get; set; }
-        public String Comprador { get; set; }
+        public virtual Categoria Categoria { get; set; }
+        public virtual ICollection<Imagem> Imagens { get; set; }
+
     }
 }
