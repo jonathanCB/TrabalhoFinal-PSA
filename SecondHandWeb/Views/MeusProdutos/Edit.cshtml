@@ -47,43 +47,44 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
 
-<div class="row">
-    <h3>Imagens</h3>
-    <div class="col-md-4">
 
-
-        @foreach (Entities.Models.Imagem im in Model.Imagens)
-        {
-
-            <div class="form-group">
-                <img width="300"
-                     src=@Url.Action("GetImage", "MeusProdutos", new { id=im.ImagemId})
-                     alt=@im.ImageMimeType>
-            </div>}
-
-    </div>
-</div>
-
-@if (Model.Estado != Entities.Models.StatusProduto.Status.Vendido)
+@if (Model.Imagens != null)
 {
-    @using (Html.BeginForm("LoadFiles", "MeusProdutos",
-                          FormMethod.Post,
-                            new { enctype = "multipart/form-data" }))
-    {
-        <input type="hidden" asp-for="ProdutoId" />
-        <dl>
-            <dt>
-                <label for="FileUpload_FormFile">Selecionar arquivos</label>
-            </dt>
-            <dd>
-                <input id="files" type="file"
-                       name="files" multiple />
-            </dd>
-        </dl>
+    <div class="row">
+        <h3>Imagens</h3>
+        <div class="col-md-4">
 
-        <input type="submit" value="Enviar arquivos" class="btn btn-primary" />
+            @foreach (Entities.Models.Imagem im in Model.Imagens)
+            {
 
-        <div style="margin-top:15px">
-            <output name="result"></output>
-        </div>}
+                <div class="form-group">
+                    <img width="300"
+                         src=@Url.Action("GetImage", "MeusProdutos", new { id = im.ImagemId })
+                         alt=@im.ImageMimeType>
+                </div>}
+
+        </div>
+    </div>
 }
+
+
+@using (Html.BeginForm("LoadFiles", "MeusProdutos",
+                     FormMethod.Post,
+                       new { enctype = "multipart/form-data" }))
+{
+    <input type="hidden" asp-for="ProdutoId" />
+    <dl>
+        <dt>
+            <label for="FileUpload_FormFile">Selecionar arquivos</label>
+        </dt>
+        <dd>
+            <input id="files" type="file"
+                   name="files" multiple />
+        </dd>
+    </dl>
+
+    <input type="submit" value="Enviar arquivos" class="btn btn-primary" />
+
+    <div style="margin-top:15px">
+        <output name="result"></output>
+    </div>}

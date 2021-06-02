@@ -41,7 +41,6 @@ namespace SecondHandWeb.Controllers
 
         [Authorize]
         // GET: MeusProdutosComprados/Details/5
-        [AllowAnonymous]
         public IActionResult Details(long id)
         {
             if (id == 0)
@@ -58,6 +57,7 @@ namespace SecondHandWeb.Controllers
             return View(produto);
         }
 
+        [Authorize]
         public async Task<IActionResult> Cancel(long id)
         {
             if (id == 0)

@@ -55,7 +55,10 @@ namespace SecondHandWeb.Controllers
                 Produtos = produtos.ToList()
             };
             var usuario = await _userManager.GetUserAsync(HttpContext.User);
-            ViewData["user"] = usuario.Id;
+            if (usuario != null)
+            {
+                ViewData["user"] = usuario.Id;
+            }
             return View(produtoCategoriaVM);
         }
 
@@ -75,7 +78,10 @@ namespace SecondHandWeb.Controllers
             }
 
             var usuario = await _userManager.GetUserAsync(HttpContext.User);
-            ViewData["user"] = usuario.Id;
+            if (usuario != null)
+            {
+                ViewData["user"] = usuario.Id;
+            }
             return View(produto);
         }
 

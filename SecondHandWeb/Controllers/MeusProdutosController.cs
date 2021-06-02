@@ -42,7 +42,6 @@ namespace SecondHandWeb.Controllers
 
         [Authorize]
         // GET: MeusProdutos/Details/5
-        [AllowAnonymous]
         public IActionResult Details(long id)
         {
             if (id == 0)
