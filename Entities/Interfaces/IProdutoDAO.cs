@@ -23,6 +23,9 @@ namespace Entities.Interfaces
         //realiza a venda de um produto
         public Boolean VendaProduto(long id, String userName);
 
+        //realiza o cancelamento da venda de um produto
+        public Boolean CancelarVendaProduto(long id);
+
         //Recebe um ID de produto e retorna o mesmo
         public Produto ItemPorId(long ProdutoID);
 

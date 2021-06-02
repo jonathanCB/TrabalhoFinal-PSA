@@ -57,33 +57,22 @@ namespace SecondHandWeb.Controllers
             return View(produto);
         }
 
-        [Authorize]
+        // POST: MeusProdutosComprados/Cancel/5
         public async Task<IActionResult> Cancel(long id)
         {
             if (id == 0)
             {
                 return NotFound();
-            }
-            
-            //Pegando o produto que está sendo cancelado:
-            var produto = _businesFacade.ItemPorId((long)id);
+            }           
 
-            //Alterando estado do produto para 'vendido':
-            produto.Estado = StatusProduto.Status.Disponivel;
+            Boolean prod = _businesFacade.CancelarVendaProduto((long)id);
 
-            //Tirando id e username do comprador do produto:
-            produto.NomeComprador = null;
-            produto.UsuarioIDComprador = null;
-
-            //Salvando atualização no produto:
-            _businesFacade.editProduto(produto);
-
-            if (produto == null)
+            if (prod == false)
             {
                 return NotFound();
             }
 
-            return View(produto);
+            return View(_businesFacade.ItemPorId((long)id));
         }
 
         private bool ProdutoExists(long id)

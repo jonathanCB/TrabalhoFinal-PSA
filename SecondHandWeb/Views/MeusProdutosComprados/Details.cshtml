@@ -9,6 +9,7 @@
 <div>
     <h4>Produto</h4>
     <hr />
+    <a asp-action="Cancel" asp-route-id="@Model.ProdutoId">Cancelar pedido</a>
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Name)

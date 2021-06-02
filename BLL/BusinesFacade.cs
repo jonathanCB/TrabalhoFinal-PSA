@@ -137,6 +137,12 @@ namespace BLL
             return _ProdutoDAO.VendaProduto(id, userName);
         }
 
+        //realiza o cancelamento da venda de um produto
+        public Boolean CancelarVendaProduto(long id)
+        {
+            return _ProdutoDAO.CancelarVendaProduto(id);
+        }
+
         public List<Produto> ItensDoComprador(String usu)
         {
             return _ProdutoDAO.ItensDoComprador(usu);

@@ -72,6 +72,26 @@ namespace PL.DAO
             return false;
         }
 
+        //realiza o cancelamento da venda de um produto
+        public Boolean CancelarVendaProduto(long id)
+        {
+            var consulta1 = _context.Produtos
+                            .FirstOrDefault(m => m.ProdutoId == id);
+
+            if (consulta1 != null)
+            {
+                consulta1.NomeComprador = null;
+                consulta1.UsuarioIDComprador = null;
+                consulta1.Estado = StatusProduto.Status.Disponivel;
+                consulta1.DataVenda = null;
+                _context.Update(consulta1);
+                _context.SaveChanges();
+                return true;
+            }
+
+            return false;
+        }
+
         //relatorio de itens disponiveis para venda
         public List<Produto> ItensDisponiveis()
         {
