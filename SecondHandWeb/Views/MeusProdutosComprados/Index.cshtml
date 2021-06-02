@@ -67,13 +67,16 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.CategoriaID)
                 </td>
-                <td>                     
+                <td>
                     <a asp-action="Details" asp-route-id="@item.ProdutoId">Details</a>
-                    @if (item.Estado != Entities.Models.StatusProduto.Status.Vendido)
+                    <a asp-action="Details" asp-route-id="@item.ProdutoId">Cancelar pedido</a>
+                    <!--
+                    (arroba)if (item.Estado != Entities.Models.StatusProduto.Status.Vendido)
                     {
-                        <a asp-action="Delete" asp-route-id="@item.ProdutoId">Delete</a>
-                        <a asp-action="Edit" asp-route-id="@item.ProdutoId">Edit</a> 
+                        <a asp-action="Delete" asp-route-id="(arroba)item.ProdutoId">Delete</a>
+                        <a asp-action="Edit" asp-route-id="(arroba)item.ProdutoId">Edit</a>
                     }
+                    -->
                 </td>
             </tr>
         }

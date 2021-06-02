@@ -59,6 +59,7 @@ namespace SecondHandWeb.Controllers
             return View(produto);
         }
 
+        // POST: MeusProdutosComprados/Cancel/5
         public async Task<IActionResult> Cancel(long id)
         {
             if (id == 0)
@@ -69,7 +70,7 @@ namespace SecondHandWeb.Controllers
             //Pegando o produto que está sendo cancelado:
             var produto = _businesFacade.ItemPorId((long)id);
 
-            //Alterando estado do produto para 'vendido':
+            //Alterando estado do produto para 'disponivel':
             produto.Estado = StatusProduto.Status.Disponivel;
 
             //Tirando id e username do comprador do produto:
