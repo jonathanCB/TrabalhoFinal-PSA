@@ -131,6 +131,12 @@ namespace BLL
             _ProdutoDAO.editProduto(prod);
         }
 
+        //realiza a venda de um produto
+        public Boolean VendaProduto(long id, String userName)
+        {
+            return _ProdutoDAO.VendaProduto(id, userName);
+        }
+
         public List<Produto> ItensDoComprador(String usu)
         {
             return _ProdutoDAO.ItensDoComprador(usu);

@@ -50,6 +50,28 @@ namespace PL.DAO
             _context.SaveChanges();
         }
 
+        //realiza a venda de um produto
+        public Boolean VendaProduto(long id, String userName)
+        {
+            var user = _context.Users.FirstOrDefault(x => x.UserName.Equals(userName));
+
+            var consulta1 = _context.Produtos
+                            .FirstOrDefault(m => m.ProdutoId == id);
+
+            if (consulta1 != null)
+            {
+                consulta1.NomeComprador = user.UserName;
+                consulta1.UsuarioIDComprador = user.Id;
+                consulta1.Estado = StatusProduto.Status.Vendido;
+                consulta1.DataVenda = DateTime.Now;
+                _context.Update(consulta1);
+                _context.SaveChanges();
+                return true;
+            }                
+            
+            return false;
+        }
+
         //relatorio de itens disponiveis para venda
         public List<Produto> ItensDisponiveis()
         {

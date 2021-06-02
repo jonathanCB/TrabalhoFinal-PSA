@@ -31,7 +31,7 @@
                 @Html.DisplayNameFor(model => model.DataVenda)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UsuarioIDComprador)
+                @Html.DisplayNameFor(model => model.NomeComprador)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Categoria)
@@ -62,15 +62,16 @@
                     @Html.DisplayFor(modelItem => item.DataVenda)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.UsuarioIDComprador)
+                    @Html.DisplayFor(modelItem => item.NomeComprador)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.CategoriaID)
                 </td>
                 <td>                     
-                    <a asp-action="Details" asp-route-id="@item.ProdutoId">Details</a>
+                        <a asp-action="Details" asp-route-id="@item.ProdutoId">Details</a>
                     @if (item.Estado != Entities.Models.StatusProduto.Status.Vendido)
                     {
+
                         <a asp-action="Delete" asp-route-id="@item.ProdutoId">Delete</a>
                         <a asp-action="Edit" asp-route-id="@item.ProdutoId">Edit</a> 
                     }

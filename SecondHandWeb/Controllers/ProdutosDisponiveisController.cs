@@ -54,13 +54,14 @@ namespace SecondHandWeb.Controllers
                 Categorias = new SelectList(categoriaQuery.Distinct().ToList()),
                 Produtos = produtos.ToList()
             };
-
+            var usuario = await _userManager.GetUserAsync(HttpContext.User);
+            ViewData["user"] = usuario.Id;
             return View(produtoCategoriaVM);
         }
 
         // GET: ProdutosDisponiveis/Details/
         [AllowAnonymous]
-        public IActionResult Details(long id)
+        public async Task<IActionResult> Details(long id)
         {
             if (id == 0)
             {
@@ -73,39 +74,30 @@ namespace SecondHandWeb.Controllers
                 return NotFound();
             }
 
+            var usuario = await _userManager.GetUserAsync(HttpContext.User);
+            ViewData["user"] = usuario.Id;
             return View(produto);
         }
 
         // GET: ProdutosDisponiveis/Compra/
         [Authorize]
-        public async Task<IActionResult> CompraAsync(long id)
+        public async Task<IActionResult> Compra(long? id)
         {
-            if (id == 0)
+            if (id == null)
             {
                 return NotFound();
             }
             //Pegando o usuário logado:
             var usuario = await _userManager.GetUserAsync(HttpContext.User);
 
-            //Pegando o produto que está sendo comprado:
-            var produto = _businesFacade.ItemPorId((long)id);
+            Boolean prod = _businesFacade.VendaProduto((long)id, usuario.UserName);
 
-            //Colocando o nome e o id do comprador no produto:
-            produto.NomeComprador = usuario.UserName;
-            produto.UsuarioIDComprador = usuario.Id;
-
-            //Alterando estado do produto para 'vendido':
-            produto.Estado = StatusProduto.Status.Vendido;
-
-            //Salvando produto:
-            _businesFacade.editProduto(produto);
-
-            if (produto == null)
+            if (prod == false)
             {
                 return NotFound();
             }
 
-            return View(produto);
+            return View(_businesFacade.ItemPorId((long)id));
         }
 
         private bool ProdutoExists(long id)

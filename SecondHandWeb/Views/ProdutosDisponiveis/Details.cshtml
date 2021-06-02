@@ -9,6 +9,10 @@
 <div>
     <h4>Produto</h4>
     <hr />
+    @if (Model.UsuarioIDVendedor != ViewBag.user)
+    {
+        <a asp-action="Compra" asp-route-id="@Model.ProdutoId">Comprar</a>
+    }
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Name)
@@ -44,16 +48,13 @@
             @Html.DisplayNameFor(model => model.Categoria)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Categoria.Name)
-        </dd>
-        <dd>
-
+            @Html.DisplayFor(model => model.CategoriaID)
         </dd>
 
     </dl>
 </div>
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Voltar</a>
 </div>
 
 
@@ -70,6 +71,5 @@
             </div>}
     </div>
 </div>
-<a asp-action="Compra" asp-route-id="@Model.ProdutoId">Comprar</a>
 
 

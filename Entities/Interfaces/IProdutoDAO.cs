@@ -20,6 +20,9 @@ namespace Entities.Interfaces
         //Salva um produto novo no banco
         public void CadastroNovoProduto(Produto prod);
 
+        //realiza a venda de um produto
+        public Boolean VendaProduto(long id, String userName);
+
         //Recebe um ID de produto e retorna o mesmo
         public Produto ItemPorId(long ProdutoID);
 

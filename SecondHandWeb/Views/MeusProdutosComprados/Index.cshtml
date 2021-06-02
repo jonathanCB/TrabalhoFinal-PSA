@@ -1,14 +1,11 @@
 ﻿@model IEnumerable<Entities.Models.Produto>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Compras Realizadas";
 }
 
-<h1>Meus Produtos</h1>
+<h1>Minhas Compras</h1>
 
-<p>
-    <a asp-action="Create">Vender novo Produto</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -19,19 +16,13 @@
                 @Html.DisplayNameFor(model => model.Descricao)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Estado)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Valor)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DataEntrada)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.DataVenda)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UsuarioIDComprador)
+                @Html.DisplayNameFor(model => model.NomeVendedor)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Categoria)
@@ -50,30 +41,19 @@
                     @Html.DisplayFor(modelItem => item.Descricao)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Estado)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.Valor)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DataEntrada)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.DataVenda)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.UsuarioIDComprador)
+                    @Html.DisplayFor(modelItem => item.NomeVendedor)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.CategoriaID)
                 </td>
                 <td>                     
                     <a asp-action="Details" asp-route-id="@item.ProdutoId">Details</a>
-                    @if (item.Estado != Entities.Models.StatusProduto.Status.Vendido)
-                    {
-                        <a asp-action="Delete" asp-route-id="@item.ProdutoId">Delete</a>
-                        <a asp-action="Edit" asp-route-id="@item.ProdutoId">Edit</a> 
-                    }
                 </td>
             </tr>
         }
