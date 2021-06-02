@@ -47,6 +47,30 @@
             @Html.DisplayFor(model => model.DataVenda)
         </dd>
         <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UsuarioIDVendedor)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UsuarioIDVendedor)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NomeVendedor)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NomeVendedor)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UsuarioIDComprador)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UsuarioIDComprador)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NomeComprador)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NomeComprador)
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Categoria)
         </dt>
         <dd class="col-sm-10">
@@ -59,7 +83,7 @@
     {
         <a asp-action="Edit" asp-route-id="@Model.ProdutoId">Edit</a>
     }
-<a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Back to List</a>
 </div>
 
 
@@ -79,3 +103,5 @@
 
     </div>
 </div>
+
+<a asp-action="Cancel" asp-route-id="@Model.ProdutoId">Cancelar pedido</a>
