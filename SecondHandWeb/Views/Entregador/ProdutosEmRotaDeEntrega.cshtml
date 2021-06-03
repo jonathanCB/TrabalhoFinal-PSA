@@ -17,10 +17,7 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Estado)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Valor)
-            </th>            
+            </th>           
             <th>
                 @Html.DisplayNameFor(model => model.NomeVendedor)
             </th>
@@ -28,13 +25,7 @@
                 @Html.DisplayNameFor(model => model.NomeComprador)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UsuarioIDEntregador)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UsuarioIDEntregador)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Categoria)
+                @Html.DisplayNameFor(model => model.NomeEntregador)
             </th>
             <th></th>
         </tr>
@@ -52,32 +43,16 @@
                 @Html.DisplayFor(modelItem => item.Estado)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Valor)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataEntrada)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataVenda)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UsuarioIDVendedor)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.NomeVendedor)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UsuarioIDComprador)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.NomeComprador)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Categoria.Name)
+                @Html.DisplayFor(modelItem => item.NomeEntregador)
             </td>
             <td>
-                <a asp-action="Details" asp-route-id="@item.ProdutoId">Details</a><br>
-                <a asp-action="Details" asp-route-id="@item.ProdutoId">Confirmar entrega</a>
+                <a asp-action="ProdutoEntregue" asp-route-id="@item.ProdutoId">Confirmar entrega</a>
             </td>
         </tr>
 }

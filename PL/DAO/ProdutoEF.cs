@@ -250,7 +250,21 @@ namespace PL.DAO
 
             return consulta4.ToList();
         }
+        public Boolean ProdutoEntregue(long id)
+        {
+            var consulta1 = _context.Produtos
+                            .FirstOrDefault(m => m.ProdutoId == id);
 
+            if (consulta1 != null)
+            {
+                consulta1.Estado = StatusProduto.Status.Entregue;
+                _context.Update(consulta1);
+                _context.SaveChanges();
+                return true;
+            }
+
+            return false;
+        }
         public Boolean EntregaProduto(long id, String entregador)
         {
             var consulta1 = _context.Produtos

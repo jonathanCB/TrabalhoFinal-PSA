@@ -17,10 +17,7 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Estado)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Valor)
-            </th>            
+            </th>        
             <th>
                 @Html.DisplayNameFor(model => model.NomeVendedor)
             </th>
@@ -31,7 +28,7 @@
                 @Html.DisplayNameFor(model => model.UsuarioIDEntregador)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UsuarioIDEntregador)
+                @Html.DisplayNameFor(model => model.NomeEntregador)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Categoria)
@@ -52,26 +49,17 @@
                 @Html.DisplayFor(modelItem => item.Estado)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Valor)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataEntrada)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataVenda)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UsuarioIDVendedor)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.NomeVendedor)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UsuarioIDComprador)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.NomeComprador)
             </td>
+            <th>
+                @Html.DisplayNameFor(model => model.UsuarioIDEntregador)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NomeEntregador)
+            </th>
             <td>
                 @Html.DisplayFor(modelItem => item.Categoria.Name)
             </td>

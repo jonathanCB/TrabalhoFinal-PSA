@@ -69,5 +69,6 @@ namespace Entities.Interfaces
         public List<Produto> ItensParaEntrega();
         public List<Produto> ItensEmRotaDeEntrega();
         public Boolean EntregaProduto(long id, String entregador);
+        public Boolean ProdutoEntregue(long id);
     }
 }

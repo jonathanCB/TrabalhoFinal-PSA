@@ -160,7 +160,11 @@ namespace BLL
         {
             return _ProdutoDAO.EntregaProduto(id, entregador);
         }
-        
+        public Boolean ProdutoEntregue(long id)
+        {
+            return _ProdutoDAO.ProdutoEntregue(id);
+        }
+
 
         #endregion
 

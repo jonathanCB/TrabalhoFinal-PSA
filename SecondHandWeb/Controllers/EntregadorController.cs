@@ -54,7 +54,24 @@ namespace SecondHandWeb.Controllers
         public async Task<IActionResult> ProdutosEmRotaDeEntrega()
         {
             return View(_businesFacade.ItensEmRotaDeEntrega());
-        }       
+        }
+
+        public async Task<IActionResult> ProdutoEntregue(long id)
+        {
+            if (id == 0)
+            {
+                return NotFound();
+            }
+
+            Boolean prod = _businesFacade.ProdutoEntregue((long)id);
+
+            if (prod == false)
+            {
+                return NotFound();
+            }
+
+            return View(_businesFacade.ItemPorId((long)id));
+        }
 
         public async Task<IActionResult> Entrega(long? id)
         {
