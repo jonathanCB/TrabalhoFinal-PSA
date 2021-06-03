@@ -14,11 +14,9 @@ namespace Entities.Models
         [Display(Name = "Nome")]
         public string Nome { get; set; }
 
-
         [MaxLength(9)]
         [Display(Name = "CEP")]
         public string CEP { get; set; }
-
 
         [MaxLength(255)]
         [Display(Name = "Endereço")]
