@@ -148,6 +148,20 @@ namespace BLL
             return _ProdutoDAO.ItensDoComprador(usu);
         }
 
+        public List<Produto> ItensParaEntrega()
+        {
+            return _ProdutoDAO.ItensParaEntrega();
+        }
+        public List<Produto> ItensEmRotaDeEntrega()
+        {
+            return _ProdutoDAO.ItensEmRotaDeEntrega();
+        }
+        public Boolean EntregaProduto(long id, String entregador)
+        {
+            return _ProdutoDAO.EntregaProduto(id, entregador);
+        }
+        
+
         #endregion
 
         #region consultas em imagem

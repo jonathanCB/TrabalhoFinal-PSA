@@ -19,14 +19,12 @@ namespace SecondHandWeb.Controllers
     public class ADMController : Controller
     {
         private readonly BusinesFacade _businesFacade;
-        private readonly SecondHandContext _context;
         public readonly UserManager<ApplicationUser> _userManager;
         private IWebHostEnvironment _environment;
 
         public ADMController(BusinesFacade businesFacade, SecondHandContext context,
                                    UserManager<ApplicationUser> userManager, IWebHostEnvironment environment)
         {
-            _context = context;
             _businesFacade = businesFacade;
             _environment = environment;
             _userManager = userManager;
@@ -63,12 +61,6 @@ namespace SecondHandWeb.Controllers
             };
 
             return View(TotalVendaPorPeriodo);
-        }
-
-
-        private bool ProdutoExists(long id)
-        {
-            return _context.Produtos.Any(e => e.ProdutoId == id);
         }
     }
 }

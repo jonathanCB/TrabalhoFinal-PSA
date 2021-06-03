@@ -66,5 +66,8 @@ namespace Entities.Interfaces
         public void editProduto(Produto prod);
 
         public List<Produto> ItensDoComprador(String usu);
+        public List<Produto> ItensParaEntrega();
+        public List<Produto> ItensEmRotaDeEntrega();
+        public Boolean EntregaProduto(long id, String entregador);
     }
 }

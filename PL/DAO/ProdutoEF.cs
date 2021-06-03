@@ -231,5 +231,41 @@ namespace PL.DAO
             return consulta4.ToList();
         }
 
+        public List<Produto> ItensParaEntrega()
+        {
+            var consulta4 = _context.Produtos
+                            .Where(p => p.Estado == StatusProduto.Status.Vendido)
+                            .Where(p => p.NomeComprador != null)
+                            .Select(p => p).OrderByDescending(e => e.Name);
+
+            return consulta4.ToList();
+        }
+
+        public List<Produto> ItensEmRotaDeEntrega()
+        {
+            var consulta4 = _context.Produtos
+                            .Where(p => p.Estado == StatusProduto.Status.EmRotaDeEntrega)
+                            .Where(p => p.NomeComprador != null)
+                            .Select(p => p).OrderByDescending(e => e.Name);
+
+            return consulta4.ToList();
+        }
+
+        public Boolean EntregaProduto(long id, String entregador)
+        {
+            var consulta1 = _context.Produtos
+                           .FirstOrDefault(m => m.ProdutoId == id);
+
+            if (consulta1 != null)
+            {
+                consulta1.Estado = StatusProduto.Status.EmRotaDeEntrega;
+                consulta1.NomeEntregador = entregador;
+                _context.Update(consulta1);
+                _context.SaveChanges();
+                return true;
+            }
+
+            return false;
+        }
     }
 }
