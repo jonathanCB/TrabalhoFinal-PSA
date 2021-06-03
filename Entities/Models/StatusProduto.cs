@@ -5,7 +5,7 @@ namespace Entities.Models
     {
         public enum Status
         {
-            Disponivel = 0, Vendido = 1
+            Disponivel = 0, Vendido = 1, AguardandoAprovacao = 2, EmRotaDeEntrega = 3, Entregue = 4
         }
     }
 }

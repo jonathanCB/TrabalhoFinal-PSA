@@ -54,6 +54,12 @@ namespace Entities.Models
         [Display(Name = "Nome do Comprador")]
         public String NomeComprador { get; set; }
 
+        [Display(Name = "ID do Usuario Entregador")]
+        public String UsuarioIDEntregador { get; set; }
+
+        [Display(Name = "Nome do Comprador")]
+        public String NomeEntregador { get; set; }
+
         [Required]
         [Display(Name = "Categoria")]
         public int CategoriaID { get; set; }

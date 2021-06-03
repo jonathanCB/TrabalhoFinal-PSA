@@ -175,11 +175,17 @@ namespace PL.Migrations
                     b.Property<string>("NomeComprador")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("NomeEntregador")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("NomeVendedor")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UsuarioIDComprador")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UsuarioIDEntregador")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UsuarioIDVendedor")
@@ -276,10 +282,12 @@ namespace PL.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -316,10 +324,12 @@ namespace PL.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
