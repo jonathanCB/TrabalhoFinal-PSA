@@ -10,11 +10,20 @@
     {
         @if (@User.Identity.Name!.ToUpper().Contains("ADM"))
         {
-             <li class="nav-item">
+            <li class="nav-item">
                 <a class="nav-link text-dark" asp-area="" asp-controller="ADM" asp-action="Index">Área Administrativa</a>
-             </li>
+            </li>
 
         }
+
+        @if (@User.Identity.Name!.ToUpper().Contains("ENTREGADOR"))
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Entregador" asp-action="Index">Área Do Entregador</a>
+            </li>
+
+        }
+
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Olá @User.Identity.Name!</a>
         </li>

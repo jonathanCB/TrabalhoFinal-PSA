@@ -68,13 +68,7 @@
                     @Html.DisplayFor(modelItem => item.CategoriaID)
                 </td>
                 <td>                     
-                        <a asp-action="Details" asp-route-id="@item.ProdutoId">Details</a>
-                    @if (item.Estado != Entities.Models.StatusProduto.Status.Vendido)
-                    {
-
-                        <a asp-action="Delete" asp-route-id="@item.ProdutoId">Delete</a>
-                        <a asp-action="Edit" asp-route-id="@item.ProdutoId">Edit</a> 
-                    }
+                       <a asp-action="Details" asp-route-id="@item.ProdutoId">Details</a>
                 </td>
             </tr>
         }
