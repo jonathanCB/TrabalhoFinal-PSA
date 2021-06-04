@@ -37,6 +37,10 @@ namespace SecondHandWeb.Controllers
         {
             var usuario = await _userManager.GetUserAsync(HttpContext.User);
             String usu = _businesFacade.getUserID(usuario.UserName);
+            if (usuario != null)
+            {
+                ViewData["usuario"] = usuario;
+            }
             return View(_businesFacade.ItensPorStatusUsu(usu));
         }
 

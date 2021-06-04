@@ -80,7 +80,7 @@ namespace SecondHandWeb.Controllers
             var usuario = await _userManager.GetUserAsync(HttpContext.User);
             if (usuario != null)
             {
-                ViewData["user"] = usuario.Id;
+                ViewData["usuario"] = usuario;
             }
             return View(produto);
         }

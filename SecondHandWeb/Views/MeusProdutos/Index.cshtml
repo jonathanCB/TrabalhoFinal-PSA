@@ -7,7 +7,14 @@
 <h1>Meus Produtos</h1>
 
 <p>
-    <a asp-action="Create">Vender novo Produto</a>
+    @if (ViewBag.usuario.CEP == null || ViewBag.usuario.Endereco == null)
+    {
+        <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Cadastre um endereco e um cep para comprar</a>
+    }
+    else
+    {
+        <a asp-action="Create">Vender novo Produto</a>
+    }
 </p>
 <table class="table">
     <thead>

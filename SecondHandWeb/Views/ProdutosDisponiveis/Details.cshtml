@@ -9,9 +9,16 @@
 <div>
     <h4>Produto</h4>
     <hr />
-    @if (Model.UsuarioIDVendedor != ViewBag.user)
+    @if (Model.UsuarioIDVendedor != ViewBag.usuario.Id)
     {
-        <a asp-action="Compra" asp-route-id="@Model.ProdutoId">Comprar</a>
+        @if (ViewBag.usuario.CEP == null || ViewBag.usuario.Endereco == null)
+        {
+            <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Cadastre um endereco e um cep para comprar</a>
+        }
+        else
+        {
+            <a asp-action="Compra" asp-route-id="@Model.ProdutoId">Comprar</a>
+        }
     }
     <dl class="row">
         <dt class="col-sm-2">
