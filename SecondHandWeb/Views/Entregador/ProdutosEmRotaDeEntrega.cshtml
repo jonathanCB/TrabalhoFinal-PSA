@@ -1,31 +1,22 @@
 ﻿@model IEnumerable<Entities.Models.Produto>
 
 @{
-    ViewData["Title"] = "ProdutosEmRotaDeEntrega";
+    ViewData["Title"] = "Produtos Em Rota De Entrega";
 }
 
-<h1>Confirme a entrega dos seguintes produtos:</h1>
+<h1>Produtos aguardando confirmação de entrega</h1>
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @Html.DisplayNameFor(model => model.ProdutoId)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Descricao)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Estado)
-            </th>           
             <th>
                 @Html.DisplayNameFor(model => model.NomeVendedor)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.NomeComprador)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NomeEntregador)
             </th>
             <th></th>
         </tr>
@@ -34,22 +25,13 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descricao)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Estado)
+                @Html.DisplayFor(modelItem => item.ProdutoId)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.NomeVendedor)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.NomeComprador)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NomeEntregador)
             </td>
             <td>
                 <a asp-action="ProdutoEntregue" asp-route-id="@item.ProdutoId">Confirmar entrega</a>

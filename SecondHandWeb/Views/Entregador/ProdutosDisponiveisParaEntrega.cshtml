@@ -1,37 +1,22 @@
 ﻿@model IEnumerable<Entities.Models.Produto>
 
 @{
-    ViewData["Title"] = "ProdutosDisponiveisParaEntrega";
+    ViewData["Title"] = "Produtos Disponiveis Para Entrega";
 }
 
 <h1>Produtos disponíveis para entrega</h1>
 
 <table class="table">
     <thead>
-        <tr>
+        <tr>    
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @Html.DisplayNameFor(model => model.ProdutoId)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Descricao)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Estado)
-            </th>        
             <th>
                 @Html.DisplayNameFor(model => model.NomeVendedor)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.NomeComprador)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UsuarioIDEntregador)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NomeEntregador)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Categoria)
             </th>
             <th></th>
         </tr>
@@ -40,28 +25,13 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descricao)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Estado)
+                @Html.DisplayFor(modelItem => item.ProdutoId)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.NomeVendedor)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.NomeComprador)
-            </td>
-            <th>
-                @Html.DisplayNameFor(model => model.UsuarioIDEntregador)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NomeEntregador)
-            </th>
-            <td>
-                @Html.DisplayFor(modelItem => item.Categoria.Name)
             </td>
             <td>
                 <a asp-action="Details" asp-route-id="@item.ProdutoId">Details</a><br>

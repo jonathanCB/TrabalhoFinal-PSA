@@ -9,7 +9,7 @@ namespace Entities.Models
         public enum Status
         {
             [Display(Name = "Disponivel")] Disponivel = 0,
-            [Display(Name = "Vendido")] Vendido = 1,
+            [Display(Name = "Vendido, Aguardando Entregador")] Vendido = 1,
             [Display(Name = "Aguardando Aprovação")] Aguardando_Aprovacao = 2,
             [Display(Name = "Em Rota De Entrega")] Em_Rota_De_Entrega = 3,
             [Display(Name = "Entregue")] Entregue = 4,
