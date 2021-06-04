@@ -133,9 +133,21 @@ namespace BLL
         }
 
         //realiza o cancelamento da venda de um produto
-        public Boolean CancelarVendaProduto(long id)
+        public Boolean CompradorCancelarVendaProduto(long id)
         {
-            return _ProdutoDAO.CancelarVendaProduto(id);
+            return _ProdutoDAO.CompradorCancelarVendaProduto(id);
+        }
+
+        //Comprador aceitou realizar a venda do produto, recebe um id e muda o status do produto
+        public Boolean CompradoAceitouVendaProduto(long id)
+        {
+            return _ProdutoDAO.CompradoAceitouVendaProduto(id);
+        }
+
+        //Comprador negou realizar a venda do produto, recebe um id e muda o status do produto
+        public Boolean CompradoNegouVendaProduto(long id)
+        {
+            return _ProdutoDAO.CompradoNegouVendaProduto(id);
         }
 
         //recebe um id do comprador e retorna uma lista de todos os produtos

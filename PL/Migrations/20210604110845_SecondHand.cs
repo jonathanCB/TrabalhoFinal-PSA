@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PL.Migrations
 {
-    public partial class CreateDB : Migration
+    public partial class SecondHand : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

@@ -1,11 +1,20 @@
 ﻿
+
+using System.ComponentModel.DataAnnotations;
+
 namespace Entities.Models
 {
     public class StatusProduto
     {
         public enum Status
         {
-            Disponivel = 0, Vendido = 1, AguardandoAprovacao = 2, EmRotaDeEntrega = 3, Entregue = 4
+            [Display(Name = "Disponivel")] Disponivel = 0,
+            [Display(Name = "Vendido")] Vendido = 1,
+            [Display(Name = "Aguardando Aprovação")] Aguardando_Aprovacao = 2,
+            [Display(Name = "Em Rota De Entrega")] Em_Rota_De_Entrega = 3,
+            [Display(Name = "Entregue")] Entregue = 4,
+            [Display(Name = "Bloqueado")] Bloqueado = 5
         }
     }
+    
 }

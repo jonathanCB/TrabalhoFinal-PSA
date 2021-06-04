@@ -58,11 +58,11 @@ namespace PL.DAO
             var consulta1 = _context.Produtos
                             .FirstOrDefault(m => m.ProdutoId == id);
 
-            if (consulta1 != null)
+            if (consulta1 != null && consulta1.Estado == StatusProduto.Status.Disponivel)
             {
                 consulta1.NomeComprador = user.UserName;
                 consulta1.UsuarioIDComprador = user.Id;
-                consulta1.Estado = StatusProduto.Status.Vendido;
+                consulta1.Estado = StatusProduto.Status.Aguardando_Aprovacao;
                 consulta1.DataVenda = DateTime.Now;
                 _context.Update(consulta1);
                 _context.SaveChanges();
@@ -72,18 +72,52 @@ namespace PL.DAO
             return false;
         }
 
-        //realiza o cancelamento da venda de um produto
-        public Boolean CancelarVendaProduto(long id)
+        //Comprador realiza o cancelamento da venda de um produto
+        public Boolean CompradorCancelarVendaProduto(long id)
         {
             var consulta1 = _context.Produtos
                             .FirstOrDefault(m => m.ProdutoId == id);
 
-            if (consulta1 != null)
+            if (consulta1 != null && consulta1.Estado == StatusProduto.Status.Aguardando_Aprovacao)
             {
                 consulta1.NomeComprador = null;
                 consulta1.UsuarioIDComprador = null;
                 consulta1.Estado = StatusProduto.Status.Disponivel;
                 consulta1.DataVenda = null;
+                _context.Update(consulta1);
+                _context.SaveChanges();
+                return true;
+            }
+
+            return false;
+        }
+
+        //Comprador aceitou realizar a venda do produto, recebe um id e muda o status do produto
+        public Boolean CompradoAceitouVendaProduto(long id)
+        {
+            var consulta1 = _context.Produtos
+                            .FirstOrDefault(m => m.ProdutoId == id);
+
+            if (consulta1 != null && consulta1.Estado == StatusProduto.Status.Aguardando_Aprovacao)
+            {
+                consulta1.Estado = StatusProduto.Status.Vendido;
+                _context.Update(consulta1);
+                _context.SaveChanges();
+                return true;
+            }
+
+            return false;
+        }
+
+        //Comprador negou realizar a venda do produto, recebe um id e muda o status do produto
+        public Boolean CompradoNegouVendaProduto(long id)
+        {
+            var consulta1 = _context.Produtos
+                            .FirstOrDefault(m => m.ProdutoId == id);
+
+            if (consulta1 != null && consulta1.Estado == StatusProduto.Status.Aguardando_Aprovacao)
+            {
+                consulta1.Estado = StatusProduto.Status.Bloqueado;
                 _context.Update(consulta1);
                 _context.SaveChanges();
                 return true;
@@ -247,7 +281,7 @@ namespace PL.DAO
         public List<Produto> ItensEmRotaDeEntrega()
         {
             var consulta4 = _context.Produtos
-                            .Where(p => p.Estado == StatusProduto.Status.EmRotaDeEntrega)
+                            .Where(p => p.Estado == StatusProduto.Status.Em_Rota_De_Entrega)
                             .Where(p => p.NomeComprador != null)
                             .Select(p => p).OrderByDescending(e => e.Name);
 
@@ -280,7 +314,7 @@ namespace PL.DAO
 
             if (consulta1 != null)
             {
-                consulta1.Estado = StatusProduto.Status.EmRotaDeEntrega;
+                consulta1.Estado = StatusProduto.Status.Em_Rota_De_Entrega;
                 consulta1.NomeEntregador = entregador;
                 _context.Update(consulta1);
                 _context.SaveChanges();

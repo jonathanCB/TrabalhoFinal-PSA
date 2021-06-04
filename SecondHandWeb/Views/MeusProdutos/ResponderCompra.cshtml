@@ -1,18 +1,20 @@
 ﻿@model Entities.Models.Produto
 
-@{
-    ViewData["Title"] = "Detalhes";
-}
-
-<h1>Detalhes</h1>
-
 <div>
     <h4>Produto</h4>
     <hr />
-    @if (Model.Estado == Entities.Models.StatusProduto.Status.Aguardando_Aprovacao)
-    {
-        <a asp-action="Details" asp-route-id="@Model.ProdutoId">Cancelar pedido</a>
-    }
+
+    <div>
+        @if (Model.Estado == Entities.Models.StatusProduto.Status.Aguardando_Aprovacao)
+        {
+        <div>
+            <a asp-action="AceitarCompra" asp-route-id="@Model.ProdutoId">Aceitar a Compra</a>
+        </div>
+        <div>
+            <a asp-action="NegarCompra" asp-route-id="@Model.ProdutoId">Negar a Compra</a>
+        </div>
+        }
+    </div>
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Name)
@@ -45,12 +47,6 @@
             @Html.DisplayFor(model => model.DataEntrada)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.NomeVendedor)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.NomeVendedor)
-        </dd>
-        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.DataVenda)
         </dt>
         <dd class="col-sm-10">
@@ -70,10 +66,10 @@
         </dd>
     </dl>
 </div>
-<div>
-<a asp-action="Index">Voltar para Compras Realizadas</a>
-</div>
 
+<div>    
+    <a asp-action="Index">Voltar</a>
+</div>
 
 <div class="row">
     <h3>Imagens</h3>
@@ -82,12 +78,11 @@
 
         @foreach (Entities.Models.Imagem im in Model.Imagens)
         {
-
             <div class="form-group">
                 <img width="300"
                      src=@Url.Action("GetImage", "MeusProdutos", new { id=im.ImagemId})
                      alt=@im.ImageMimeType>
-            </div>}
-
+            </div>
+        }
     </div>
 </div>

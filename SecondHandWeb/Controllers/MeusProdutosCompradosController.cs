@@ -41,9 +41,9 @@ namespace SecondHandWeb.Controllers
 
         [Authorize]
         // GET: MeusProdutosComprados/Details/5
-        public IActionResult Details(long id)
+        public IActionResult Details(long? id)
         {
-            if (id == 0)
+            if (id == null)
             {
                 return NotFound();
             }
@@ -58,14 +58,14 @@ namespace SecondHandWeb.Controllers
         }
 
         // POST: MeusProdutosComprados/Cancel/5
-        public async Task<IActionResult> Cancel(long id)
+        public async Task<IActionResult> Cancel(long? id)
         {
-            if (id == 0)
+            if (id == null)
             {
                 return NotFound();
             }           
 
-            Boolean prod = _businesFacade.CancelarVendaProduto((long)id);
+            Boolean prod = _businesFacade.CompradorCancelarVendaProduto((long)id);
 
             if (prod == false)
             {

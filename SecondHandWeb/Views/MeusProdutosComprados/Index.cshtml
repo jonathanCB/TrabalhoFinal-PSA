@@ -25,6 +25,9 @@
                 @Html.DisplayNameFor(model => model.NomeVendedor)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Estado)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Categoria)
             </th>
             <th></th>
@@ -33,30 +36,36 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Descricao)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Valor)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DataVenda)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NomeVendedor)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CategoriaID)
-                </td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.ProdutoId">Details</a>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descricao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Valor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataVenda)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NomeVendedor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoriaID)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.ProdutoId">Details</a>
+                @if (item.Estado == Entities.Models.StatusProduto.Status.Aguardando_Aprovacao)
+                {
                     <a asp-action="Details" asp-route-id="@item.ProdutoId">Cancelar pedido</a>
-                </td>
-            </tr>
+                }
+            </td>
+        </tr>
         }
     </tbody>
 </table>

@@ -10,8 +10,8 @@ using PL.Context;
 namespace PL.Migrations
 {
     [DbContext(typeof(SecondHandContext))]
-    [Migration("20210603175830_CreateDB")]
-    partial class CreateDB
+    [Migration("20210604110845_SecondHand")]
+    partial class SecondHand
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
