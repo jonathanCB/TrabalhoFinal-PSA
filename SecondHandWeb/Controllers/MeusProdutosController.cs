@@ -18,17 +18,16 @@ namespace SecondHandWeb.Controllers
     public class MeusProdutosController : Controller
     {
         private readonly BusinesFacade _businesFacade;
-        private readonly SecondHandContext _ct;
         public readonly UserManager<ApplicationUser> _userManager;
         private IWebHostEnvironment _environment;
 
-        public MeusProdutosController(BusinesFacade businesFacade, SecondHandContext ff,
-                                   UserManager<ApplicationUser> userManager, IWebHostEnvironment environment)
+        public MeusProdutosController(BusinesFacade businesFacade,
+                                   UserManager<ApplicationUser> userManager, 
+                                   IWebHostEnvironment environment)
         {           
             _businesFacade = businesFacade;
             _environment = environment;
             _userManager = userManager;
-            _ct = ff;
         }
 
         [Authorize]

@@ -22,8 +22,9 @@ namespace SecondHandWeb.Controllers
         public readonly UserManager<ApplicationUser> _userManager;
         private IWebHostEnvironment _environment;
 
-        public ADMController(BusinesFacade businesFacade, SecondHandContext context,
-                                   UserManager<ApplicationUser> userManager, IWebHostEnvironment environment)
+        public ADMController(BusinesFacade businesFacade,
+                             UserManager<ApplicationUser> userManager, 
+                             IWebHostEnvironment environment)
         {
             _businesFacade = businesFacade;
             _environment = environment;

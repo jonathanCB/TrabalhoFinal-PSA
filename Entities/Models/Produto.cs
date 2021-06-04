@@ -47,17 +47,29 @@ namespace Entities.Models
         [Required]
         [Display(Name = "Email do Vendedor")]
         public String NomeVendedor { get; set; }
+                
+        [Display(Name = "Endereço do Vendedor")]
+        public String EnderecoRemetente { get; set; }
+
+        [Display(Name = "Resposta da pergunta")]
+        public virtual ICollection<String> Respostas { get; set; }
 
         [Display(Name = "ID do Usuario Comprador")]
         public String UsuarioIDComprador { get; set; }
                 
-        [Display(Name = "Nome do Comprador")]
+        [Display(Name = "Email do Comprador")]
         public String NomeComprador { get; set; }
+
+        [Display(Name = "Endereço do Comprador")]
+        public String EnderecoComprador { get; set; }
+
+        [Display(Name = "Pergunta")]
+        public virtual ICollection<String> Pergunta { get; set; }
 
         [Display(Name = "ID do Usuario Entregador")]
         public String UsuarioIDEntregador { get; set; }
 
-        [Display(Name = "Nome do Comprador")]
+        [Display(Name = "Email do Entregador")]
         public String NomeEntregador { get; set; }
 
         [Required]
