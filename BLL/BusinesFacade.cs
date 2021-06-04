@@ -26,12 +26,7 @@ namespace BLL
             _ImagemDAO = Idao;
             _ApplicationUserDAO = Adao;
             _CategoriaDAO = Cdao;
-        }
-        
-        /*public List<VendProdStatusVenda> RelProdStatus(int id)
-        {
-            return null;
-        }*/
+        }        
 
         #region consultas em produtos
 
@@ -143,23 +138,33 @@ namespace BLL
             return _ProdutoDAO.CancelarVendaProduto(id);
         }
 
+        //recebe um id do comprador e retorna uma lista de todos os produtos
+        //comprados por ele ordenados pelo status
         public List<Produto> ItensDoComprador(String usu)
         {
             return _ProdutoDAO.ItensDoComprador(usu);
-        }
+        }        
 
+        //retorna uma lista de produtos prontos para serem entregados
         public List<Produto> ItensParaEntrega()
         {
             return _ProdutoDAO.ItensParaEntrega();
         }
+
+        //retorna uma lista de produtos em rota de entrega
         public List<Produto> ItensEmRotaDeEntrega()
         {
             return _ProdutoDAO.ItensEmRotaDeEntrega();
         }
+
+        //recebe o id de um produto e o email de um entregador e coloca o produto
+        //para rota de entregada
         public Boolean EntregaProduto(long id, String entregador)
         {
             return _ProdutoDAO.EntregaProduto(id, entregador);
         }
+
+        //recebe o id de um produto e confirma sua entrega
         public Boolean ProdutoEntregue(long id)
         {
             return _ProdutoDAO.ProdutoEntregue(id);

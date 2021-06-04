@@ -221,7 +221,8 @@ namespace PL.DAO
             return consulta5_1;
         }
 
-        //recebe um id do comprador e retorna uma lista de todos os produtos ordenados pelo status
+        //recebe um id do comprador e retorna uma lista de todos os produtos
+        //comprados por ele ordenados pelo status
         public List<Produto> ItensDoComprador(String usu)
         {
             var consulta4 = _context.Produtos
@@ -231,6 +232,7 @@ namespace PL.DAO
             return consulta4.ToList();
         }
 
+        //retorna uma lista de produtos prontos para serem entregados
         public List<Produto> ItensParaEntrega()
         {
             var consulta4 = _context.Produtos
@@ -241,6 +243,7 @@ namespace PL.DAO
             return consulta4.ToList();
         }
 
+        //retorna uma lista de produtos em rota de entrega
         public List<Produto> ItensEmRotaDeEntrega()
         {
             var consulta4 = _context.Produtos
@@ -250,6 +253,8 @@ namespace PL.DAO
 
             return consulta4.ToList();
         }
+
+        //recebe o id de um produto e confirma sua entrega
         public Boolean ProdutoEntregue(long id)
         {
             var consulta1 = _context.Produtos
@@ -265,6 +270,9 @@ namespace PL.DAO
 
             return false;
         }
+
+        //recebe o id de um produto e o email de um entregador e coloca o produto
+        //para rota de entregada
         public Boolean EntregaProduto(long id, String entregador)
         {
             var consulta1 = _context.Produtos
