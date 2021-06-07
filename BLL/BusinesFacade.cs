@@ -16,16 +16,19 @@ namespace BLL
         private readonly IImagemDAO _ImagemDAO;
         private readonly IApplicationUserDAO _ApplicationUserDAO;
         private readonly ICategoriaDAO _CategoriaDAO;
+        private readonly IPerguntaDAO _PerguntaDAO;
 
         //construtor busines facade
 
         public BusinesFacade(IProdutoDAO Pdao, IImagemDAO Idao, 
-                                IApplicationUserDAO Adao, ICategoriaDAO Cdao)
+                             IApplicationUserDAO Adao, ICategoriaDAO Cdao,
+                             IPerguntaDAO Perdao)
         {
             _ProdutoDAO = Pdao;
             _ImagemDAO = Idao;
             _ApplicationUserDAO = Adao;
             _CategoriaDAO = Cdao;
+            _PerguntaDAO = Perdao;
         }        
 
         #region consultas em produtos
@@ -224,6 +227,28 @@ namespace BLL
         public IEnumerable<Categoria> categoriasIEnumerable()
         {
             return _CategoriaDAO.categoriasIEnumerable();
+        }
+
+        #endregion
+
+        #region
+
+        //recebe uma pergunta e salva
+        public void SalvaPergunta(long ProdId, String Per)
+        {
+            _PerguntaDAO.SalvaPergunta(ProdId, Per);
+        }
+
+        //recebe uma resposta para uma pergunta e salva
+        public void SalvaResposta(long PerId, String Resp)
+        {
+            _PerguntaDAO.SalvaResposta(PerId, Resp);
+        }
+
+        //recebe um id de uma pergunta e retorna o resultado
+        public Pergunta GetPergunta(long PerId)
+        {
+            return _PerguntaDAO.GetPergunta(PerId);
         }
 
         #endregion

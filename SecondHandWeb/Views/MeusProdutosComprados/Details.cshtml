@@ -11,7 +11,7 @@
     <hr />
     @if (Model.Estado == Entities.Models.Enums.StatusProduto.Aguardando_Aprovacao)
     {
-        <a asp-action="Details" asp-route-id="@Model.ProdutoId">Cancelar pedido</a>
+        <a asp-action="Cancel" asp-route-id="@Model.ProdutoId">Cancelar pedido</a>
     }
     <dl class="row">
         <dt class="col-sm-2">

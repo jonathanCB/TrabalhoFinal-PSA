@@ -9,17 +9,25 @@
 <div>
     <h4>Produto</h4>
     <hr />
-    @if (Model.UsuarioIDVendedor != ViewBag.usuario.Id)
+    @if (ViewBag.usuario == null)
     {
-        @if (ViewBag.usuario.CEP == null || ViewBag.usuario.Endereco == null)
+        <a asp-area="Identity" asp-page="/Account/Register" title="Manage">Se registre para comprar</a>
+    }
+    else
+    {
+        @if (Model.UsuarioIDVendedor != ViewBag.usuario.Id)
         {
-            <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Cadastre um endereco e um cep para comprar</a>
-        }
-        else
-        {
-            <a asp-action="Compra" asp-route-id="@Model.ProdutoId">Comprar</a>
+            @if (ViewBag.usuario.CEP == null || ViewBag.usuario.Endereco == null)
+            {
+                <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Cadastre um endereco e um cep para comprar</a>
+            }
+            else
+            {
+                <a asp-action="Compra" asp-route-id="@Model.ProdutoId">Comprar</a>
+            }
         }
     }
+
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Name)
@@ -64,6 +72,55 @@
     <a asp-action="Index">Voltar</a>
 </div>
 
+<h3>Fazer uma pergunta</h3>
+@if (ViewBag.usuario == null)
+{
+    <a asp-area="Identity" asp-page="/Account/Register" title="Manage">Se registre para fazer uma pergunta</a>
+}
+else
+{
+    @if (Model.UsuarioIDVendedor != ViewBag.usuario.Id)
+    {
+        <form asp-action="SalvaPergunta">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="@Model.ProdutoId" />
+            <div class="form-group">
+                <label asp-for="Pergunta" class="control-label"></label>
+                <input asp-for="Pergunta" class="form-control" />
+                <span asp-validation-for="Pergunta" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Perguntar" class="btn btn-primary" />
+            </div>
+        </form>
+
+    }
+}
+
+@if (Model.Pergunta != null)
+{
+    <h5>Perguntas anteriores</h5>
+    <div class="row">
+        <div class="col-md-4">
+            @foreach (Entities.Models.Pergunta per in Model.Pergunta)
+            {
+
+                <div class="form-group">
+                    <img width="300"
+                         src=@Url.Action("GetPergunta", "ProdutosDisponiveis", new { id = per.PerguntaId }) ;>
+                </div>}
+
+
+
+        </div>
+    </div>
+
+}
+else
+{
+    <h5>Sem Perguntas Anteriores</h5>
+}
 
 <div class="row">
     <h3>Imagens</h3>

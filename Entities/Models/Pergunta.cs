@@ -8,20 +8,18 @@ using System.Threading.Tasks;
 
 namespace Entities.Models
 {
-    public class Perguntas
+    public class Pergunta
     {
         [Required]
-        public long PerguntasId { get; set; }
+        public long PerguntaId { get; set; }
 
         [Required]
-        public String Pergunta { get; set; }
+        public String Perguntas { get; set; }
         
-        public String Resposta { get; set; }
-
-        [Required]
+        public String Respostas { get; set; }
+                
         public StatusPergunta StatusPergunta { get;set;}
-
-        [Required]
+                
         public long ProdutoId { get; set; }
 
         public Produto Produto { get; set; }

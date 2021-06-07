@@ -67,16 +67,13 @@ namespace Entities.Models
         public String NomeEntregador { get; set; }
 
         [Required]
-        [Display(Name = "Categoria")]
+        [Display(Name = "Categoria ID")]
         public int CategoriaID { get; set; }
-
-        public virtual Categoria Categoria { get; set; }
                
-        [Display(Name = "Pergunta ID")]
-        public int PerguntasId { get; set; }
-
-        [Display(Name = "Pergunta")]
-        public virtual ICollection<Perguntas> Pergunta { get; set; }
+        [Display(Name = "Categoria")]
+        public virtual Categoria Categoria { get; set; }              
+        
+        public virtual ICollection<Pergunta> Pergunta { get; set; }
 
         public virtual ICollection<Imagem> Imagens { get; set; }
 

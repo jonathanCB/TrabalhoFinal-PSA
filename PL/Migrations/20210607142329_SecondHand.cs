@@ -191,7 +191,6 @@ namespace PL.Migrations
                     UsuarioIDEntregador = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NomeEntregador = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CategoriaID = table.Column<int>(type: "int", nullable: false),
-                    PerguntasId = table.Column<int>(type: "int", nullable: false),
                     ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
@@ -236,16 +235,16 @@ namespace PL.Migrations
                 name: "Perguntas",
                 columns: table => new
                 {
-                    PerguntasId = table.Column<long>(type: "bigint", nullable: false)
+                    PerguntaId = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Pergunta = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Resposta = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Perguntas = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Respostas = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     StatusPergunta = table.Column<int>(type: "int", nullable: false),
                     ProdutoId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Perguntas", x => x.PerguntasId);
+                    table.PrimaryKey("PK_Perguntas", x => x.PerguntaId);
                     table.ForeignKey(
                         name: "FK_Perguntas_Produtos_ProdutoId",
                         column: x => x.ProdutoId,

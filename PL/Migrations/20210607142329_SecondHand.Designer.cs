@@ -10,7 +10,7 @@ using PL.Context;
 namespace PL.Migrations
 {
     [DbContext(typeof(SecondHandContext))]
-    [Migration("20210607120223_SecondHand")]
+    [Migration("20210607142329_SecondHand")]
     partial class SecondHand
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -145,27 +145,27 @@ namespace PL.Migrations
                     b.ToTable("Imagem");
                 });
 
-            modelBuilder.Entity("Entities.Models.Perguntas", b =>
+            modelBuilder.Entity("Entities.Models.Pergunta", b =>
                 {
-                    b.Property<long>("PerguntasId")
+                    b.Property<long>("PerguntaId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Pergunta")
+                    b.Property<string>("Perguntas")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("ProdutoId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("Resposta")
+                    b.Property<string>("Respostas")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("StatusPergunta")
                         .HasColumnType("int");
 
-                    b.HasKey("PerguntasId");
+                    b.HasKey("PerguntaId");
 
                     b.HasIndex("ProdutoId");
 
@@ -219,9 +219,6 @@ namespace PL.Migrations
                     b.Property<string>("NomeVendedor")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PerguntasId")
-                        .HasColumnType("int");
 
                     b.Property<string>("UsuarioIDComprador")
                         .HasColumnType("nvarchar(max)");
@@ -391,7 +388,7 @@ namespace PL.Migrations
                     b.Navigation("Produto");
                 });
 
-            modelBuilder.Entity("Entities.Models.Perguntas", b =>
+            modelBuilder.Entity("Entities.Models.Pergunta", b =>
                 {
                     b.HasOne("Entities.Models.Produto", "Produto")
                         .WithMany("Pergunta")

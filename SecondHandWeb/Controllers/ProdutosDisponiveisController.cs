@@ -106,6 +106,28 @@ namespace SecondHandWeb.Controllers
             return View(_businesFacade.ItemPorId((long)id));
         }
 
+        [HttpPost]
+        public async Task<IActionResult> SalvaPergunta([Bind("Perguntas")] Pergunta per)
+        {
+
+            if (ModelState.IsValid)
+            {
+                _businesFacade.SalvaPergunta(per.ProdutoId, per.Perguntas);
+                return RedirectToAction(nameof(Index));
+            }
+           
+            return View(_businesFacade.GetPergunta(per.PerguntaId));
+
+        }
+
+        /*
+        public async Task<IActionResult> SalvaPergunta(long ProdutoId, String per)
+        {
+            _businesFacade.SalvaPergunta(ProdutoId, per);
+
+            return View("Details", _businesFacade.ItemPorId(ProdutoId));
+        */
+
         private bool ProdutoExists(long id)
         {
             return _businesFacade.existe(id);
@@ -133,6 +155,19 @@ namespace SecondHandWeb.Controllers
             else
             {
                 return NotFound();
+            }
+        }
+
+        public Pergunta GetPergunta(long id)
+        {
+            Pergunta per = _businesFacade.GetPergunta(id);
+            if (per != null)
+            {
+                return per;
+            }
+            else
+            {
+                return null;
             }
         }
 
