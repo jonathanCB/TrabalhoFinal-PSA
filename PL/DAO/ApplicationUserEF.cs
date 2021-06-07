@@ -25,5 +25,17 @@ namespace PL.DAO
             var user = _context.Users.FirstOrDefault(x => x.UserName.Equals(userName));
             return user.Id;
         }
+        public ApplicationUser PerfilVendedor(String nomeVendedor)
+        {
+            /*var perfilVendedor = _context.ApplicationUser
+                            .Where(a => a.UserName.Equals(nomeVendedor))
+                            .Select*/
+            var perfilVendedor = _context.ApplicationUser
+                            .Where(a => a.Nome.Equals(nomeVendedor))
+                            .Select(a => a)
+                            .FirstOrDefault();
+
+            return perfilVendedor;
+        }
     }
 }

@@ -10,5 +10,6 @@ namespace Entities.Interfaces
     public interface IApplicationUserDAO
     {
         public String getUserID(String userName);
+        public ApplicationUser PerfilVendedor(String nomeVendedor);
     }
 }
