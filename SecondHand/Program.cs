@@ -1,6 +1,7 @@
 ﻿using BLL;
 using Entities.Interfaces;
 using Entities.Models;
+using Entities.Models.Enums;
 using Entities.ViewModels;
 using Ninject;
 using PL.Context;
@@ -34,7 +35,7 @@ namespace ConsoleTests
                 Descricao = "produto para testar a criação no bando de dados",
                 CategoriaID = 1,
                 DataEntrada = new DateTime(2020, 04, 01),
-                Estado = StatusProduto.Status.Disponivel,
+                Estado = StatusProduto.Disponivel,
                 Valor = 200.0m,
                 UsuarioIDVendedor = "c0f2a95a-d441-423f-b369-746d098c18a9"
             };

@@ -17,7 +17,7 @@ namespace SecondHandWeb.Controllers
         private readonly BusinesFacade _businesFacade;
         public readonly UserManager<ApplicationUser> _userManager;
 
-        public EntregadorController(BusinesFacade businesFacade, SecondHandContext context,
+        public EntregadorController(BusinesFacade businesFacade,
                                    UserManager<ApplicationUser> userManager)
         {
             _businesFacade = businesFacade;

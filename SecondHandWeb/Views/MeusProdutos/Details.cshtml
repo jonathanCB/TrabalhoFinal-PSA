@@ -56,7 +56,7 @@
 </div>
 
 <div>
-    @if (Model.Estado == Entities.Models.StatusProduto.Status.Aguardando_Aprovacao)
+    @if (Model.Estado == Entities.Models.Enums.StatusProduto.Aguardando_Aprovacao)
     {
         <a asp-action="ResponderCompra" asp-route-id="@Model.ProdutoId">Responder Compra</a>
     }
@@ -82,7 +82,7 @@
     </div>
 </div>
 
-@if (Model.Estado == Entities.Models.StatusProduto.Status.Disponivel)
+@if (Model.Estado == Entities.Models.Enums.StatusProduto.Disponivel)
 {
     @using (Html.BeginForm("LoadFiles", "MeusProdutos",
                    FormMethod.Post,

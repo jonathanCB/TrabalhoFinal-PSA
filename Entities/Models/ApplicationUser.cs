@@ -26,6 +26,10 @@ namespace Entities.Models
         [Display(Name = "Endereço")]
         public string Endereco { get; set; }
 
+        [PersonalData]
+        [Display(Name = "Reputação")]
+        public int Reputacao { get; set; }
+
         public virtual ICollection<Produto> Produtos { get; set; }
     }
 }

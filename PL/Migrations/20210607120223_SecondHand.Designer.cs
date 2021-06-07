@@ -10,7 +10,7 @@ using PL.Context;
 namespace PL.Migrations
 {
     [DbContext(typeof(SecondHandContext))]
-    [Migration("20210604110845_SecondHand")]
+    [Migration("20210607120223_SecondHand")]
     partial class SecondHand
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -79,6 +79,9 @@ namespace PL.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<int>("Reputacao")
+                        .HasColumnType("int");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -142,6 +145,33 @@ namespace PL.Migrations
                     b.ToTable("Imagem");
                 });
 
+            modelBuilder.Entity("Entities.Models.Perguntas", b =>
+                {
+                    b.Property<long>("PerguntasId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Pergunta")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ProdutoId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Resposta")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StatusPergunta")
+                        .HasColumnType("int");
+
+                    b.HasKey("PerguntasId");
+
+                    b.HasIndex("ProdutoId");
+
+                    b.ToTable("Perguntas");
+                });
+
             modelBuilder.Entity("Entities.Models.Produto", b =>
                 {
                     b.Property<long>("ProdutoId")
@@ -166,6 +196,12 @@ namespace PL.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
+                    b.Property<string>("EnderecoComprador")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EnderecoRemetente")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Estado")
                         .HasColumnType("int");
 
@@ -183,6 +219,9 @@ namespace PL.Migrations
                     b.Property<string>("NomeVendedor")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PerguntasId")
+                        .HasColumnType("int");
 
                     b.Property<string>("UsuarioIDComprador")
                         .HasColumnType("nvarchar(max)");
@@ -352,6 +391,17 @@ namespace PL.Migrations
                     b.Navigation("Produto");
                 });
 
+            modelBuilder.Entity("Entities.Models.Perguntas", b =>
+                {
+                    b.HasOne("Entities.Models.Produto", "Produto")
+                        .WithMany("Pergunta")
+                        .HasForeignKey("ProdutoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Produto");
+                });
+
             modelBuilder.Entity("Entities.Models.Produto", b =>
                 {
                     b.HasOne("Entities.Models.ApplicationUser", null)
@@ -431,6 +481,8 @@ namespace PL.Migrations
             modelBuilder.Entity("Entities.Models.Produto", b =>
                 {
                     b.Navigation("Imagens");
+
+                    b.Navigation("Pergunta");
                 });
 #pragma warning restore 612, 618
         }

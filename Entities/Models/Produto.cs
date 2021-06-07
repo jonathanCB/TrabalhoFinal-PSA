@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Entities.Models.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static Entities.Models.StatusProduto;
 
 namespace Entities.Models
 {
@@ -26,7 +26,7 @@ namespace Entities.Models
         public string Descricao { get; set; }
 
         [Required]
-        public Status Estado { get; set; }
+        public StatusProduto Estado { get; set; }
 
         [Required]
         [Display(Name = "Valor do Produto")]
@@ -47,17 +47,23 @@ namespace Entities.Models
         [Required]
         [Display(Name = "Email do Vendedor")]
         public String NomeVendedor { get; set; }
+                
+        [Display(Name = "Endereço do Vendedor")]
+        public String EnderecoRemetente { get; set; }
 
         [Display(Name = "ID do Usuario Comprador")]
         public String UsuarioIDComprador { get; set; }
                 
-        [Display(Name = "Nome do Comprador")]
+        [Display(Name = "Email do Comprador")]
         public String NomeComprador { get; set; }
+
+        [Display(Name = "Endereço do Comprador")]
+        public String EnderecoComprador { get; set; }        
 
         [Display(Name = "ID do Usuario Entregador")]
         public String UsuarioIDEntregador { get; set; }
 
-        [Display(Name = "Nome do Comprador")]
+        [Display(Name = "Email do Entregador")]
         public String NomeEntregador { get; set; }
 
         [Required]
@@ -65,6 +71,13 @@ namespace Entities.Models
         public int CategoriaID { get; set; }
 
         public virtual Categoria Categoria { get; set; }
+               
+        [Display(Name = "Pergunta ID")]
+        public int PerguntasId { get; set; }
+
+        [Display(Name = "Pergunta")]
+        public virtual ICollection<Perguntas> Pergunta { get; set; }
+
         public virtual ICollection<Imagem> Imagens { get; set; }
 
     }
