@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities.Models
+namespace Entities.Interfaces
 {
-    class ItenVenda
+    public class IPergunta
     {
 
     }

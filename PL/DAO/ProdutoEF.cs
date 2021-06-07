@@ -1,5 +1,6 @@
 ﻿using Entities.Interfaces;
 using Entities.Models;
+using Entities.Models.Enums;
 using Entities.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using PL.Context;
@@ -37,7 +38,7 @@ namespace PL.DAO
         //recebe um produto novo e salva no bando de dados
         public void CadastroNovoProduto(Produto prod)
         {
-            prod.Estado = StatusProduto.Status.Disponivel;
+            prod.Estado = StatusProduto.Disponivel;
 
             _context.Produtos.Add(prod);
             _context.SaveChanges();
@@ -58,11 +59,11 @@ namespace PL.DAO
             var consulta1 = _context.Produtos
                             .FirstOrDefault(m => m.ProdutoId == id);
 
-            if (consulta1 != null && consulta1.Estado == StatusProduto.Status.Disponivel)
+            if (consulta1 != null && consulta1.Estado == StatusProduto.Disponivel)
             {
                 consulta1.NomeComprador = user.UserName;
                 consulta1.UsuarioIDComprador = user.Id;
-                consulta1.Estado = StatusProduto.Status.Aguardando_Aprovacao;
+                consulta1.Estado = StatusProduto.Aguardando_Aprovacao;
                 consulta1.DataVenda = DateTime.Now;
                 _context.Update(consulta1);
                 _context.SaveChanges();
@@ -78,11 +79,11 @@ namespace PL.DAO
             var consulta1 = _context.Produtos
                             .FirstOrDefault(m => m.ProdutoId == id);
 
-            if (consulta1 != null && consulta1.Estado == StatusProduto.Status.Aguardando_Aprovacao)
+            if (consulta1 != null && consulta1.Estado == StatusProduto.Aguardando_Aprovacao)
             {
                 consulta1.NomeComprador = null;
                 consulta1.UsuarioIDComprador = null;
-                consulta1.Estado = StatusProduto.Status.Disponivel;
+                consulta1.Estado = StatusProduto.Disponivel;
                 consulta1.DataVenda = null;
                 _context.Update(consulta1);
                 _context.SaveChanges();
@@ -98,9 +99,9 @@ namespace PL.DAO
             var consulta1 = _context.Produtos
                             .FirstOrDefault(m => m.ProdutoId == id);
 
-            if (consulta1 != null && consulta1.Estado == StatusProduto.Status.Aguardando_Aprovacao)
+            if (consulta1 != null && consulta1.Estado == StatusProduto.Aguardando_Aprovacao)
             {
-                consulta1.Estado = StatusProduto.Status.Vendido;
+                consulta1.Estado = StatusProduto.Vendido;
                 _context.Update(consulta1);
                 _context.SaveChanges();
                 return true;
@@ -115,9 +116,9 @@ namespace PL.DAO
             var consulta1 = _context.Produtos
                             .FirstOrDefault(m => m.ProdutoId == id);
 
-            if (consulta1 != null && consulta1.Estado == StatusProduto.Status.Aguardando_Aprovacao)
+            if (consulta1 != null && consulta1.Estado == StatusProduto.Aguardando_Aprovacao)
             {
-                consulta1.Estado = StatusProduto.Status.Bloqueado;
+                consulta1.Estado = StatusProduto.Bloqueado;
                 _context.Update(consulta1);
                 _context.SaveChanges();
                 return true;
@@ -130,7 +131,7 @@ namespace PL.DAO
         public List<Produto> ItensDisponiveis()
         {
             var consulta1 = _context.Produtos
-                            .Where(p => p.Estado == StatusProduto.Status.Disponivel)
+                            .Where(p => p.Estado == StatusProduto.Disponivel)
                             .Select(p => p);
 
             return consulta1.ToList();
@@ -157,7 +158,7 @@ namespace PL.DAO
         public IQueryable<Produto> IQuerDeProdutosDisponiveis()
         {
             IQueryable<Produto> prod = _context.Produtos
-                                        .Where(p => p.Estado == StatusProduto.Status.Disponivel)
+                                        .Where(p => p.Estado == StatusProduto.Disponivel)
                                         .Select(p => p);
             return prod;
         }
@@ -175,7 +176,7 @@ namespace PL.DAO
         public IQueryable<Produto> ItensPorCategoriaDisponiveis(String cat)
         {
             var consulta1 = _context.Produtos
-                            .Where(x => x.Estado == StatusProduto.Status.Disponivel)
+                            .Where(x => x.Estado == StatusProduto.Disponivel)
                             .Where(x => x.Categoria.Name == cat)
                             .Select(p => p);
 
@@ -207,7 +208,7 @@ namespace PL.DAO
         public IQueryable<Produto> ItensPalChavDisponiveis(string palChave)
         {
             var consulta2 = _context.Produtos
-                            .Where(p => p.Estado == StatusProduto.Status.Disponivel)
+                            .Where(p => p.Estado == StatusProduto.Disponivel)
                             .Where(p => p.Name.ToUpper().Contains(palChave.ToUpper()))
                             .Select(p => p);
 
@@ -218,7 +219,7 @@ namespace PL.DAO
         public List<Produto> ItensFaixaDeValores(decimal valIni, decimal valFin)
         {
             var consulta3 = _context.Produtos
-                            .Where(p => p.Estado == StatusProduto.Status.Disponivel)
+                            .Where(p => p.Estado == StatusProduto.Disponivel)
                             .Where(p => p.Valor >= valIni && p.Valor <= valFin)
                             .Select(p => p);
 
@@ -240,7 +241,7 @@ namespace PL.DAO
         public IQueryable<TotalVendaPorPeriodo> NroTotalVendaPeriodo(DateTime dtIni, DateTime dtFin)
         {
             var consulta5 = from p in _context.Produtos
-                            where p.Estado == StatusProduto.Status.Vendido
+                            where p.Estado == StatusProduto.Vendido
                             where p.DataVenda >= dtIni && p.DataVenda <= dtFin
                             select p.Valor;
 
@@ -270,7 +271,7 @@ namespace PL.DAO
         public List<Produto> ItensParaEntrega()
         {
             var consulta4 = _context.Produtos
-                            .Where(p => p.Estado == StatusProduto.Status.Vendido)
+                            .Where(p => p.Estado == StatusProduto.Vendido)
                             .Where(p => p.NomeComprador != null)
                             .Select(p => p).OrderByDescending(e => e.Name);
 
@@ -281,7 +282,7 @@ namespace PL.DAO
         public List<Produto> ItensEmRotaDeEntrega()
         {
             var consulta4 = _context.Produtos
-                            .Where(p => p.Estado == StatusProduto.Status.Em_Rota_De_Entrega)
+                            .Where(p => p.Estado == StatusProduto.Em_Rota_De_Entrega)
                             .Where(p => p.NomeComprador != null)
                             .Select(p => p).OrderByDescending(e => e.Name);
 
@@ -296,7 +297,7 @@ namespace PL.DAO
 
             if (consulta1 != null)
             {
-                consulta1.Estado = StatusProduto.Status.Entregue;
+                consulta1.Estado = StatusProduto.Entregue;
                 _context.Update(consulta1);
                 _context.SaveChanges();
                 return true;
@@ -314,7 +315,7 @@ namespace PL.DAO
 
             if (consulta1 != null)
             {
-                consulta1.Estado = StatusProduto.Status.Em_Rota_De_Entrega;
+                consulta1.Estado = StatusProduto.Em_Rota_De_Entrega;
                 consulta1.NomeEntregador = entregador;
                 _context.Update(consulta1);
                 _context.SaveChanges();

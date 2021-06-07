@@ -5,7 +5,7 @@
     <hr />
 
     <div>
-        @if (Model.Estado == Entities.Models.StatusProduto.Status.Aguardando_Aprovacao)
+        @if (Model.Estado == Entities.Models.Enums.StatusProduto.Aguardando_Aprovacao)
         {
         <div>
             <a asp-action="AceitarCompra" asp-route-id="@Model.ProdutoId">Aceitar a Compra</a>

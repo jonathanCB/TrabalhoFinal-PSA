@@ -76,7 +76,7 @@
                 </td>
                 <td>
                     <a asp-action="Details" asp-route-id="@item.ProdutoId">Details</a>
-                    @if (item.Estado == Entities.Models.StatusProduto.Status.Aguardando_Aprovacao)
+                    @if (item.Estado == Entities.Models.Enums.StatusProduto.Aguardando_Aprovacao)
                     {
                         <a asp-action="ResponderCompra" asp-route-id="@item.ProdutoId">Responder Compra</a>
                     }

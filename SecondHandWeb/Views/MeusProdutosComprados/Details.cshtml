@@ -9,7 +9,7 @@
 <div>
     <h4>Produto</h4>
     <hr />
-    @if (Model.Estado == Entities.Models.StatusProduto.Status.Aguardando_Aprovacao)
+    @if (Model.Estado == Entities.Models.Enums.StatusProduto.Aguardando_Aprovacao)
     {
         <a asp-action="Details" asp-route-id="@Model.ProdutoId">Cancelar pedido</a>
     }
