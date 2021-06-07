@@ -1,4 +1,5 @@
 ﻿using Entities.Models;
+using Entities.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,6 @@ namespace Entities.Interfaces
     public interface IApplicationUserDAO
     {
         public String getUserID(String userName);
-        public ApplicationUser PerfilVendedor(String nomeVendedor);
+        public ApplicationUser PerfilVendedor(long id);
     }
 }

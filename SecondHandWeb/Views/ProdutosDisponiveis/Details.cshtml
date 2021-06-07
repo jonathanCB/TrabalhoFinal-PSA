@@ -11,7 +11,7 @@
     <hr />
         <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Cadastre um endereco e um cep para comprar</a><br>
         <a asp-action="Compra" asp-route-id="@Model.ProdutoId">Comprar</a><br>
-        <a asp-action="PerfilVendedor" asp-route-id="@Model.NomeVendedor">Perfil do vendedor</a>
+        <a asp-action="PerfilVendedor" asp-route-id="@Model.ProdutoId">Perfil do vendedor</a>
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Name)

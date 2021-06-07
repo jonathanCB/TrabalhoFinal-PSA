@@ -298,6 +298,7 @@ namespace PL.DAO
             if (consulta1 != null)
             {
                 consulta1.Estado = StatusProduto.Entregue;
+                //reputacao
                 _context.Update(consulta1);
                 _context.SaveChanges();
                 return true;

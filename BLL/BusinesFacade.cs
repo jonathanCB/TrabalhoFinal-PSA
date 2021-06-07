@@ -209,9 +209,9 @@ namespace BLL
         {
             return _ApplicationUserDAO.getUserID(userName);
         }
-        public ApplicationUser PerfilVendedor(String nomeVendedor)
+        public ApplicationUser PerfilVendedor(long id)
         {
-            return _ApplicationUserDAO.PerfilVendedor(nomeVendedor);
+            return _ApplicationUserDAO.PerfilVendedor(id);
         }
         
 

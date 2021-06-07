@@ -1,5 +1,6 @@
 ﻿using Entities.Interfaces;
 using Entities.Models;
+using Entities.ViewModels;
 using PL.Context;
 using System;
 using System.Collections.Generic;
@@ -25,17 +26,18 @@ namespace PL.DAO
             var user = _context.Users.FirstOrDefault(x => x.UserName.Equals(userName));
             return user.Id;
         }
-        public ApplicationUser PerfilVendedor(String nomeVendedor)
+        public ApplicationUser PerfilVendedor(long id)
         {
-            /*var perfilVendedor = _context.ApplicationUser
-                            .Where(a => a.UserName.Equals(nomeVendedor))
-                            .Select*/
-            var perfilVendedor = _context.ApplicationUser
-                            .Where(a => a.Nome.Equals(nomeVendedor))
-                            .Select(a => a)
-                            .FirstOrDefault();
+            var nomeVendedor = _context.Produtos
+                .Where(p => p.ProdutoId == id)
+                .Select(p => p.NomeVendedor)
+                .FirstOrDefault();
+            
+            var vendedor = _context.ApplicationUser
+                .Where(u => u.UserName.Equals(nomeVendedor))
+                .FirstOrDefault();
 
-            return perfilVendedor;
+            return vendedor;
         }
     }
 }
