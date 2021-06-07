@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PL.Migrations
 {
-    public partial class SecondHand : Migration
+    public partial class CreateDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -191,7 +191,6 @@ namespace PL.Migrations
                     UsuarioIDEntregador = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NomeEntregador = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CategoriaID = table.Column<int>(type: "int", nullable: false),
-                    PerguntasId = table.Column<int>(type: "int", nullable: false),
                     ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
@@ -226,28 +225,6 @@ namespace PL.Migrations
                     table.PrimaryKey("PK_Imagem", x => x.ImagemId);
                     table.ForeignKey(
                         name: "FK_Imagem_Produtos_ProdutoId",
-                        column: x => x.ProdutoId,
-                        principalTable: "Produtos",
-                        principalColumn: "ProdutoId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Perguntas",
-                columns: table => new
-                {
-                    PerguntasId = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Pergunta = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Resposta = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StatusPergunta = table.Column<int>(type: "int", nullable: false),
-                    ProdutoId = table.Column<long>(type: "bigint", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Perguntas", x => x.PerguntasId);
-                    table.ForeignKey(
-                        name: "FK_Perguntas_Produtos_ProdutoId",
                         column: x => x.ProdutoId,
                         principalTable: "Produtos",
                         principalColumn: "ProdutoId",
@@ -299,11 +276,6 @@ namespace PL.Migrations
                 column: "ProdutoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Perguntas_ProdutoId",
-                table: "Perguntas",
-                column: "ProdutoId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Produtos_ApplicationUserId",
                 table: "Produtos",
                 column: "ApplicationUserId");
@@ -333,9 +305,6 @@ namespace PL.Migrations
 
             migrationBuilder.DropTable(
                 name: "Imagem");
-
-            migrationBuilder.DropTable(
-                name: "Perguntas");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
