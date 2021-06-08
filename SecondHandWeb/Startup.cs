@@ -1,6 +1,7 @@
      using BLL;
 using Entities.Interfaces;
 using Entities.Models;
+using LogicLayer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -47,6 +48,7 @@ namespace SecondHandWeb
             services.AddTransient<IImagemDAO, ImagemEF>();
             services.AddTransient<IApplicationUserDAO, ApplicationUserEF>();
             services.AddTransient<ICategoriaDAO, CategoriaEF>();
+            services.AddTransient<Reputacao, Reputacao>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();

@@ -2,6 +2,7 @@
 using Entities.Models;
 using Entities.Models.Enums;
 using Entities.ViewModels;
+using LogicLayer;
 using Microsoft.EntityFrameworkCore;
 using PL.Context;
 using System;
@@ -13,12 +14,14 @@ namespace PL.DAO
     public class ProdutoEF : IProdutoDAO
     {
         private readonly SecondHandContext _context;
+        private readonly Reputacao _reputacao;
 
         //construtor produtos entity framework        
         
-        public ProdutoEF(SecondHandContext context)
+        public ProdutoEF(SecondHandContext context, Reputacao reputacao)
         {
             _context = context;
+            _reputacao = reputacao;
         }        
 
         //Recebe um id e informa se o produto existe ou nao
@@ -129,15 +132,8 @@ namespace PL.DAO
 
             if (consulta1 != null && consulta1.Estado == StatusProduto.Aguardando_Aprovacao)
             {
-                //Lógica para reputação:
-                if (vendedor.Reputacao <= 5)
-                {
-                    vendedor.Reputacao -= 1; 
-                    if (vendedor.Reputacao <= 0)
-                    {
-                        vendedor.Reputacao = 0;
-                    }
-                }
+                _reputacao.DiminuiReputacao(vendedor);
+
                 _context.Update(vendedor);
 
                 consulta1.Estado = StatusProduto.Bloqueado;
@@ -332,15 +328,8 @@ namespace PL.DAO
             {
                 consulta1.Estado = StatusProduto.Entregue;
 
-                //Lógica para reputação:
-                if (vendedor.Reputacao <= 5) 
-                { 
-                    vendedor.Reputacao += 2;
-                    if (vendedor.Reputacao > 5)
-                    {
-                        vendedor.Reputacao = 5;
-                    }
-                }
+                _reputacao.AumentaReputacao(vendedor);
+
                 _context.Update(vendedor);
 
                 _context.Update(consulta1);
