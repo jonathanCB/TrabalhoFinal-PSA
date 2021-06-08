@@ -40,6 +40,10 @@ namespace PL.DAO
 
             int qtdDeProdutosAVenda = QtdProdutosAVenda(vendedor);
             int qtdDeProdutosAguardandoAprovacao = QtdProdutosAguardandoAprovacao(vendedor);
+            int qtdDeProdutosVendidos = QtdProdutosVendidos(vendedor);
+            int qtdDeProdutosEmRotaDeEntrega = QtdProdutosEmRotaDeEntrega(vendedor);
+            int qtdDeProdutosEntregues = QtdProdutosEntregues(vendedor);
+            int qtdDeProdutosBloqueados = QtdProdutosBloqueados(vendedor);
 
             return vendedor;
         }
@@ -75,7 +79,6 @@ namespace PL.DAO
 
             return qtdProdutosAVenda;
         }
-
         public int QtdProdutosAguardandoAprovacao(ApplicationUser vendedor)
         {
             /*
@@ -106,6 +109,130 @@ namespace PL.DAO
             _context.SaveChanges();
 
             return qtdProdutosAguardandoAprovacao;
+        }
+        public int QtdProdutosVendidos(ApplicationUser vendedor)
+        {
+            /*
+             * Consultando os produtos com determinado vendedor, onde
+             * o status é 'Vendido':
+             */
+            var produtos = from p in _context.Produtos
+                           where p.NomeVendedor.Equals(vendedor.UserName)
+                           where p.Estado == StatusProduto.Vendido
+                           select new
+                           {
+                               p.Name
+                           };
+
+            //Pegando a quantidade de produtos da consulta:
+            int qtdProdutosVendidos = produtos.Count();
+
+            /*
+             * Setando a qtd de produtos vendidos desse vendedor
+             * com a qtd de produtos encontrados na consulta:
+             */
+            vendedor.ProdutosVendido = qtdProdutosVendidos;
+
+            //Atualizando o vendedor no banco:
+            _context.Update(vendedor);
+
+            //Salvando as novas informações do vendedor no banco:
+            _context.SaveChanges();
+
+            return qtdProdutosVendidos;
+        }
+        public int QtdProdutosEmRotaDeEntrega(ApplicationUser vendedor)
+        {
+            /*
+             * Consultando os produtos com determinado vendedor, onde
+             * o status é 'Em rota de entrega':
+             */
+            var produtos = from p in _context.Produtos
+                           where p.NomeVendedor.Equals(vendedor.UserName)
+                           where p.Estado == StatusProduto.Em_Rota_De_Entrega
+                           select new
+                           {
+                               p.Name
+                           };
+
+            //Pegando a quantidade de produtos da consulta:
+            int qtdProdutosEmRotaDeEntrega = produtos.Count();
+
+            /*
+             * Setando a qtd de produtos vendidos desse vendedor
+             * com a qtd de produtos encontrados na consulta:
+             */
+            vendedor.ProdutosEmRotaDeEntrega = qtdProdutosEmRotaDeEntrega;
+
+            //Atualizando o vendedor no banco:
+            _context.Update(vendedor);
+
+            //Salvando as novas informações do vendedor no banco:
+            _context.SaveChanges();
+
+            return qtdProdutosEmRotaDeEntrega;
+        }
+        public int QtdProdutosEntregues(ApplicationUser vendedor)
+        {
+            /*
+             * Consultando os produtos com determinado vendedor, onde
+             * o status é 'Entregues':
+             */
+            var produtos = from p in _context.Produtos
+                           where p.NomeVendedor.Equals(vendedor.UserName)
+                           where p.Estado == StatusProduto.Entregue
+                           select new
+                           {
+                               p.Name
+                           };
+
+            //Pegando a quantidade de produtos da consulta:
+            int qtdProdutosEntregues = produtos.Count();
+
+            /*
+             * Setando a qtd de produtos entregues desse vendedor
+             * com a qtd de produtos encontrados na consulta:
+             */
+            vendedor.ProdutosEntregue = qtdProdutosEntregues;
+
+            //Atualizando o vendedor no banco:
+            _context.Update(vendedor);
+
+            //Salvando as novas informações do vendedor no banco:
+            _context.SaveChanges();
+
+            return qtdProdutosEntregues;
+        }
+        public int QtdProdutosBloqueados(ApplicationUser vendedor)
+        {
+            /*
+             * Consultando os produtos com determinado vendedor, onde
+             * o status é 'Bloqueados':
+             */
+            var produtos = from p in _context.Produtos
+                           where p.NomeVendedor.Equals(vendedor.UserName)
+                           where p.Estado == StatusProduto.Bloqueado
+                           select new
+                           {
+                               p.Name
+                           };
+
+            //Pegando a quantidade de produtos da consulta:
+            int qtdProdutosBloqueados = produtos.Count();
+
+            /*
+             * Setando a qtd de produtos bloqueados desse vendedor
+             * com a qtd de produtos encontrados na consulta:
+             */
+            vendedor.ProdutosBloqueado = qtdProdutosBloqueados;
+
+            //Atualizando o vendedor no banco:
+            _context.Update(vendedor);
+
+            //Salvando as novas informações do vendedor no banco:
+            _context.SaveChanges();
+
+            return qtdProdutosBloqueados;
         }
     }
 }
