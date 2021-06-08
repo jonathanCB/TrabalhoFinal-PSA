@@ -214,9 +214,21 @@ namespace BLL
         }
 
         //retorna o perfil de um vendedor
-        public ApplicationUser PerfilVendedor(long id)
+        public ApplicationUser PerfilVendedor(String userName)
         {
-            return _ApplicationUserDAO.PerfilVendedor(id);
+            return _ApplicationUserDAO.PerfilVendedor(userName);
+        }
+
+        //aumenta a reputação do vendedor
+        public Boolean AumentaRep(String userName)
+        {
+            return _ApplicationUserDAO.AumentaRep(userName);
+        }
+
+        //aumenta a reputação do vendedor
+        public Boolean DiminuiRep(String userName)
+        {
+            return _ApplicationUserDAO.DiminuiRep(userName);
         }
 
         #endregion

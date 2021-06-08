@@ -5,36 +5,41 @@ namespace LogicLayer
 {
     public class Reputacao
     {
-        public ApplicationUser AumentaReputacao(ApplicationUser vendedor)
+        public int AumentaReputacao(ApplicationUser vendedor)
         {
             //Lógica para aumento de reputação:
-            if (vendedor.Reputacao <= 5)
+            if (vendedor.Reputacao <= 10)
+            {
+                vendedor.Reputacao += 1;
+            }
+            else if (vendedor.Reputacao > 10 && vendedor.Reputacao <= 50)
             {
                 vendedor.Reputacao += 2;
-                if (vendedor.Reputacao > 5)
-                {
-                    vendedor.Reputacao = 5;
-                }
             }
             else
             {
-                vendedor.Reputacao = 5;
+                vendedor.Reputacao += 3;
             }
-            return vendedor;
+
+            return vendedor.Reputacao;
         }
 
-        public ApplicationUser DiminuiReputacao(ApplicationUser vendedor)
+        public int DiminuiReputacao(ApplicationUser vendedor)
         {
-            if (vendedor.Reputacao <= 5)
+            if (vendedor.Reputacao <= 10)
             {
                 vendedor.Reputacao -= 1;
-                if (vendedor.Reputacao <= 0)
-                {
-                    vendedor.Reputacao = 0;
-                }
+            }
+            else if (vendedor.Reputacao > 10 && vendedor.Reputacao <= 50)
+            {
+                vendedor.Reputacao -= 3;
+            }
+            else
+            {
+                vendedor.Reputacao -= 4;
             }
 
-            return vendedor;
+            return vendedor.Reputacao;
         }
     }
 }

@@ -10,7 +10,7 @@ using PL.Context;
 namespace PL.Migrations
 {
     [DbContext(typeof(SecondHandContext))]
-    [Migration("20210607142329_SecondHand")]
+    [Migration("20210608200202_SecondHand")]
     partial class SecondHand
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -78,6 +78,24 @@ namespace PL.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<int>("ProdutosAVenda")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProdutosAguardandoApVenda")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProdutosBloqueado")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProdutosEmRotaDeEntrega")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProdutosEntregue")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProdutosVendido")
+                        .HasColumnType("int");
 
                     b.Property<int>("Reputacao")
                         .HasColumnType("int");
@@ -401,7 +419,7 @@ namespace PL.Migrations
 
             modelBuilder.Entity("Entities.Models.Produto", b =>
                 {
-                    b.HasOne("Entities.Models.ApplicationUser", null)
+                    b.HasOne("Entities.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("Produtos")
                         .HasForeignKey("ApplicationUserId");
 
@@ -410,6 +428,8 @@ namespace PL.Migrations
                         .HasForeignKey("CategoriaID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("ApplicationUser");
 
                     b.Navigation("Categoria");
                 });

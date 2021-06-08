@@ -30,6 +30,30 @@ namespace Entities.Models
         [Display(Name = "Reputação")]
         public int Reputacao { get; set; }
 
+        [PersonalData]
+        [Display(Name = "Produtos a venda")]
+        public int ProdutosAVenda { get; set; }
+
+        [PersonalData]
+        [Display(Name = "Produtos aguardando aprovação de venda")]
+        public int ProdutosAguardandoApVenda { get; set; }
+
+        [PersonalData]
+        [Display(Name = "Produtos vendidos")]
+        public int ProdutosVendido { get; set; }
+
+        [PersonalData]
+        [Display(Name = "Produtos em rota de entrega")]
+        public int ProdutosEmRotaDeEntrega { get; set; }
+
+        [PersonalData]
+        [Display(Name = "Produtos entregue")]
+        public int ProdutosEntregue { get; set; }
+
+        [PersonalData]
+        [Display(Name = "Produtos bloqueados")]
+        public int ProdutosBloqueado { get; set; }
+
         public virtual ICollection<Produto> Produtos { get; set; }
     }
 }

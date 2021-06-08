@@ -13,6 +13,12 @@ namespace Entities.Interfaces
         public String getUserID(String userName);
 
         //recebe o id de usuario e retonra informacaoes do seu perfil
-        public ApplicationUser PerfilVendedor(long id);
+        public ApplicationUser PerfilVendedor(String userName);
+
+        //aumenta a reputação do vendedor
+        public Boolean AumentaRep(String userName);
+
+        //aumenta a reputação do vendedor
+        public Boolean DiminuiRep(String userName);
     }
 }

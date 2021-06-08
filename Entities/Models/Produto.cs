@@ -71,8 +71,8 @@ namespace Entities.Models
         public int CategoriaID { get; set; }
                
         [Display(Name = "Categoria")]
-        public virtual Categoria Categoria { get; set; }              
-        
+        public virtual Categoria Categoria { get; set; }
+
         public virtual ICollection<Pergunta> Pergunta { get; set; }
 
         public virtual ICollection<Imagem> Imagens { get; set; }
