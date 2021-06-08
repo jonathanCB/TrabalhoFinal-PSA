@@ -75,6 +75,9 @@ namespace Entities.Models
         
         public virtual ICollection<Pergunta> Pergunta { get; set; }
 
+        [Display(Name = "Pergunta")]
+        public virtual ICollection<Perguntas> Pergunta { get; set; }
+
         public virtual ICollection<Imagem> Imagens { get; set; }
 
     }

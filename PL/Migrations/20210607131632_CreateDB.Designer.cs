@@ -10,13 +10,8 @@ using PL.Context;
 namespace PL.Migrations
 {
     [DbContext(typeof(SecondHandContext))]
-<<<<<<< HEAD:PL/Migrations/20210607142329_SecondHand.Designer.cs
-    [Migration("20210607142329_SecondHand")]
-    partial class SecondHand
-=======
     [Migration("20210607131632_CreateDB")]
     partial class CreateDB
->>>>>>> origin/BranchJonathan:PL/Migrations/20210607131632_CreateDB.Designer.cs
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -150,36 +145,6 @@ namespace PL.Migrations
                     b.ToTable("Imagem");
                 });
 
-<<<<<<< HEAD:PL/Migrations/20210607142329_SecondHand.Designer.cs
-            modelBuilder.Entity("Entities.Models.Pergunta", b =>
-                {
-                    b.Property<long>("PerguntaId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Perguntas")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("ProdutoId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Respostas")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("StatusPergunta")
-                        .HasColumnType("int");
-
-                    b.HasKey("PerguntaId");
-
-                    b.HasIndex("ProdutoId");
-
-                    b.ToTable("Perguntas");
-                });
-
-=======
->>>>>>> origin/BranchJonathan:PL/Migrations/20210607131632_CreateDB.Designer.cs
             modelBuilder.Entity("Entities.Models.Produto", b =>
                 {
                     b.Property<long>("ProdutoId")
@@ -396,20 +361,6 @@ namespace PL.Migrations
                     b.Navigation("Produto");
                 });
 
-<<<<<<< HEAD:PL/Migrations/20210607142329_SecondHand.Designer.cs
-            modelBuilder.Entity("Entities.Models.Pergunta", b =>
-                {
-                    b.HasOne("Entities.Models.Produto", "Produto")
-                        .WithMany("Pergunta")
-                        .HasForeignKey("ProdutoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Produto");
-                });
-
-=======
->>>>>>> origin/BranchJonathan:PL/Migrations/20210607131632_CreateDB.Designer.cs
             modelBuilder.Entity("Entities.Models.Produto", b =>
                 {
                     b.HasOne("Entities.Models.ApplicationUser", null)

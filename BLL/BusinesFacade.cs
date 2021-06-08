@@ -207,11 +207,16 @@ namespace BLL
 
         #region consultas em application user
 
-            //retorna o id de um usuario
-            public String getUserID(String userName)
+        //retorna o id de um usuario
+        public String getUserID(String userName)
         {
             return _ApplicationUserDAO.getUserID(userName);
         }
+        public ApplicationUser PerfilVendedor(long id)
+        {
+            return _ApplicationUserDAO.PerfilVendedor(id);
+        }
+        
 
         #endregion
 

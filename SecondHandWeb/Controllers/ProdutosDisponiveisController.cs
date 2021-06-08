@@ -145,6 +145,16 @@ namespace SecondHandWeb.Controllers
 
         }
 
+        public async Task<IActionResult> PerfilVendedor(long id)
+        {
+            var perfilVendedor = _businesFacade.PerfilVendedor(id);
+            /*if (perfilVendedor == null)
+            {
+                return NotFound();
+            }*/
+            return View(perfilVendedor);
+        }
+
         public ActionResult GetImage(int id)
         {
             Imagem im = _businesFacade.GetImagem(id);
