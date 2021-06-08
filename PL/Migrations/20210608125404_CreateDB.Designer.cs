@@ -10,7 +10,7 @@ using PL.Context;
 namespace PL.Migrations
 {
     [DbContext(typeof(SecondHandContext))]
-    [Migration("20210607131632_CreateDB")]
+    [Migration("20210608125404_CreateDB")]
     partial class CreateDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -78,6 +78,24 @@ namespace PL.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<int>("ProdutosAVenda")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProdutosAguardandoApVenda")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProdutosBloqueado")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProdutosEmRotaDeEntrega")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProdutosEntregue")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProdutosVendido")
+                        .HasColumnType("int");
 
                     b.Property<int>("Reputacao")
                         .HasColumnType("int");

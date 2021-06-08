@@ -126,6 +126,7 @@ namespace SecondHandWeb.Controllers
         public async Task<IActionResult> PerfilVendedor(long id)
         {
             var perfilVendedor = _businesFacade.PerfilVendedor(id);
+            //var 
             /*if (perfilVendedor == null)
             {
                 return NotFound();

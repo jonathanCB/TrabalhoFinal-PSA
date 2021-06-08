@@ -11,7 +11,7 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.UserName)
+            Nome do usuário:
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.UserName)
@@ -27,6 +27,18 @@
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Reputacao)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProdutosAVenda)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProdutosAVenda)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProdutosAguardandoApVenda)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProdutosAguardandoApVenda)
         </dd>
     </dl>
 </div>
