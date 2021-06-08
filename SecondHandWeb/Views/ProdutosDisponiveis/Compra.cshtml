@@ -4,18 +4,12 @@
     ViewData["Title"] = "Compra Realizada";
 }
 
-<h1>Compra Realizada Com Sucesso</h1>
+<center><h1>Compra Realizada Com Sucesso</h1></center>
 
 <div>
-    <h4>Produto</h4>
+    <center><h4>@Model.Name</h4></center>
     <hr />
     <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Descricao)
         </dt>

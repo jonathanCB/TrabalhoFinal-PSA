@@ -4,7 +4,7 @@
     ViewData["Title"] = "Produtos Em Rota De Entrega";
 }
 
-<h1>Produtos aguardando confirmação de entrega</h1>
+<center><h1>Produtos aguardando confirmação de entrega</h1></center>
 
 <table class="table">
     <thead>
@@ -22,21 +22,25 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProdutoId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NomeVendedor)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NomeComprador)
-            </td>
-            <td>
-                <a asp-action="ProdutoEntregue" asp-route-id="@item.ProdutoId">Confirmar entrega</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProdutoId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NomeVendedor)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NomeComprador)
+                </td>
+                <td>
+                    <a asp-action="ProdutoEntregue" asp-route-id="@item.ProdutoId">Confirmar entrega</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+<hr />
+<a asp-action="Index">Voltar</a>
