@@ -1,5 +1,4 @@
 ﻿using Entities.Models;
-using Entities.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +9,10 @@ namespace Entities.Interfaces
 {
     public interface IApplicationUserDAO
     {
+        //recebe o username e retorna o id de usuario
         public String getUserID(String userName);
+
+        //recebe o id de usuario e retonra informacaoes do seu perfil
         public ApplicationUser PerfilVendedor(long id);
     }
 }

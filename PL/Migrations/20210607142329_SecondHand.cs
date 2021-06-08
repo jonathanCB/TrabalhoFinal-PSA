@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PL.Migrations
 {
-    public partial class CreateDB : Migration
+    public partial class SecondHand : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -231,7 +231,6 @@ namespace PL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-<<<<<<< HEAD:PL/Migrations/20210607142329_SecondHand.cs
             migrationBuilder.CreateTable(
                 name: "Perguntas",
                 columns: table => new
@@ -254,8 +253,6 @@ namespace PL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-=======
->>>>>>> origin/BranchJonathan:PL/Migrations/20210607131632_CreateDB.cs
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -301,6 +298,11 @@ namespace PL.Migrations
                 column: "ProdutoId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Perguntas_ProdutoId",
+                table: "Perguntas",
+                column: "ProdutoId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Produtos_ApplicationUserId",
                 table: "Produtos",
                 column: "ApplicationUserId");
@@ -330,6 +332,9 @@ namespace PL.Migrations
 
             migrationBuilder.DropTable(
                 name: "Imagem");
+
+            migrationBuilder.DropTable(
+                name: "Perguntas");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

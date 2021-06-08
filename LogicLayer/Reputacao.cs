@@ -15,7 +15,7 @@ namespace LogicLayer
                 {
                     vendedor.Reputacao = 5;
                 }
-            } 
+            }
             else
             {
                 vendedor.Reputacao = 5;

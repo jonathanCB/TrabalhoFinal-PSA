@@ -10,13 +10,8 @@ using PL.Context;
 namespace PL.Migrations
 {
     [DbContext(typeof(SecondHandContext))]
-<<<<<<< HEAD:PL/Migrations/20210607142329_SecondHand.Designer.cs
     [Migration("20210607142329_SecondHand")]
     partial class SecondHand
-=======
-    [Migration("20210607131632_CreateDB")]
-    partial class CreateDB
->>>>>>> origin/BranchJonathan:PL/Migrations/20210607131632_CreateDB.Designer.cs
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -150,7 +145,6 @@ namespace PL.Migrations
                     b.ToTable("Imagem");
                 });
 
-<<<<<<< HEAD:PL/Migrations/20210607142329_SecondHand.Designer.cs
             modelBuilder.Entity("Entities.Models.Pergunta", b =>
                 {
                     b.Property<long>("PerguntaId")
@@ -178,8 +172,6 @@ namespace PL.Migrations
                     b.ToTable("Perguntas");
                 });
 
-=======
->>>>>>> origin/BranchJonathan:PL/Migrations/20210607131632_CreateDB.Designer.cs
             modelBuilder.Entity("Entities.Models.Produto", b =>
                 {
                     b.Property<long>("ProdutoId")
@@ -396,7 +388,6 @@ namespace PL.Migrations
                     b.Navigation("Produto");
                 });
 
-<<<<<<< HEAD:PL/Migrations/20210607142329_SecondHand.Designer.cs
             modelBuilder.Entity("Entities.Models.Pergunta", b =>
                 {
                     b.HasOne("Entities.Models.Produto", "Produto")
@@ -408,8 +399,6 @@ namespace PL.Migrations
                     b.Navigation("Produto");
                 });
 
-=======
->>>>>>> origin/BranchJonathan:PL/Migrations/20210607131632_CreateDB.Designer.cs
             modelBuilder.Entity("Entities.Models.Produto", b =>
                 {
                     b.HasOne("Entities.Models.ApplicationUser", null)
@@ -489,6 +478,8 @@ namespace PL.Migrations
             modelBuilder.Entity("Entities.Models.Produto", b =>
                 {
                     b.Navigation("Imagens");
+
+                    b.Navigation("Pergunta");
                 });
 #pragma warning restore 612, 618
         }

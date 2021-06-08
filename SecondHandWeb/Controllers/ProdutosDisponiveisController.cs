@@ -106,6 +106,12 @@ namespace SecondHandWeb.Controllers
             return View(_businesFacade.ItemPorId((long)id));
         }
 
+        public async Task<IActionResult> PerfilVendedor(long id)
+        {
+            var perfilVendedor = _businesFacade.PerfilVendedor(id);
+            return View(perfilVendedor);
+        }
+
         [HttpPost]
         public async Task<IActionResult> SalvaPergunta([Bind("Perguntas")] Pergunta per)
         {
@@ -143,16 +149,6 @@ namespace SecondHandWeb.Controllers
 
             return View();
 
-        }
-
-        public async Task<IActionResult> PerfilVendedor(long id)
-        {
-            var perfilVendedor = _businesFacade.PerfilVendedor(id);
-            /*if (perfilVendedor == null)
-            {
-                return NotFound();
-            }*/
-            return View(perfilVendedor);
         }
 
         public ActionResult GetImage(int id)

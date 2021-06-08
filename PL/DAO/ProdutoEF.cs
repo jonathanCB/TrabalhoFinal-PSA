@@ -2,7 +2,6 @@
 using Entities.Models;
 using Entities.Models.Enums;
 using Entities.ViewModels;
-using LogicLayer;
 using Microsoft.EntityFrameworkCore;
 using PL.Context;
 using System;
@@ -14,14 +13,12 @@ namespace PL.DAO
     public class ProdutoEF : IProdutoDAO
     {
         private readonly SecondHandContext _context;
-        private readonly Reputacao _reputacao;
 
         //construtor produtos entity framework        
         
-        public ProdutoEF(SecondHandContext context, Reputacao reputacao)
+        public ProdutoEF(SecondHandContext context)
         {
             _context = context;
-            _reputacao = reputacao;
         }        
 
         //Recebe um id e informa se o produto existe ou nao
@@ -119,23 +116,8 @@ namespace PL.DAO
             var consulta1 = _context.Produtos
                             .FirstOrDefault(m => m.ProdutoId == id);
 
-            //Pegando nome do vendedor que terá a reputação diminuida devido ao cancelamento da venda
-            var nomeVendedor = _context.Produtos
-                .Where(p => p.ProdutoId == id)
-                .Select(p => p.NomeVendedor)
-                .FirstOrDefault();
-
-            //Pegando a entidade ApplicationUser relacionada ao vendedor:
-            var vendedor = _context.ApplicationUser
-                .Where(u => u.UserName.Equals(nomeVendedor))
-                .FirstOrDefault();
-
             if (consulta1 != null && consulta1.Estado == StatusProduto.Aguardando_Aprovacao)
             {
-                _reputacao.DiminuiReputacao(vendedor);
-
-                _context.Update(vendedor);
-
                 consulta1.Estado = StatusProduto.Bloqueado;
                 _context.Update(consulta1);
                 _context.SaveChanges();
@@ -313,25 +295,9 @@ namespace PL.DAO
             var consulta1 = _context.Produtos
                             .FirstOrDefault(m => m.ProdutoId == id);
 
-            //Pegando nome do vendedor que terá a reputação aumentada:
-            var nomeVendedor = _context.Produtos
-                .Where(p => p.ProdutoId == id)
-                .Select(p => p.NomeVendedor)
-                .FirstOrDefault();
-
-            //Pegando a entidade ApplicationUser relacionada ao vendedor:
-            var vendedor = _context.ApplicationUser
-                .Where(u => u.UserName.Equals(nomeVendedor))
-                .FirstOrDefault();
-
             if (consulta1 != null)
             {
                 consulta1.Estado = StatusProduto.Entregue;
-
-                _reputacao.AumentaReputacao(vendedor);
-
-                _context.Update(vendedor);
-
                 _context.Update(consulta1);
                 _context.SaveChanges();
                 return true;

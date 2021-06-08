@@ -212,11 +212,12 @@ namespace BLL
         {
             return _ApplicationUserDAO.getUserID(userName);
         }
+
+        //retorna o perfil de um vendedor
         public ApplicationUser PerfilVendedor(long id)
         {
             return _ApplicationUserDAO.PerfilVendedor(id);
         }
-        
 
         #endregion
 
