@@ -39,9 +39,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Produtos[0].NomeVendedor)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Produtos[0].Imagens)
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -68,14 +65,15 @@
                     @Html.DisplayFor(modelItem => item.NomeVendedor)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Imagens)
-                </td>
-                <td>
                     @if (item.UsuarioIDVendedor != ViewBag.user)
                     {
-                        <a asp-action="Details" asp-route-id="@item.ProdutoId">Comprar</a>                        
+                        <div>
+                            <a asp-action="Details" asp-route-id="@item.ProdutoId">Comprar</a>
+                        </div>                        
                     }
-                    <a asp-action="Details" asp-route-id="@item.ProdutoId">Detalhes</a>
+                    <div>
+                        <a asp-action="Details" asp-route-id="@item.ProdutoId">Detalhes</a>
+                    </div>
                 </td>
             </tr>
         }

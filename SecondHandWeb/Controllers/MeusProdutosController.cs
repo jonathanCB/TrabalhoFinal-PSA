@@ -144,14 +144,17 @@ namespace SecondHandWeb.Controllers
             {
                 return NotFound();
             }
+            var usuario = await _userManager.GetUserAsync(HttpContext.User);
 
             var produto = _businesFacade.CompradoNegouVendaProduto((long)id);
-            if (produto == false)
+            var rep = _businesFacade.DiminuiRep(usuario.UserName);
+
+            if (produto == true && rep == true )
             {
-                return NotFound();
+                return View(_businesFacade.ItemPorId((long)id));
             }
 
-            return View(_businesFacade.ItemPorId((long)id));
+            return NotFound();
         }
 
         //dados do usuario

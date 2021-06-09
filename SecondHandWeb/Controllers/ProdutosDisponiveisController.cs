@@ -106,6 +106,43 @@ namespace SecondHandWeb.Controllers
             return View(_businesFacade.ItemPorId((long)id));
         }
 
+        public async Task<IActionResult> PerfilVendedor(long? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var userName = _businesFacade.ItemPorId((long)id).NomeVendedor;
+
+            var perfilVendedor = _businesFacade.vendasPerfil(userName);
+
+            ViewData["prodID"] = (long)id;
+            return View(perfilVendedor);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SalvaPergunta([Bind("Perguntas")] Pergunta per)
+        {
+
+            if (ModelState.IsValid)
+            {
+                _businesFacade.SalvaPergunta(per.ProdutoId, per.Perguntas);
+                return RedirectToAction(nameof(Index));
+            }
+           
+            return View(_businesFacade.GetPergunta(per.PerguntaId));
+
+        }
+
+        /*
+        public async Task<IActionResult> SalvaPergunta(long ProdutoId, String per)
+        {
+            _businesFacade.SalvaPergunta(ProdutoId, per);
+
+            return View("Details", _businesFacade.ItemPorId(ProdutoId));
+        */
+
         private bool ProdutoExists(long id)
         {
             return _businesFacade.existe(id);
@@ -123,16 +160,6 @@ namespace SecondHandWeb.Controllers
 
         }
 
-        public async Task<IActionResult> PerfilVendedor(long id)
-        {
-            var perfilVendedor = _businesFacade.PerfilVendedor(id);
-            /*if (perfilVendedor == null)
-            {
-                return NotFound();
-            }*/
-            return View(perfilVendedor);
-        }
-
         public ActionResult GetImage(int id)
         {
             Imagem im = _businesFacade.GetImagem(id);
@@ -143,6 +170,19 @@ namespace SecondHandWeb.Controllers
             else
             {
                 return NotFound();
+            }
+        }
+
+        public Pergunta GetPergunta(long id)
+        {
+            Pergunta per = _businesFacade.GetPergunta(id);
+            if (per != null)
+            {
+                return per;
+            }
+            else
+            {
+                return null;
             }
         }
 

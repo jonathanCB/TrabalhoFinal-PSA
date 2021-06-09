@@ -1,6 +1,7 @@
-     using BLL;
+using BLL;
 using Entities.Interfaces;
 using Entities.Models;
+using LogicLayer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -43,10 +44,12 @@ namespace SecondHandWeb
 
             //Interface e repositorio injecao dependencia
             services.AddTransient<BusinesFacade, BusinesFacade>();
+            services.AddTransient<Reputacao, Reputacao>();
             services.AddTransient<IProdutoDAO, ProdutoEF>();
             services.AddTransient<IImagemDAO, ImagemEF>();
             services.AddTransient<IApplicationUserDAO, ApplicationUserEF>();
             services.AddTransient<ICategoriaDAO, CategoriaEF>();
+            services.AddTransient<IPerguntaDAO, PerguntaEF>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();

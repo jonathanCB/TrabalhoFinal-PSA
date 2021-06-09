@@ -4,18 +4,29 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Meus Produtos</h1>
+<center><h1>Meus Produtos</h1></center>
 
 <p>
     @if (ViewBag.usuario.CEP == null || ViewBag.usuario.Endereco == null)
     {
-        <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Cadastre um endereco e um cep para comprar</a>
+        <span>
+            Cadastre um 
+            <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Endereco e Cep</a>
+            para Vender
+        </span>
     }
     else
     {
-        <a asp-action="Create">Vender novo Produto</a>
+        <span>
+            <a asp-action="Create">Vender</a>
+            novo Produto
+        </span>
+            <div align ="right">
+                aki vai a reputacao                  
+            </div>
     }
 </p>
+
 <table class="table">
     <thead>
         <tr>
@@ -78,7 +89,7 @@
                     <a asp-action="Details" asp-route-id="@item.ProdutoId">Details</a>
                     @if (item.Estado == Entities.Models.Enums.StatusProduto.Aguardando_Aprovacao)
                     {
-                        <a asp-action="ResponderCompra" asp-route-id="@item.ProdutoId">Responder Compra</a>
+                        <a asp-action="ResponderCompra" asp-route-id="@item.ProdutoId">Responder Solicitação de Compra</a>
                     }
                 </td>
             </tr>
