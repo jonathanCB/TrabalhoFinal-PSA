@@ -158,6 +158,7 @@ namespace PL.DAO
         public IQueryable<Produto> IQuerDeProdutosDisponiveis()
         {
             IQueryable<Produto> prod = _context.Produtos
+                                        .Include("Categoria")
                                         .Where(p => p.Estado == StatusProduto.Disponivel)
                                         .Select(p => p);
             return prod;
