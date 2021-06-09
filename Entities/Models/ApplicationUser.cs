@@ -54,6 +54,22 @@ namespace Entities.Models
         [Display(Name = "Produtos bloqueados")]
         public int ProdutosBloqueado { get; set; }
 
+        [PersonalData]
+        [Display(Name = "Produtos Comprados")]
+        public int ProdutosComprados { get; set; }
+
+        [PersonalData]
+        [Display(Name = "Produtos em rota de entrega")]
+        public int ProdutosCompradosEmRotaDeEntrega { get; set; }
+
+        [PersonalData]
+        [Display(Name = "Produtos entregue")]
+        public int ProdutosCompradosEntregue { get; set; }
+
+        [PersonalData]
+        [Display(Name = "Produtos com venda negada")]
+        public int ProdutosComVendaNegada { get; set; }
+
         public virtual ICollection<Produto> Produtos { get; set; }
     }
 }

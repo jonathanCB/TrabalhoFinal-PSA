@@ -29,6 +29,8 @@ namespace SecondHandWeb.Areas.Identity.Pages.Account.Manage
 
         public string Endereco { get; set; }
 
+        public string Reputacao { get; set; }
+
         [TempData]
         public string StatusMessage { get; set; }
 
@@ -56,10 +58,12 @@ namespace SecondHandWeb.Areas.Identity.Pages.Account.Manage
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             var cep = Usuario.CEP;
             var endereco = Usuario.Endereco;
+            var reputacao = Usuario.Reputacao;
 
             Username = userName;
             Cep = cep;
             Endereco = endereco;
+            Reputacao = reputacao.ToString();
 
             Input = new InputModel
             {

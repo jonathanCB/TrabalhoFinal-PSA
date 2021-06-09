@@ -4,10 +4,10 @@
     ViewData["Title"] = "Informacoes do vendedor";
 }
 
-<h1>Informações do vendedor</h1>
+<center><h1>Informações do vendedor</h1></center>
 
 <div>
-    <h4>Vendedor</h4>
+    <center><h4>@Model.UserName</h4></center>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -67,7 +67,7 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Index">Voltar</a>
+    <a asp-action="Details" asp-route-id="@ViewBag.prodID">Voltar</a>
 </div>
 
 

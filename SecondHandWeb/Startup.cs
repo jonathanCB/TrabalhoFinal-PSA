@@ -44,11 +44,12 @@ namespace SecondHandWeb
 
             //Interface e repositorio injecao dependencia
             services.AddTransient<BusinesFacade, BusinesFacade>();
+            services.AddTransient<Reputacao, Reputacao>();
             services.AddTransient<IProdutoDAO, ProdutoEF>();
             services.AddTransient<IImagemDAO, ImagemEF>();
             services.AddTransient<IApplicationUserDAO, ApplicationUserEF>();
             services.AddTransient<ICategoriaDAO, CategoriaEF>();
-            services.AddTransient<Reputacao, Reputacao>();
+            services.AddTransient<IPerguntaDAO, PerguntaEF>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();

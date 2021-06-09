@@ -19,6 +19,7 @@ namespace PL.Context
         public DbSet<ApplicationUser> Usuarios { get; set; }
         public DbSet<ApplicationUser> ApplicationUser { get; set; }
         public DbSet<Imagem> Imagem { get; set; }
+        public DbSet<Pergunta> Perguntas { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

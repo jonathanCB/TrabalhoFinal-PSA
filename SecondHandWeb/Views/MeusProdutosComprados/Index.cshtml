@@ -4,7 +4,7 @@
     ViewData["Title"] = "Compras Realizadas";
 }
 
-<h1>Minhas Compras</h1>
+<center><h1>Minhas Compras</h1></center>
 
 <table class="table">
     <thead>
@@ -59,10 +59,16 @@
                 @Html.DisplayFor(modelItem => item.CategoriaID)
             </td>
             <td>
-                <a asp-action="Details" asp-route-id="@item.ProdutoId">Details</a>
+                <div>
+                    <a asp-action="Details" asp-route-id="@item.ProdutoId">Details</a>
+                </div>
                 @if (item.Estado == Entities.Models.Enums.StatusProduto.Aguardando_Aprovacao)
                 {
-                    <a asp-action="Details" asp-route-id="@item.ProdutoId">Cancelar pedido</a>
+                    <div>
+                        <span>
+                            <a asp-action="Details" asp-route-id="@item.ProdutoId">Cancelar pedido</a>
+                        </span>
+                    </div>
                 }
             </td>
         </tr>

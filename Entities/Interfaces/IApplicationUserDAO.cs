@@ -1,5 +1,4 @@
 ﻿using Entities.Models;
-using Entities.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +9,19 @@ namespace Entities.Interfaces
 {
     public interface IApplicationUserDAO
     {
+        //recebe o username e retorna o id de usuario
         public String getUserID(String userName);
-        public ApplicationUser PerfilVendedor(long id);
+
+        //retorna informações de vendas de um perfil
+        public ApplicationUser vendasPerfil(String userName);
+
+        //retorna informações de compras de um perfil
+        public ApplicationUser comprasPerfil(String userName);
+
+        //aumenta a reputação do vendedor
+        public Boolean AumentaRep(String userName);
+
+        //aumenta a reputação do vendedor
+        public Boolean DiminuiRep(String userName);
     }
 }
