@@ -37,6 +37,10 @@ namespace PL.Migrations
                     ProdutosEmRotaDeEntrega = table.Column<int>(type: "int", nullable: false),
                     ProdutosEntregue = table.Column<int>(type: "int", nullable: false),
                     ProdutosBloqueado = table.Column<int>(type: "int", nullable: false),
+                    ProdutosComprados = table.Column<int>(type: "int", nullable: false),
+                    ProdutosCompradosEmRotaDeEntrega = table.Column<int>(type: "int", nullable: false),
+                    ProdutosCompradosEntregue = table.Column<int>(type: "int", nullable: false),
+                    ProdutosComVendaNegada = table.Column<int>(type: "int", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -116,8 +120,8 @@ namespace PL.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
@@ -161,8 +165,8 @@ namespace PL.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -237,6 +241,28 @@ namespace PL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Perguntas",
+                columns: table => new
+                {
+                    PerguntaId = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Perguntas = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Respostas = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StatusPergunta = table.Column<int>(type: "int", nullable: false),
+                    ProdutoId = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Perguntas", x => x.PerguntaId);
+                    table.ForeignKey(
+                        name: "FK_Perguntas_Produtos_ProdutoId",
+                        column: x => x.ProdutoId,
+                        principalTable: "Produtos",
+                        principalColumn: "ProdutoId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -282,6 +308,11 @@ namespace PL.Migrations
                 column: "ProdutoId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Perguntas_ProdutoId",
+                table: "Perguntas",
+                column: "ProdutoId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Produtos_ApplicationUserId",
                 table: "Produtos",
                 column: "ApplicationUserId");
@@ -311,6 +342,9 @@ namespace PL.Migrations
 
             migrationBuilder.DropTable(
                 name: "Imagem");
+
+            migrationBuilder.DropTable(
+                name: "Perguntas");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
