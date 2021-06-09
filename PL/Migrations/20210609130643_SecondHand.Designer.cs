@@ -10,7 +10,7 @@ using PL.Context;
 namespace PL.Migrations
 {
     [DbContext(typeof(SecondHandContext))]
-    [Migration("20210608200202_SecondHand")]
+    [Migration("20210609130643_SecondHand")]
     partial class SecondHand
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -86,6 +86,18 @@ namespace PL.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("ProdutosBloqueado")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProdutosComVendaNegada")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProdutosComprados")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProdutosCompradosEmRotaDeEntrega")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProdutosCompradosEntregue")
                         .HasColumnType("int");
 
                     b.Property<int>("ProdutosEmRotaDeEntrega")
@@ -419,7 +431,7 @@ namespace PL.Migrations
 
             modelBuilder.Entity("Entities.Models.Produto", b =>
                 {
-                    b.HasOne("Entities.Models.ApplicationUser", "ApplicationUser")
+                    b.HasOne("Entities.Models.ApplicationUser", null)
                         .WithMany("Produtos")
                         .HasForeignKey("ApplicationUserId");
 
@@ -428,8 +440,6 @@ namespace PL.Migrations
                         .HasForeignKey("CategoriaID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("ApplicationUser");
 
                     b.Navigation("Categoria");
                 });

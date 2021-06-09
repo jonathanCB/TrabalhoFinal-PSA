@@ -115,8 +115,9 @@ namespace SecondHandWeb.Controllers
 
             var userName = _businesFacade.ItemPorId((long)id).NomeVendedor;
 
-            var perfilVendedor = _businesFacade.PerfilVendedor(userName);
+            var perfilVendedor = _businesFacade.vendasPerfil(userName);
 
+            ViewData["prodID"] = (long)id;
             return View(perfilVendedor);
         }
 

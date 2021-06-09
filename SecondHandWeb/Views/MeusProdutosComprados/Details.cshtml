@@ -14,6 +14,14 @@
         <a asp-action="Cancel" asp-route-id="@Model.ProdutoId">Cancelar pedido</a>
         <hr />
     }
+
+    @if (Model.Estado == Entities.Models.Enums.StatusProduto.Bloqueado)
+    {
+        <span>
+            Vendedor Desistiu da venda do produto!
+        </span>
+        <hr />
+    }
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Descricao)

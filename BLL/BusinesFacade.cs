@@ -213,10 +213,16 @@ namespace BLL
             return _ApplicationUserDAO.getUserID(userName);
         }
 
-        //retorna o perfil de um vendedor
-        public ApplicationUser PerfilVendedor(String userName)
+        //retorna informações de vendas de um perfil
+        public ApplicationUser vendasPerfil(String userName)
         {
-            return _ApplicationUserDAO.PerfilVendedor(userName);
+            return _ApplicationUserDAO.vendasPerfil(userName);
+        }
+
+        //retorna informações de compras de um perfil
+        public ApplicationUser comprasPerfil(String userName)
+        {
+            return _ApplicationUserDAO.comprasPerfil(userName);
         }
 
         //aumenta a reputação do vendedor

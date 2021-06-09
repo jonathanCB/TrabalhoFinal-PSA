@@ -32,8 +32,8 @@ namespace PL.DAO
             return user.Id;
         }
 
-        //recebe o id de usuario e retorna informacaoes do seu perfil
-        public ApplicationUser PerfilVendedor(String userName)
+        //retorna informações de vendas de um perfil
+        public ApplicationUser vendasPerfil(String userName)
         {
             var vendedor = _context.ApplicationUser
                 .Where(u => u.UserName.Equals(userName))
@@ -43,129 +43,140 @@ namespace PL.DAO
                            where p.NomeVendedor.Equals(vendedor.UserName)
                            select p;
 
-            int qtdDeProdutosAVenda = QtdProdutosAVenda(vendedor, produtos);
-            int qtdDeProdutosAguardandoAprovacao = QtdProdutosAguardandoAprovacao(vendedor, produtos);
-            int qtdDeProdutosVendidos = QtdProdutosVendidos(vendedor, produtos);
-            int qtdDeProdutosEmRotaDeEntrega = QtdProdutosEmRotaDeEntrega(vendedor, produtos);
-            int qtdDeProdutosEntregues = QtdProdutosEntregues(vendedor, produtos);
-            int qtdDeProdutosBloqueados = QtdProdutosBloqueados(vendedor, produtos);
+            AtualizaVendas(vendedor, produtos);
 
             return vendedor;
         }
 
-        //conta a quantidade de produtos a venda e atualiza no bando de dados
-        public int QtdProdutosAVenda(ApplicationUser vendedor, IQueryable<Produto> prod)
+        //retorna informações de compras de um perfil
+        public ApplicationUser comprasPerfil(String userName)
         {
-            var produtos = from p in prod
+            var comprador = _context.ApplicationUser
+                .Where(u => u.UserName.Equals(userName))
+                .FirstOrDefault();
+
+            var produtos = from p in _context.Produtos
+                           where p.NomeComprador.Equals(comprador.UserName)
+                           select p;
+
+            AtualizaCompras(comprador, produtos);           
+
+            return comprador;
+        }
+
+        //conta a quantidade de produtos a venda e atualiza no bando de dados
+        public void AtualizaVendas(ApplicationUser vendedor, IQueryable<Produto> prod)
+        {
+            //conta a quantidade de produtos a venda
+            var QtdProdutosAVenda = from p in prod
                             where p.Estado == StatusProduto.Disponivel
                             select new
                             {
                                 p.Name
                             };
+            vendedor.ProdutosAVenda = QtdProdutosAVenda.Count();
 
-            int qtdProdutosAVenda = produtos.Count();
-            vendedor.ProdutosAVenda = qtdProdutosAVenda;
-
-            _context.Update(vendedor);
-            _context.SaveChanges();
-
-            return qtdProdutosAVenda;
-        }
-
-        //conta a quantidade de produtos aguardando aprovacao e atualiza no bando de dados
-        public int QtdProdutosAguardandoAprovacao(ApplicationUser vendedor, IQueryable<Produto> prod)
-        {
-            var produtos = from p in prod
+            //conta a quantidade de produtos aguardando aprovacao
+            var QtdProdutosAguardandoAprovacao = from p in prod
                            where p.Estado == StatusProduto.Aguardando_Aprovacao
                            select new
                            {
                                p.Name
                            };
+            vendedor.ProdutosAguardandoApVenda = QtdProdutosAguardandoAprovacao.Count();
 
-            int qtdProdutosAguardandoAprovacao = produtos.Count();
-            vendedor.ProdutosAguardandoApVenda = qtdProdutosAguardandoAprovacao;
+            //conta a quantidade de produtos vendidos
+            var QtdProdutosVendidos = from p in prod
+                                      where p.Estado == StatusProduto.Vendido
+                                      select new
+                                      {
+                                          p.Name
+                                      };
+            vendedor.ProdutosVendido = QtdProdutosVendidos.Count();
 
+            //conta a quantidade de produtos em rota de entrega
+            var QtdProdutosEmRotaDeEntrega = from p in prod
+                                             where p.Estado == StatusProduto.Em_Rota_De_Entrega
+                                             select new
+                                             {
+                                                 p.Name
+                                             };
+            vendedor.ProdutosEmRotaDeEntrega = QtdProdutosEmRotaDeEntrega.Count();
+
+            //conta a quantidade de produtos entregues
+            var QtdProdutosEntregues = from p in prod
+                                       where p.Estado == StatusProduto.Entregue
+                                       select new
+                                       {
+                                           p.Name
+                                       };
+            vendedor.ProdutosEntregue = QtdProdutosEntregues.Count();
+
+            //conta a quantidade de produtos bloqueados
+            var QtdProdutosBloqueados = from p in prod
+                                        where p.Estado == StatusProduto.Bloqueado
+                                        select new
+                                        {
+                                            p.Name
+                                        };
+            vendedor.ProdutosBloqueado = QtdProdutosBloqueados.Count();
+
+            //atualiza o banco de dados
             _context.Update(vendedor);
             _context.SaveChanges();
 
-            return qtdProdutosAguardandoAprovacao;
         }
 
-        //conta a quantidade de produtos vendidos e atualiza no bando de dados
-        public int QtdProdutosVendidos(ApplicationUser vendedor, IQueryable<Produto> prod)
+        public void AtualizaCompras(ApplicationUser vendedor, IQueryable<Produto> prod)
         {
-            var produtos = from p in prod
-                           where p.Estado == StatusProduto.Vendido
-                           select new
-                           {
-                               p.Name
-                           };
+            //conta a quantidade de produtos comprados
+            var QtdProdutosComprados = from p in prod
+                                    where p.Estado == StatusProduto.Vendido
+                                    select new
+                                    {
+                                        p.Name
+                                    };
 
-            int qtdProdutosVendidos = produtos.Count();
-            vendedor.ProdutosVendido = qtdProdutosVendidos;
+            //conta a quantidade de produtos comprados
+            var QtdProdutosAguardandoAprovacao = from p in prod
+                                       where p.Estado == StatusProduto.Aguardando_Aprovacao
+                                       select new
+                                       {
+                                           p.Name
+                                       };
+            vendedor.ProdutosComprados = QtdProdutosComprados.Count() + QtdProdutosAguardandoAprovacao.Count();
 
+            //conta a quantidade de produtos em rota de entrega
+            var QtdProdutosCompradosEmRotaDeEntrega = from p in prod
+                                             where p.Estado == StatusProduto.Em_Rota_De_Entrega
+                                             select new
+                                             {
+                                                 p.Name
+                                             };
+            vendedor.ProdutosCompradosEmRotaDeEntrega = QtdProdutosCompradosEmRotaDeEntrega.Count();
+
+            //conta a quantidade de produtos entregues
+            var QtdProdutosCompradosEntregues = from p in prod
+                                       where p.Estado == StatusProduto.Entregue
+                                       select new
+                                       {
+                                           p.Name
+                                       };
+            vendedor.ProdutosCompradosEntregue = QtdProdutosCompradosEntregues.Count();
+
+            //conta a quantidade de produtos com a venda negada
+            var QtdProdutosComVendaNegada = from p in prod
+                                        where p.Estado == StatusProduto.Bloqueado
+                                        select new
+                                        {
+                                            p.Name
+                                        };
+            vendedor.ProdutosComVendaNegada = QtdProdutosComVendaNegada.Count();
+
+            //atualiza o banco de dados
             _context.Update(vendedor);
             _context.SaveChanges();
 
-            return qtdProdutosVendidos;
-        }
-
-        //conta a quantidade de produtos em rota de entrega e atualiza no bando de dados
-        public int QtdProdutosEmRotaDeEntrega(ApplicationUser vendedor, IQueryable<Produto> prod)
-        {
-            var produtos = from p in prod
-                           where p.Estado == StatusProduto.Em_Rota_De_Entrega
-                           select new
-                           {
-                               p.Name
-                           };
-
-            int qtdProdutosEmRotaDeEntrega = produtos.Count();
-            vendedor.ProdutosEmRotaDeEntrega = qtdProdutosEmRotaDeEntrega;
-
-            _context.Update(vendedor);
-            _context.SaveChanges();
-
-            return qtdProdutosEmRotaDeEntrega;
-        }
-
-        //conta a quantidade de produtos entregues e atualiza no bando de dados
-        public int QtdProdutosEntregues(ApplicationUser vendedor, IQueryable<Produto> prod)
-        {
-            var produtos = from p in prod
-                           where p.Estado == StatusProduto.Entregue
-                           select new
-                           {
-                               p.Name
-                           };
-
-            int qtdProdutosEntregues = produtos.Count();
-            vendedor.ProdutosEntregue = qtdProdutosEntregues;
-
-            _context.Update(vendedor);
-            _context.SaveChanges();
-
-            return qtdProdutosEntregues;
-        }
-
-        //conta a quantidade de produtos bloqueados e atualiza no bando de dados
-        public int QtdProdutosBloqueados(ApplicationUser vendedor, IQueryable<Produto> prod)
-        {
-            var produtos = from p in prod
-                           where p.Estado == StatusProduto.Bloqueado
-                           select new
-                           {
-                               p.Name
-                           };
-
-            int qtdProdutosBloqueados = produtos.Count();
-
-            vendedor.ProdutosBloqueado = qtdProdutosBloqueados;
-
-            _context.Update(vendedor);
-            _context.SaveChanges();
-
-            return qtdProdutosBloqueados;
         }
 
         //chama a logica da reputacao e aumenta a reputação do vendedor
@@ -207,7 +218,8 @@ namespace PL.DAO
             {
                 return false;
             }
-
         }
+
+
     }
 }

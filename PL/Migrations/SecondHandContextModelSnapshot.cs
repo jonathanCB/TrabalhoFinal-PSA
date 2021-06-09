@@ -86,6 +86,18 @@ namespace PL.Migrations
                     b.Property<int>("ProdutosBloqueado")
                         .HasColumnType("int");
 
+                    b.Property<int>("ProdutosComVendaNegada")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProdutosComprados")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProdutosCompradosEmRotaDeEntrega")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProdutosCompradosEntregue")
+                        .HasColumnType("int");
+
                     b.Property<int>("ProdutosEmRotaDeEntrega")
                         .HasColumnType("int");
 
@@ -417,7 +429,7 @@ namespace PL.Migrations
 
             modelBuilder.Entity("Entities.Models.Produto", b =>
                 {
-                    b.HasOne("Entities.Models.ApplicationUser", "ApplicationUser")
+                    b.HasOne("Entities.Models.ApplicationUser", null)
                         .WithMany("Produtos")
                         .HasForeignKey("ApplicationUserId");
 
@@ -426,8 +438,6 @@ namespace PL.Migrations
                         .HasForeignKey("CategoriaID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("ApplicationUser");
 
                     b.Navigation("Categoria");
                 });
