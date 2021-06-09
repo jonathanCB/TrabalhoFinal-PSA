@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using SecondHandWeb.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace SecondHandWeb.Controllers
 {
@@ -31,6 +32,7 @@ namespace SecondHandWeb.Controllers
             _environment = environment;
             _userManager = userManager;
         }
+                
 
         // GET: ProdutosDisponiveis
         [AllowAnonymous]
@@ -81,7 +83,8 @@ namespace SecondHandWeb.Controllers
             if (usuario != null)
             {
                 ViewData["usuario"] = usuario;
-            }
+            }              
+
             return View(produto);
         }
 
@@ -121,27 +124,16 @@ namespace SecondHandWeb.Controllers
             return View(perfilVendedor);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> SalvaPergunta([Bind("Perguntas")] Pergunta per)
+       
+        public async Task<IActionResult> SalvaPergunta(long id, String per)
         {
 
-            if (ModelState.IsValid)
-            {
-                _businesFacade.SalvaPergunta(per.ProdutoId, per.Perguntas);
-                return RedirectToAction(nameof(Index));
-            }
+            
+            _businesFacade.SalvaPergunta(id, per);            
            
-            return View(_businesFacade.GetPergunta(per.PerguntaId));
+            return View(_businesFacade.ItemPorId((long)id));
 
         }
-
-        /*
-        public async Task<IActionResult> SalvaPergunta(long ProdutoId, String per)
-        {
-            _businesFacade.SalvaPergunta(ProdutoId, per);
-
-            return View("Details", _businesFacade.ItemPorId(ProdutoId));
-        */
 
         private bool ProdutoExists(long id)
         {

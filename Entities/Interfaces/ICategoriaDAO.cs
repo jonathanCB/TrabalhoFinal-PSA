@@ -14,5 +14,8 @@ namespace Entities.Interfaces
 
         //retorna um IEnumerable de categorias
         public IEnumerable<Categoria> categoriasIEnumerable();
+
+        //Salva uma categoria nova no banco
+        public void CadastroNovaCategoria(Categoria cat);
     }
 }

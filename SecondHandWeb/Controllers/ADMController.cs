@@ -63,5 +63,27 @@ namespace SecondHandWeb.Controllers
 
             return View(TotalVendaPorPeriodo);
         }
+
+        // GET: ADM/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: ADM/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Name")] Categoria categoria)
+        {
+            if (ModelState.IsValid)
+            {
+
+                _businesFacade.CadastroNovaCategoria(categoria);
+                return RedirectToAction(nameof(Index));
+            }
+            return View(categoria);
+        }
     }
 }

@@ -253,6 +253,12 @@ namespace BLL
             return _CategoriaDAO.categoriasIEnumerable();
         }
 
+        //Salva uma categoria nova no banco
+        public void CadastroNovaCategoria(Categoria cat)
+        {
+            _CategoriaDAO.CadastroNovaCategoria(cat);
+        }
+
         #endregion
 
         #region
