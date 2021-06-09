@@ -101,18 +101,14 @@
         {
             <hr />
             <h3>Fazer uma pergunta</h3>
-            <form asp-action="SalvaPergunta">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="@Model.ProdutoId" />
-                <div class="form-group">
-                    <label asp-for="Pergunta" class="control-label"></label>
-                    <input asp-for="Pergunta" class="form-control" />
-                    <span asp-validation-for="Pergunta" class="text-danger"></span>
-                </div>
+            <form asp-controller="ProdutosDisponiveis" asp-action="SalvaPergunta" method="get">
+                <p>
 
-                <div class="form-group">
-                    <input type="submit" value="Perguntar" class="btn btn-primary" />
-                </div>
+                    <input type="hidden" asp-for="@Model.ProdutoId" />
+
+                    pergunta: <input type="text" asp-for="Pergunta" />
+                    <input type="submit" value="Perguntas" />
+                </p>
             </form>
 
         }

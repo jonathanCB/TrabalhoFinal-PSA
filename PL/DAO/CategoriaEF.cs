@@ -38,5 +38,12 @@ namespace PL.DAO
 
             return ienume;
         }
+
+        //Salva uma categoria nova no banco
+        public void CadastroNovaCategoria(Categoria cat)
+        {
+            _context.Categorias.Add(cat);
+            _context.SaveChanges();
+        }
     }
 }
