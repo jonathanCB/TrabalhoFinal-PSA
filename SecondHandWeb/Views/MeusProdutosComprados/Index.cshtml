@@ -22,6 +22,9 @@
                 @Html.DisplayNameFor(model => model.DataVenda)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.EnderecoRemetente)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.NomeVendedor)
             </th>
             <th>
@@ -50,6 +53,9 @@
                 @Html.DisplayFor(modelItem => item.DataVenda)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.EnderecoRemetente)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.NomeVendedor)
             </td>
             <td>
@@ -64,12 +70,11 @@
                 </div>
                 @if (item.Estado == Entities.Models.Enums.StatusProduto.Aguardando_Aprovacao)
                 {
-                    <div>
-                        <span>
-                            <a asp-action="Details" asp-route-id="@item.ProdutoId">Cancelar pedido</a>
-                        </span>
-                    </div>
-                }
+        <div>
+            <span>
+                <a asp-action="Details" asp-route-id="@item.ProdutoId">Cancelar pedido</a>
+            </span>
+        </div>  }
             </td>
         </tr>
         }

@@ -74,6 +74,7 @@ namespace SecondHandWeb.Controllers
             {
                 UsuarioIDVendedor = usuario.Id,
                 NomeVendedor = usuario.UserName,
+                EnderecoRemetente = usuario.Endereco,
                 DataEntrada = DateTime.Now
             };
 
@@ -86,7 +87,7 @@ namespace SecondHandWeb.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Descricao,Estado,Valor,DataEntrada,UsuarioIDVendedor,NomeVendedor,CategoriaID")] Produto produto)
+        public async Task<IActionResult> Create([Bind("Name,Descricao,Estado,Valor,DataEntrada,UsuarioIDVendedor,NomeVendedor,EnderecoRemetente,CategoriaID")] Produto produto)
         { 
 
             if (ModelState.IsValid)

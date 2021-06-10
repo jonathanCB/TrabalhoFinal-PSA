@@ -51,6 +51,12 @@ namespace BLL
             _ProdutoDAO.CadastroNovoProduto(prod);
         }
 
+        //altera o endereco dos produtos a venda de um usuario
+        public void AlteraEndProdutoAvend(String userName, String endereco)
+        {
+            _ProdutoDAO.AlteraEndProdutoAvend(userName, endereco);
+        }
+
         //Recebe um id e deleta o produto
         public void deletaProduto(long ProdutoID)
         {
@@ -211,6 +217,12 @@ namespace BLL
         public String getUserID(String userName)
         {
             return _ApplicationUserDAO.getUserID(userName);
+        }
+
+        //recebe o username e retorna o endereco e cep
+        public IQueryable<EnderecoComCep> getEnderecoCep(string userName)
+        {
+            return _ApplicationUserDAO.getEnderecoCep(userName);
         }
 
         //retorna informações de vendas de um perfil

@@ -41,6 +41,18 @@
             @Html.DisplayFor(model => model.DataVenda)
         </dd>
         <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NomeComprador)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NomeComprador)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EnderecoComprador)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EnderecoComprador)
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Categoria)
         </dt>
         <dd class="col-sm-10">
@@ -50,6 +62,7 @@
 </div>
 
 <div>
+    <hr />
     @if (Model.Estado == Entities.Models.Enums.StatusProduto.Aguardando_Aprovacao)
     {
         <a asp-action="ResponderCompra" asp-route-id="@Model.ProdutoId">Responder Solicitação de Compra</a>

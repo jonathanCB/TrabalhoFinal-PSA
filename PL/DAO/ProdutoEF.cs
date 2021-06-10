@@ -56,7 +56,8 @@ namespace PL.DAO
         //realiza a venda de um produto
         public Boolean VendaProduto(long id, String userName)
         {
-            var user = _context.Users.FirstOrDefault(x => x.UserName.Equals(userName));
+            var user = _context.Users
+                        .FirstOrDefault(x => x.UserName.Equals(userName));
 
             var consulta1 = _context.Produtos
                             .Include("Categoria")
@@ -65,6 +66,7 @@ namespace PL.DAO
             if (consulta1 != null && consulta1.Estado == StatusProduto.Disponivel)
             {
                 consulta1.NomeComprador = user.UserName;
+                consulta1.EnderecoComprador = user.Endereco;
                 consulta1.UsuarioIDComprador = user.Id;
                 consulta1.Estado = StatusProduto.Aguardando_Aprovacao;
                 consulta1.DataVenda = DateTime.Now;
@@ -87,6 +89,7 @@ namespace PL.DAO
             {
                 consulta1.NomeComprador = null;
                 consulta1.UsuarioIDComprador = null;
+                consulta1.EnderecoComprador = null;
                 consulta1.Estado = StatusProduto.Disponivel;
                 consulta1.DataVenda = null;
                 _context.Update(consulta1);
@@ -344,6 +347,22 @@ namespace PL.DAO
             }
 
             return false;
+        }
+
+        //altera o endereco dos produtos a venda de um usuario
+        public void AlteraEndProdutoAvend(String userName, String endereco)
+        {
+             var consulta1 = _context.Produtos 
+                            .Where(p => p.NomeVendedor == userName)
+                            .Where(p => p.Estado == StatusProduto.Disponivel)
+                            .Select(p => p);
+
+            foreach (Produto p in consulta1)
+            {
+                p.EnderecoRemetente = endereco;
+                _context.Update(p);
+            }
+            _context.SaveChanges();
         }
     }
 }

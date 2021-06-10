@@ -52,6 +52,9 @@
                 @Html.DisplayNameFor(model => model.NomeComprador)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.EnderecoComprador)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Categoria)
             </th>
             <th></th>
@@ -81,6 +84,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.NomeComprador)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EnderecoComprador)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Categoria.Name)

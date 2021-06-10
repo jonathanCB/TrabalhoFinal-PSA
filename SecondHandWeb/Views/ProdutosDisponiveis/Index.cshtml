@@ -39,6 +39,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Produtos[0].NomeVendedor)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Produtos[0].EnderecoRemetente)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -65,7 +68,10 @@
                     @Html.DisplayFor(modelItem => item.NomeVendedor)
                 </td>
                 <td>
-                    @if (item.UsuarioIDVendedor != ViewBag.user)
+                    @Html.DisplayFor(modelItem => item.EnderecoRemetente)
+                </td>
+                <td>
+                    @if (item.UsuarioIDVendedor != ViewBag.user.Id)
                     {
                         <div>
                             <a asp-action="Details" asp-route-id="@item.ProdutoId">Comprar</a>

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Entities.ViewModels;
 
 namespace PL.DAO
 {
@@ -30,6 +31,20 @@ namespace PL.DAO
         {
             var user = _context.Users.FirstOrDefault(x => x.UserName.Equals(userName));
             return user.Id;
+        }
+
+        //recebe o username e retorna o endereco e cep
+        public IQueryable<EnderecoComCep> getEnderecoCep(string userName)
+        {
+            var endCep = from p in _context.Users
+                         where p.UserName == userName
+                         select new EnderecoComCep
+                         {
+                            Cep = p.CEP,
+                            Endereco = p.Endereco
+                         };
+
+            return endCep;
         }
 
         //retorna informações de vendas de um perfil

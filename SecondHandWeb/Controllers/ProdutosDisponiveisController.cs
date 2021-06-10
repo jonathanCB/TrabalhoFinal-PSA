@@ -56,11 +56,14 @@ namespace SecondHandWeb.Controllers
                 Categorias = new SelectList(categoriaQuery.Distinct().ToList()),
                 Produtos = produtos.ToList()
             };
+
             var usuario = await _userManager.GetUserAsync(HttpContext.User);
+
             if (usuario != null)
             {
-                ViewData["user"] = usuario.Id;
+                ViewData["user"] = usuario;
             }
+
             return View(produtoCategoriaVM);
         }
 

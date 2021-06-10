@@ -87,5 +87,8 @@ namespace Entities.Interfaces
 
         //recebe o id de um produto e confirma sua entrega
         public Boolean ProdutoEntregue(long id);
+
+        //altera o endereco dos produtos a venda de um usuario
+        public void AlteraEndProdutoAvend(String userName, String endereco);
     }
 }
