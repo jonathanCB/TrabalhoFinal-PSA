@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using SecondHandWeb.Models;
 
 namespace SecondHandWeb.Controllers
 {
@@ -32,12 +33,35 @@ namespace SecondHandWeb.Controllers
 
         [Authorize]
         // GET: MeusProdutosComprados
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string ProdutosCategoria, string searchString)
         {
             var usuario = await _userManager.GetUserAsync(HttpContext.User);
-            String usu = _businesFacade.getUserID(usuario.UserName);
-            return View(_businesFacade.ItensDoComprador(usu));
-        }
+            var categoriaQuery = _businesFacade.categoriasNomes();
+            var produtos = _businesFacade.IqueyItensDoComprador(usuario.Id);
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                produtos = _businesFacade.IqueyItensPalChav(searchString, produtos);
+            }
+
+            if (!string.IsNullOrEmpty(ProdutosCategoria))
+            {
+                produtos = _businesFacade.IqueryItensPorCategoria(ProdutosCategoria, produtos);
+            }
+
+            var produtoCategoriaVM = new ProdutoCategoriaViewModel
+            {
+                Categorias = new SelectList(categoriaQuery.Distinct().ToList()),
+                Produtos = produtos.ToList()
+            };
+
+            if (usuario != null)
+            {
+                ViewData["usuario"] = usuario;
+            }
+
+            return View(produtoCategoriaVM);
+        }        
 
         [Authorize]
         // GET: MeusProdutosComprados/Details/5
@@ -73,6 +97,16 @@ namespace SecondHandWeb.Controllers
             }
 
             return View(_businesFacade.ItemPorId((long)id));
+        }
+
+        //recebe uma pergunta e id de produto e salva a pergunta
+        public async Task<IActionResult> SalvaPergunta(long id, String per)
+        {
+
+            _businesFacade.SalvaPergunta(id, per);
+
+            return RedirectToAction("Details", "ProdutosDisponiveis", new { Id = id });
+
         }
 
         private bool ProdutoExists(long id)

@@ -43,12 +43,12 @@ namespace SecondHandWeb.Controllers
 
             if (!string.IsNullOrEmpty(searchString))
             {
-                produtos = _businesFacade.ItensPalChavDisponiveis(searchString);
+                produtos = _businesFacade.IqueyItensPalChav(searchString, produtos);
             }
 
             if (!string.IsNullOrEmpty(ProdutosCategoria))
             {
-                produtos = _businesFacade.ItensPorCategoriaDisponiveis(ProdutosCategoria);
+                produtos = _businesFacade.IqueryItensPorCategoria(ProdutosCategoria, produtos);
             }
 
             var produtoCategoriaVM = new ProdutoCategoriaViewModel
@@ -127,14 +127,13 @@ namespace SecondHandWeb.Controllers
             return View(perfilVendedor);
         }
 
-       
+        //recebe uma pergunta e id de produto e salva a pergunta
         public async Task<IActionResult> SalvaPergunta(long id, String per)
-        {
+        {            
 
-            
-            _businesFacade.SalvaPergunta(id, per);            
-           
-            return View(_businesFacade.ItemPorId((long)id));
+            _businesFacade.SalvaPergunta(id, per);
+
+            return RedirectToAction("Details", "ProdutosDisponiveis", new { Id = id });
 
         }
 

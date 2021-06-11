@@ -87,10 +87,11 @@ namespace BLL
             return _ProdutoDAO.ItensPorCategoria(cat);
         }
 
-        //relatorio de itens disponiveis por uma determinada categoria
-        public IQueryable<Produto> ItensPorCategoriaDisponiveis(String cat)
+        //recebe uma categoria e uma lista de produtos
+        //retorna todos os produtos dessa categoria
+        public IQueryable<Produto> IqueryItensPorCategoria(String cat, IQueryable<Produto> prods)
         {
-            return _ProdutoDAO.ItensPorCategoriaDisponiveis(cat);
+            return _ProdutoDAO.IqueryItensPorCategoria(cat, prods);
         }
 
         //relatorio de itens por uma determinada categoria e palavra
@@ -105,10 +106,11 @@ namespace BLL
             return _ProdutoDAO.ItensPalChav(palChave);
         }
 
-        //recebe uma palavra chave e retorna produtos disponiveis
-        public IQueryable<Produto> ItensPalChavDisponiveis(string palChave)
+        //recebe uma palavra chave e um iquery de produtos retorna um iquery de produtos
+        //que contenham em seu nome a palavra fornecida
+        public IQueryable<Produto> IqueyItensPalChav(string palChave, IQueryable<Produto> prods)
         {
-            return _ProdutoDAO.ItensPalChavDisponiveis(palChave);
+            return _ProdutoDAO.IqueyItensPalChav(palChave, prods);
         }
 
         //relatorio de itens por uma determinada faixa de valores
@@ -121,6 +123,13 @@ namespace BLL
         public List<Produto> ItensPorStatusUsu(String usu)
         {
             return _ProdutoDAO.ItensPorStatusUsu(usu);
+        }
+
+        //recebe um id de usuario e retorna um iquery de todos os produtos
+        //de um usuario ordenados pelo status
+        public IQueryable<Produto> IqueryItensPorStatusUsu(String usu)
+        {
+            return _ProdutoDAO.IqueryItensPorStatusUsu(usu);
         }
 
         //relatorio do total de vendas em um determinado periodo de tempo
@@ -161,9 +170,9 @@ namespace BLL
 
         //recebe um id do comprador e retorna uma lista de todos os produtos
         //comprados por ele ordenados pelo status
-        public List<Produto> ItensDoComprador(String usu)
+        public IQueryable<Produto> IqueyItensDoComprador(String usu)
         {
-            return _ProdutoDAO.ItensDoComprador(usu);
+            return _ProdutoDAO.IqueyItensDoComprador(usu);
         }        
 
         //retorna uma lista de produtos prontos para serem entregados

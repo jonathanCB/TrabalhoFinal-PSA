@@ -25,8 +25,10 @@ namespace PL.DAO
         public Boolean existe(long ProdutoID)
         {
             return _context.Produtos
-                    .Include("Categoria")
-                    .Any(e => e.ProdutoId == ProdutoID);
+                            .Include("Imagens")
+                            .Include("Categoria")
+                            .Include("Pergunta")
+                            .Any(e => e.ProdutoId == ProdutoID);
         }
 
         //Recebe um id e deleta o produto
@@ -60,7 +62,9 @@ namespace PL.DAO
                         .FirstOrDefault(x => x.UserName.Equals(userName));
 
             var consulta1 = _context.Produtos
+                            .Include("Imagens")
                             .Include("Categoria")
+                            .Include("Pergunta")
                             .FirstOrDefault(m => m.ProdutoId == id);
 
             if (consulta1 != null && consulta1.Estado == StatusProduto.Disponivel)
@@ -82,7 +86,9 @@ namespace PL.DAO
         public Boolean CompradorCancelarVendaProduto(long id)
         {
             var consulta1 = _context.Produtos
+                            .Include("Imagens")
                             .Include("Categoria")
+                            .Include("Pergunta")
                             .FirstOrDefault(m => m.ProdutoId == id);
 
             if (consulta1 != null && consulta1.Estado == StatusProduto.Aguardando_Aprovacao)
@@ -104,7 +110,9 @@ namespace PL.DAO
         public Boolean CompradoAceitouVendaProduto(long id)
         {
             var consulta1 = _context.Produtos
+                            .Include("Imagens")
                             .Include("Categoria")
+                            .Include("Pergunta")
                             .FirstOrDefault(m => m.ProdutoId == id);
 
             if (consulta1 != null && consulta1.Estado == StatusProduto.Aguardando_Aprovacao)
@@ -122,7 +130,9 @@ namespace PL.DAO
         public Boolean CompradoNegouVendaProduto(long id)
         {
             var consulta1 = _context.Produtos
+                            .Include("Imagens")
                             .Include("Categoria")
+                            .Include("Pergunta")
                             .FirstOrDefault(m => m.ProdutoId == id);
 
             if (consulta1 != null && consulta1.Estado == StatusProduto.Aguardando_Aprovacao)
@@ -140,7 +150,9 @@ namespace PL.DAO
         public List<Produto> ItensDisponiveis()
         {
             var consulta1 = _context.Produtos
+                            .Include("Imagens")
                             .Include("Categoria")
+                            .Include("Pergunta")
                             .Where(p => p.Estado == StatusProduto.Disponivel)
                             .Select(p => p);
 
@@ -153,6 +165,7 @@ namespace PL.DAO
             var consulta1 = _context.Produtos
                             .Include("Imagens")
                             .Include("Categoria")
+                            .Include("Pergunta")
                             .FirstOrDefault(m => m.ProdutoId == ProdutoID);
 
             return consulta1;
@@ -162,7 +175,9 @@ namespace PL.DAO
         public List<Produto> ListaDeProdutos()
         {
             List<Produto> prod = _context.Produtos
+                                .Include("Imagens")
                                 .Include("Categoria")
+                                .Include("Pergunta")
                                 .ToList();
             return prod;
         }
@@ -171,7 +186,9 @@ namespace PL.DAO
         public IQueryable<Produto> IQuerDeProdutosDisponiveis()
         {
             IQueryable<Produto> prod = _context.Produtos
+                                        .Include("Imagens")
                                         .Include("Categoria")
+                                        .Include("Pergunta")
                                         .Where(p => p.Estado == StatusProduto.Disponivel)
                                         .Select(p => p);
             return prod;
@@ -181,18 +198,22 @@ namespace PL.DAO
         public List<Produto> ItensPorCategoria(String cat)
         {
             var consulta1 = _context.Produtos
+                            .Include("Imagens")
                             .Include("Categoria")
+                            .Include("Pergunta")
                             .Where(x => x.Categoria.Name == cat);
 
             return consulta1.ToList();
         }
 
-        //recebe uma categoria e retorna todos os produtos dessa categoria
-        public IQueryable<Produto> ItensPorCategoriaDisponiveis(String cat)
+        //recebe uma categoria e uma lista de produtos
+        //retorna todos os produtos dessa categoria
+        public IQueryable<Produto> IqueryItensPorCategoria(String cat, IQueryable<Produto> prods)
         {
-            var consulta1 = _context.Produtos
+            var consulta1 = prods
+                            .Include("Imagens")
                             .Include("Categoria")
-                            .Where(x => x.Estado == StatusProduto.Disponivel)
+                            .Include("Pergunta")
                             .Where(x => x.Categoria.Name == cat)
                             .Select(p => p);
 
@@ -203,7 +224,9 @@ namespace PL.DAO
         public List<Produto> ItensPalChavCat(string palChave, String cat)
         {
             var consulta2 = _context.Produtos
+                            .Include("Imagens")
                             .Include("Categoria")
+                            .Include("Pergunta")
                             .Where(p => p.Categoria.Name == cat)
                             .Where(p => p.Name.ToUpper().Contains(palChave.ToUpper()) || p.Descricao.ToUpper().Contains(palChave.ToUpper()))
                             .Select(p => p);
@@ -215,19 +238,23 @@ namespace PL.DAO
         public List<Produto> ItensPalChav(string palChave)
         {
             var consulta2 = _context.Produtos
+                            .Include("Imagens")
                             .Include("Categoria")
+                            .Include("Pergunta")
                             .Where(p => p.Name.ToUpper().Contains(palChave.ToUpper()))
                             .Select(p => p);
 
             return consulta2.ToList();
         }
 
-        //recebe uma palavra chave e retorna produtos disponiveis
-        public IQueryable<Produto> ItensPalChavDisponiveis(string palChave)
+        //recebe uma palavra chave e um iquery de produtos retorna um iquery de produtos
+        //que contenham em seu nome a palavra fornecida
+        public IQueryable<Produto> IqueyItensPalChav(string palChave, IQueryable<Produto> prods)
         {
-            var consulta2 = _context.Produtos
+            var consulta2 = prods
+                            .Include("Imagens")
                             .Include("Categoria")
-                            .Where(p => p.Estado == StatusProduto.Disponivel)
+                            .Include("Pergunta")
                             .Where(p => p.Name.ToUpper().Contains(palChave.ToUpper()))
                             .Select(p => p);
 
@@ -238,7 +265,9 @@ namespace PL.DAO
         public List<Produto> ItensFaixaDeValores(decimal valIni, decimal valFin)
         {
             var consulta3 = _context.Produtos
+                            .Include("Imagens")
                             .Include("Categoria")
+                            .Include("Pergunta")
                             .Where(p => p.Estado == StatusProduto.Disponivel)
                             .Where(p => p.Valor >= valIni && p.Valor <= valFin)
                             .Select(p => p);
@@ -250,11 +279,27 @@ namespace PL.DAO
         public List<Produto> ItensPorStatusUsu(String usu)
         {
             var consulta4 = _context.Produtos
+                            .Include("Imagens")
                             .Include("Categoria")
+                            .Include("Pergunta")
                             .Where(p => p.UsuarioIDVendedor == usu)
                             .Select(p => p).OrderByDescending(e => e.Estado);
 
             return consulta4.ToList();
+        }
+
+        //recebe um id de usuario e retorna um iquery de todos os produtos
+        //de um usuario ordenados pelo status
+        public IQueryable<Produto> IqueryItensPorStatusUsu(String usu)
+        {
+            var consulta4 = _context.Produtos
+                            .Include("Imagens")
+                            .Include("Categoria")
+                            .Include("Pergunta")
+                            .Where(p => p.UsuarioIDVendedor == usu)
+                            .Select(p => p).OrderByDescending(e => e.Estado);
+
+            return consulta4;
         }
 
         //recebe duas datas e retorna o numero de itens vendidos
@@ -279,21 +324,25 @@ namespace PL.DAO
 
         //recebe um id do comprador e retorna uma lista de todos os produtos
         //comprados por ele ordenados pelo status
-        public List<Produto> ItensDoComprador(String usu)
+        public IQueryable<Produto> IqueyItensDoComprador(String usu)
         {
             var consulta4 = _context.Produtos
+                            .Include("Imagens")
                             .Include("Categoria")
+                            .Include("Pergunta")
                             .Where(p => p.UsuarioIDComprador == usu)
                             .Select(p => p).OrderByDescending(e => e.Estado);
 
-            return consulta4.ToList();
+            return consulta4;
         }
 
         //retorna uma lista de produtos prontos para serem entregados
         public List<Produto> ItensParaEntrega()
         {
             var consulta4 = _context.Produtos
+                            .Include("Imagens")
                             .Include("Categoria")
+                            .Include("Pergunta")
                             .Where(p => p.Estado == StatusProduto.Vendido)
                             .Where(p => p.NomeComprador != null)
                             .Select(p => p).OrderByDescending(e => e.Name);
@@ -305,7 +354,9 @@ namespace PL.DAO
         public List<Produto> ItensEmRotaDeEntrega()
         {
             var consulta4 = _context.Produtos
+                            .Include("Imagens")
                             .Include("Categoria")
+                            .Include("Pergunta")
                             .Where(p => p.Estado == StatusProduto.Em_Rota_De_Entrega)
                             .Where(p => p.NomeComprador != null)
                             .Select(p => p).OrderByDescending(e => e.Name);

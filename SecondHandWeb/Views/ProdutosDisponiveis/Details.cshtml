@@ -107,13 +107,13 @@
         {
             <hr />
             <h3>Fazer uma pergunta</h3>
-            <form asp-controller="ProdutosDisponiveis" asp-action="SalvaPergunta" method="get">
+            <form asp-controller="ProdutosDisponiveis" asp-action="SalvaPergunta">
                 <p>
 
-                    <input type="hidden" asp-for="@Model.ProdutoId" />
+                    <input type="hidden" name="id" value="@Model.ProdutoId" />
 
-                    pergunta: <input type="text" asp-for="Pergunta" />
-                    <input type="submit" value="Perguntas" />
+                    pergunta: <input type="text" name="per" />
+                    <input type="submit" value="Enviar" />
                 </p>
             </form>
 
@@ -124,21 +124,22 @@
 
 <div>
     <hr />
-    @if (Model.Pergunta != null)
+    @if (Model.Pergunta.Count() >= 1)
     {
         <h5>Perguntas anteriores</h5>
+        <hr />
         <div class="row">
             <div class="col-md-4">
                 @foreach (Entities.Models.Pergunta per in Model.Pergunta)
                 {
-
-                    <div class="form-group">
-                        <img width="300"
-                             src=@Url.Action("GetPergunta", "ProdutosDisponiveis", new { id = per.PerguntaId }) ;>
-                    </div>}
-
-
-
+                    <div>
+                        <FONT COLOR="#000000">Pergunta:</FONT> @per.Perguntas
+                    </div>
+                    <div>
+                        -----<FONT COLOR="#4F4F4F">Respostas:</FONT> @per.Respostas
+                    </div>
+                    <hr />
+                }
             </div>
         </div>
 
