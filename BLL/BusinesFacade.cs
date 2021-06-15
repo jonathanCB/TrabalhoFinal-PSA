@@ -244,18 +244,24 @@ namespace BLL
         public ApplicationUser comprasPerfil(String userName)
         {
             return _ApplicationUserDAO.comprasPerfil(userName);
+        }        
+
+        //retorna o numero de avaliações de um usuario
+        public int GetReputacao(String userName)
+        {
+            return _ApplicationUserDAO.GetReputacao(userName);
         }
 
-        //aumenta a reputação do vendedor
-        public Boolean AumentaRep(String userName)
+        //recebe uma nota de um usuario calcula e salva a reputacao final do usuario
+        public Boolean AvaliaVendedor(String userName, int avaliacao, long idProd)
         {
-            return _ApplicationUserDAO.AumentaRep(userName);
+            return _ApplicationUserDAO.AvaliaVendedor(userName, avaliacao, idProd);
         }
 
-        //aumenta a reputação do vendedor
-        public Boolean DiminuiRep(String userName)
+        //recebe uma nota de um usuario calcula e salva a reputacao final do usuario
+        public Boolean AvaliaVendedorCompraNegada(String userName)
         {
-            return _ApplicationUserDAO.DiminuiRep(userName);
+            return _ApplicationUserDAO.AvaliaVendedorCompraNegada(userName);
         }
 
         #endregion

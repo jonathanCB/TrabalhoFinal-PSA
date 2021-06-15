@@ -96,5 +96,8 @@ namespace Entities.Interfaces
 
         //altera o endereco dos produtos a venda de um usuario
         public void AlteraEndProdutoAvend(String userName, String endereco);
+
+        //recebe o id de um produto e muda o status dele para avaliado
+        public void ProdutoAvaliado(long id);
     }
 }

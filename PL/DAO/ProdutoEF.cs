@@ -415,5 +415,16 @@ namespace PL.DAO
             }
             _context.SaveChanges();
         }
+
+        //recebe o id de um produto e muda o status dele para avaliado
+        public void ProdutoAvaliado(long id)
+        {
+            var prod = ItemPorId(id);
+
+            prod.Estado = StatusProduto.ProdutoAvaliado;
+
+            _context.Update(prod);
+            _context.SaveChanges();
+        }
     }
 }

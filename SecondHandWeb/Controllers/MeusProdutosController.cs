@@ -166,7 +166,7 @@ namespace SecondHandWeb.Controllers
             var usuario = await _userManager.GetUserAsync(HttpContext.User);
 
             var produto = _businesFacade.CompradoNegouVendaProduto((long)id);
-            var rep = _businesFacade.DiminuiRep(usuario.UserName);
+            var rep = _businesFacade.AvaliaVendedorCompraNegada(usuario.UserName);
 
             if (produto == true && rep == true )
             {

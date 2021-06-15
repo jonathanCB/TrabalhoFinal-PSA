@@ -22,10 +22,16 @@ namespace Entities.Interfaces
         //recebe o username e retorna o endereco e cep
         public IQueryable<EnderecoComCep> getEnderecoCep(string userName);
 
-        //aumenta a reputação do vendedor
-        public Boolean AumentaRep(String userName);
+        //recebe uma nota de um usuario calcula e salva a reputacao final do usuario
+        //muda o status do produto para avaliado
+        public Boolean AvaliaVendedor(String userName, int avaliacao, long idProd);
 
-        //aumenta a reputação do vendedor
-        public Boolean DiminuiRep(String userName);
+        //recebe uma nota de um usuario calcula e salva a reputacao final do usuario
+        public Boolean AvaliaVendedorCompraNegada(String userName);
+
+        //retorna o numero de avaliações de um usuario
+        public int GetReputacao(String userName);
+
+
     }
 }

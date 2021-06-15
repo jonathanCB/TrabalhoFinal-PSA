@@ -109,6 +109,48 @@ namespace SecondHandWeb.Controllers
 
         }
 
+        //recebe uma pergunta e id de produto e salva a pergunta
+        public async Task<IActionResult> Avaliar(long? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.Status = new[]
+            {
+                new SelectListItem() { Value = "1", Text = "1"},
+                new SelectListItem() { Value = "2", Text = "2"},
+                new SelectListItem() { Value = "3", Text = "3"},
+                new SelectListItem() { Value = "4", Text = "4"},
+                new SelectListItem() { Value = "5", Text = "5"}
+            };
+
+            return View(_businesFacade.ItemPorId((long)id));
+
+        }
+
+        //salva a avaliacao da compra do produto
+        public async Task<IActionResult> SalvaAvaliacao(String userName, String avaliacao, long? idProd)
+        {            
+            if (idProd == null)
+            {
+                return NotFound();
+            }
+
+            var rep = _businesFacade.AvaliaVendedor(userName, Int32.Parse(avaliacao), (long)idProd);
+
+            if (rep == true)
+            {
+                return RedirectToAction("Index", "MeusProdutosComprados");
+            }
+            else
+            {
+                return NotFound();
+            }
+
+        }
+
         private bool ProdutoExists(long id)
         {
             return _businesFacade.existe(id);

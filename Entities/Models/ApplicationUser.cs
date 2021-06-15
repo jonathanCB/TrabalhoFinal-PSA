@@ -28,7 +28,15 @@ namespace Entities.Models
 
         [PersonalData]
         [Display(Name = "Reputação")]
-        public int Reputacao { get; set; }
+        public int ReputacaoFinal { get; set; }
+
+        [PersonalData]
+        [Display(Name = "Reputação Total")]
+        public int ReputacaoTotal { get; set; }
+
+        [PersonalData]
+        [Display(Name = "Numero de Avaliações")]
+        public int NroAvaliacoes { get; set; }
 
         [PersonalData]
         [Display(Name = "Produtos a venda")]

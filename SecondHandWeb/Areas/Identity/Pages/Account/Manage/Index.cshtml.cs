@@ -62,7 +62,7 @@ namespace SecondHandWeb.Areas.Identity.Pages.Account.Manage
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             var cep = Usuario.CEP;
             var endereco = Usuario.Endereco;
-            var reputacao = Usuario.Reputacao;
+            var reputacao = Usuario.ReputacaoFinal;
 
             Username = userName;
             Cep = cep;

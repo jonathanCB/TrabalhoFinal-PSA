@@ -10,7 +10,7 @@ using PL.Context;
 namespace PL.Migrations
 {
     [DbContext(typeof(SecondHandContext))]
-    [Migration("20210609130643_SecondHand")]
+    [Migration("20210615130205_SecondHand")]
     partial class SecondHand
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -70,6 +70,9 @@ namespace PL.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
+                    b.Property<int>("NroAvaliacoes")
+                        .HasColumnType("int");
+
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
@@ -109,7 +112,10 @@ namespace PL.Migrations
                     b.Property<int>("ProdutosVendido")
                         .HasColumnType("int");
 
-                    b.Property<int>("Reputacao")
+                    b.Property<int>("ReputacaoFinal")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ReputacaoTotal")
                         .HasColumnType("int");
 
                     b.Property<string>("SecurityStamp")

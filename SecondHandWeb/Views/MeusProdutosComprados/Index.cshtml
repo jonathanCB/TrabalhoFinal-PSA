@@ -83,12 +83,22 @@
                 </div>
                 @if (item.Estado == Entities.Models.Enums.StatusProduto.Aguardando_Aprovacao)
                 {
-            <div>
+                <div>
                 <span>
                     <a asp-action="Details" asp-route-id="@item.ProdutoId">Cancelar pedido</a>
                 </span>
                 <hr />
-            </div>  }
+                </div>  
+                }
+                @if (item.Estado == Entities.Models.Enums.StatusProduto.Entregue)
+                {
+                <div>
+                <span>
+                    <a asp-action="Avaliar" asp-route-id="@item.ProdutoId">Avaliar Vendedor</a>
+                </span>
+                <hr />
+                </div>  
+                }
             </td>
         </tr>
         }
