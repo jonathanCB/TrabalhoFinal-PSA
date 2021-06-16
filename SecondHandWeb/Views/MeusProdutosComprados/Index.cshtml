@@ -6,14 +6,18 @@
 
 <form asp-controller="MeusProdutosComprados" asp-action="Index" method="get">
     <p>
-
-        <select asp-for="ProdutosCategoria" asp-items="Model.Categorias">
+        Categorias: <select asp-for="ProdutosCategoria" asp-items="Model.Categorias">
             <option value="">Todos</option>
         </select>
 
         Nome do Produto: <input type="text" asp-for="SearchString" />
-        <input type="submit" value="Filter" />
     </p>
+    <p>
+        Valor Inicial: <input type="text" asp-for="ValIni" />
+
+        Valor Limite: <input type="text" asp-for="ValFinal" />
+    </p>
+    <input type="submit" value="Filter" />
 </form>
 
 <center><h1>Minhas Compras</h1></center>

@@ -36,7 +36,8 @@ namespace SecondHandWeb.Controllers
 
         // GET: ProdutosDisponiveis
         [AllowAnonymous]
-        public async Task<IActionResult> Index(string ProdutosCategoria, string searchString)
+        public async Task<IActionResult> Index(string ProdutosCategoria, string searchString,
+                                               decimal ValIni, decimal ValFinal)
         {
             var categoriaQuery = _businesFacade.categoriasNomes();
             var produtos = _businesFacade.IQuerDeProdutosDisponiveis();
@@ -49,6 +50,11 @@ namespace SecondHandWeb.Controllers
             if (!string.IsNullOrEmpty(ProdutosCategoria))
             {
                 produtos = _businesFacade.IqueryItensPorCategoria(ProdutosCategoria, produtos);
+            }
+
+            if(ValIni != 0 || ValFinal != 0)
+            {
+                produtos = _businesFacade.IqueryItensFaixaDeValores(ValIni, ValFinal, produtos);
             }
 
             var produtoCategoriaVM = new ProdutoCategoriaViewModel

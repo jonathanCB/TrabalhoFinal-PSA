@@ -6,19 +6,23 @@
 
 <form asp-controller="MeusProdutos" asp-action="Index" method="get">
     <p>
-
-        <select asp-for="ProdutosCategoria" asp-items="Model.Categorias">
+        Categorias: <select asp-for="ProdutosCategoria" asp-items="Model.Categorias">
             <option value="">Todos</option>
         </select>
 
         Nome do Produto: <input type="text" asp-for="SearchString" />
-        <input type="submit" value="Filter" />
     </p>
+    <p>
+        Valor Inicial: <input type="text" asp-for="ValIni" />
+
+        Valor Limite: <input type="text" asp-for="ValFinal" />
+    </p>
+    <input type="submit" value="Filter" />
 </form>
 
 <center><h1>Meus Produtos</h1></center>
 
-<p>
+
     @if (ViewBag.usuario.CEP == null || ViewBag.usuario.Endereco == null)
     {
         <span>
@@ -28,16 +32,18 @@
         </span>
     }
     else
-    {
-        <span>
-            <a asp-action="Create">Vender</a>
-            novo Produto
-        </span>
-            <div align ="right">
-                aki vai a reputacao                  
+    {        
+        <div>
+            <div>
+                <a asp-action="Create">Vender</a>
+                novo Produto
             </div>
+            <div>
+                Sua Reputação atual: @ViewBag.usuario.ReputacaoFinal
+            </div>
+        </div >
     }
-</p>
+
 
 <table class="table">
     <thead>

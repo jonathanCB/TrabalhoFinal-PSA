@@ -113,10 +113,12 @@ namespace BLL
             return _ProdutoDAO.IqueyItensPalChav(palChave, prods);
         }
 
-        //relatorio de itens por uma determinada faixa de valores
-        public List<Produto> ItensFaixaDeValores(decimal valIni, decimal valFin)
+        //recebe dois valores e um iquery de produto retorna
+        //uma lista de produtos dentro desses valores
+        public IQueryable<Produto> IqueryItensFaixaDeValores(decimal valIni, decimal valFin,
+                                                                IQueryable<Produto> prods)
         {
-            return _ProdutoDAO.ItensFaixaDeValores(valIni, valFin);
+            return _ProdutoDAO.IqueryItensFaixaDeValores(valIni, valFin, prods);
         }
 
         //relatorio de itens por um determinado usuario

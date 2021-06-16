@@ -261,18 +261,44 @@ namespace PL.DAO
             return consulta2;
         }
 
-        //recebe dois valores e retorna uma lista de produtos dentro desses valores
-        public List<Produto> ItensFaixaDeValores(decimal valIni, decimal valFin)
+        //recebe dois valores e um iquery de produto retorna uma lista de produtos dentro desses valores
+        public IQueryable<Produto> IqueryItensFaixaDeValores(decimal valIni, decimal valFin, 
+                                                                IQueryable<Produto> prods)
         {
-            var consulta3 = _context.Produtos
+            if (valIni == 0)
+            {
+                var consulta = prods
                             .Include("Imagens")
                             .Include("Categoria")
                             .Include("Pergunta")
-                            .Where(p => p.Estado == StatusProduto.Disponivel)
+                            .Where(p => p.Valor <= valFin)
+                            .Select(p => p);
+
+                return consulta;
+            }
+            else if(valFin == 0)
+            {
+                var consulta = prods
+                            .Include("Imagens")
+                            .Include("Categoria")
+                            .Include("Pergunta")
+                            .Where(p => p.Valor >= valIni)
+                            .Select(p => p);
+
+                return consulta;
+            }
+            else
+            {
+                var consulta = prods
+                            .Include("Imagens")
+                            .Include("Categoria")
+                            .Include("Pergunta")
                             .Where(p => p.Valor >= valIni && p.Valor <= valFin)
                             .Select(p => p);
 
-            return consulta3.ToList();
+                return consulta;
+            }
+            
         }
 
         //recebe um id de usuario e retorna uma lista de todos os produtos ordenados pelo status

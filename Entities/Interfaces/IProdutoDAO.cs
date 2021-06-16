@@ -61,8 +61,10 @@ namespace Entities.Interfaces
         //relatorio de itens por uma determinada categoria e palavra
         public List<Produto> ItensPalChavCat(String palChave, String cat);
 
-        //relatorio de itens por uma determinada faixa de valores
-        public List<Produto> ItensFaixaDeValores(decimal valIni, decimal valFin);
+        //recebe dois valores e um iquery de produto retorna
+        //uma lista de produtos dentro desses valores
+        public IQueryable<Produto> IqueryItensFaixaDeValores(decimal valIni, decimal valFin,
+                                                                IQueryable<Produto> prods);
 
         //relatorio de itens por Status do produto de um determinado usuario
         public List<Produto> ItensPorStatusUsu(String usu);
