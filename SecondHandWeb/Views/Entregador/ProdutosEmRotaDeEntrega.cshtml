@@ -18,6 +18,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.NomeComprador)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EnderecoComprador)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -26,13 +29,16 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ProdutoId)
+                @Html.DisplayFor(modelItem => item.ProdutoId)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.NomeVendedor)
+                @Html.DisplayFor(modelItem => item.NomeVendedor)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.NomeComprador)
+                @Html.DisplayFor(modelItem => item.NomeComprador)
+                </td>
+                <td>
+                @Html.DisplayFor(modelItem => item.EnderecoComprador)
                 </td>
                 <td>
                     <a asp-action="ProdutoEntregue" asp-route-id="@item.ProdutoId">Confirmar entrega</a>

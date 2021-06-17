@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace Entities.ViewModels
 {
-    public class ProdutoComImagens
+    public class EnderecoComCep
     {
-        public Produto produto { get; set; }
+        public String Endereco { get; set; }
 
-        public ICollection<Imagem> imagens { get; set; }
+        public String Cep { get; set; }
     }
 }

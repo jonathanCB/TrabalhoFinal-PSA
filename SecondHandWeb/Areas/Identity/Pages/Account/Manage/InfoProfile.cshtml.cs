@@ -62,7 +62,7 @@ namespace SecondHandWeb.Areas.Identity.Pages.Account.Manage
             aguardandoAprov = Usuario.ProdutosAguardandoApVenda.ToString();
             emRotaEntrega = Usuario.ProdutosEmRotaDeEntrega.ToString();
             entregue = Usuario.ProdutosEntregue.ToString();
-            reputacao = Usuario.Reputacao.ToString();
+            reputacao = Usuario.ReputacaoFinal.ToString();
 
         }
 

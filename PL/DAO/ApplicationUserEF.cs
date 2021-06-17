@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Entities.ViewModels;
 
 namespace PL.DAO
 {
@@ -15,14 +16,17 @@ namespace PL.DAO
     {
         private readonly SecondHandContext _context;
         private readonly Reputacao _rep;
+        private readonly IProdutoDAO _prod;
 
         //construtor produtos entity framework        
 
         public ApplicationUserEF(SecondHandContext context,
-                                 Reputacao reputacao)
+                                 Reputacao reputacao,
+                                 IProdutoDAO prodEF)
         {
             _context = context;
             _rep = reputacao;
+            _prod = prodEF;
         }
 
         //recebe o username e retorna o id de usuario
@@ -30,6 +34,20 @@ namespace PL.DAO
         {
             var user = _context.Users.FirstOrDefault(x => x.UserName.Equals(userName));
             return user.Id;
+        }
+
+        //recebe o username e retorna o endereco e cep
+        public IQueryable<EnderecoComCep> getEnderecoCep(string userName)
+        {
+            var endCep = from p in _context.Users
+                         where p.UserName == userName
+                         select new EnderecoComCep
+                         {
+                            Cep = p.CEP,
+                            Endereco = p.Endereco
+                         };
+
+            return endCep;
         }
 
         //retorna informações de vendas de um perfil
@@ -179,8 +197,8 @@ namespace PL.DAO
 
         }
 
-        //chama a logica da reputacao e aumenta a reputação do vendedor
-        public bool AumentaRep(string userName)
+        //recebe uma nota de um usuario calcula e salva a reputacao final do usuario
+        public Boolean AvaliaVendedor(String userName, int avaliacao, long idProd)
         {
             var vendedor = _context.ApplicationUser
                 .Where(u => u.UserName.Equals(userName))
@@ -188,20 +206,26 @@ namespace PL.DAO
 
             if (vendedor != null)
             {
-                vendedor.Reputacao = _rep.AumentaReputacao(vendedor);
+                vendedor.NroAvaliacoes = vendedor.NroAvaliacoes + 1;
+                vendedor.ReputacaoTotal = vendedor.ReputacaoTotal + avaliacao;
+                _context.Update(vendedor);
+
+                vendedor.ReputacaoFinal = _rep.CalculaReputacao(vendedor);
                 _context.Update(vendedor);
                 _context.SaveChanges();
+
+                _prod.ProdutoAvaliado(idProd);
+
                 return true;
             }
             else
             {
                 return false;
             }
-
         }
 
-        //chama a logica da reputacao e diminui a reputação do vendedor
-        public bool DiminuiRep(string userName)
+        //recebe uma nota de um usuario calcula e salva a reputacao final do usuario
+        public Boolean AvaliaVendedorCompraNegada(String userName)
         {
             var vendedor = _context.ApplicationUser
                 .Where(u => u.UserName.Equals(userName))
@@ -209,9 +233,13 @@ namespace PL.DAO
 
             if (vendedor != null)
             {
-                vendedor.Reputacao = _rep.DiminuiReputacao(vendedor);
+                vendedor.NroAvaliacoes = vendedor.NroAvaliacoes + 1;
+                _context.Update(vendedor);
+
+                vendedor.ReputacaoFinal = _rep.CalculaReputacao(vendedor);
                 _context.Update(vendedor);
                 _context.SaveChanges();
+
                 return true;
             }
             else
@@ -219,6 +247,17 @@ namespace PL.DAO
                 return false;
             }
         }
+
+        //retorna o numero de avaliações de um usuario
+        public int GetReputacao(String userName)
+        {
+            var vendedor = _context.ApplicationUser
+                        .Where(u => u.UserName.Equals(userName))
+                        .FirstOrDefault();
+
+            return vendedor.ReputacaoFinal;
+        }
+
 
 
     }
