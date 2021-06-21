@@ -202,6 +202,23 @@ namespace BLL
             return _ProdutoDAO.ProdutoEntregue(id);
         }
 
+        //retorna o total de produtos bloqueados no banco de dados
+        public long totalProdBloqueados(DateTime dtIni, DateTime dtFin)
+        {
+            return _ProdutoDAO.totalProdBloqueados(dtIni, dtFin);
+        }
+
+        //retorna o total de produtos entregues no banco de dados
+        public long totalProdEntregues(DateTime dtIni, DateTime dtFin)
+        {
+            return _ProdutoDAO.totalProdEntregues(dtIni, dtFin);
+        }
+
+        //retorna o total de produtos anunciados no site
+        public long totalProdAnunciados(DateTime dtIni, DateTime dtFin)
+        {
+            return _ProdutoDAO.totalProdAnunciados(dtIni, dtFin);
+        }
 
         #endregion
 
