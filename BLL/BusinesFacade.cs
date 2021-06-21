@@ -51,6 +51,12 @@ namespace BLL
             _ProdutoDAO.CadastroNovoProduto(prod);
         }
 
+        //altera o endereco dos produtos a venda de um usuario
+        public void AlteraEndProdutoAvend(String userName, String endereco)
+        {
+            _ProdutoDAO.AlteraEndProdutoAvend(userName, endereco);
+        }
+
         //Recebe um id e deleta o produto
         public void deletaProduto(long ProdutoID)
         {
@@ -81,10 +87,11 @@ namespace BLL
             return _ProdutoDAO.ItensPorCategoria(cat);
         }
 
-        //relatorio de itens disponiveis por uma determinada categoria
-        public IQueryable<Produto> ItensPorCategoriaDisponiveis(String cat)
+        //recebe uma categoria e uma lista de produtos
+        //retorna todos os produtos dessa categoria
+        public IQueryable<Produto> IqueryItensPorCategoria(String cat, IQueryable<Produto> prods)
         {
-            return _ProdutoDAO.ItensPorCategoriaDisponiveis(cat);
+            return _ProdutoDAO.IqueryItensPorCategoria(cat, prods);
         }
 
         //relatorio de itens por uma determinada categoria e palavra
@@ -99,22 +106,32 @@ namespace BLL
             return _ProdutoDAO.ItensPalChav(palChave);
         }
 
-        //recebe uma palavra chave e retorna produtos disponiveis
-        public IQueryable<Produto> ItensPalChavDisponiveis(string palChave)
+        //recebe uma palavra chave e um iquery de produtos retorna um iquery de produtos
+        //que contenham em seu nome a palavra fornecida
+        public IQueryable<Produto> IqueyItensPalChav(string palChave, IQueryable<Produto> prods)
         {
-            return _ProdutoDAO.ItensPalChavDisponiveis(palChave);
+            return _ProdutoDAO.IqueyItensPalChav(palChave, prods);
         }
 
-        //relatorio de itens por uma determinada faixa de valores
-        public List<Produto> ItensFaixaDeValores(decimal valIni, decimal valFin)
+        //recebe dois valores e um iquery de produto retorna
+        //uma lista de produtos dentro desses valores
+        public IQueryable<Produto> IqueryItensFaixaDeValores(decimal valIni, decimal valFin,
+                                                                IQueryable<Produto> prods)
         {
-            return _ProdutoDAO.ItensFaixaDeValores(valIni, valFin);
+            return _ProdutoDAO.IqueryItensFaixaDeValores(valIni, valFin, prods);
         }
 
         //relatorio de itens por um determinado usuario
         public List<Produto> ItensPorStatusUsu(String usu)
         {
             return _ProdutoDAO.ItensPorStatusUsu(usu);
+        }
+
+        //recebe um id de usuario e retorna um iquery de todos os produtos
+        //de um usuario ordenados pelo status
+        public IQueryable<Produto> IqueryItensPorStatusUsu(String usu)
+        {
+            return _ProdutoDAO.IqueryItensPorStatusUsu(usu);
         }
 
         //relatorio do total de vendas em um determinado periodo de tempo
@@ -155,9 +172,9 @@ namespace BLL
 
         //recebe um id do comprador e retorna uma lista de todos os produtos
         //comprados por ele ordenados pelo status
-        public List<Produto> ItensDoComprador(String usu)
+        public IQueryable<Produto> IqueyItensDoComprador(String usu)
         {
-            return _ProdutoDAO.ItensDoComprador(usu);
+            return _ProdutoDAO.IqueyItensDoComprador(usu);
         }        
 
         //retorna uma lista de produtos prontos para serem entregados
@@ -213,6 +230,12 @@ namespace BLL
             return _ApplicationUserDAO.getUserID(userName);
         }
 
+        //recebe o username e retorna o endereco e cep
+        public IQueryable<EnderecoComCep> getEnderecoCep(string userName)
+        {
+            return _ApplicationUserDAO.getEnderecoCep(userName);
+        }
+
         //retorna informações de vendas de um perfil
         public ApplicationUser vendasPerfil(String userName)
         {
@@ -223,18 +246,24 @@ namespace BLL
         public ApplicationUser comprasPerfil(String userName)
         {
             return _ApplicationUserDAO.comprasPerfil(userName);
+        }        
+
+        //retorna o numero de avaliações de um usuario
+        public int GetReputacao(String userName)
+        {
+            return _ApplicationUserDAO.GetReputacao(userName);
         }
 
-        //aumenta a reputação do vendedor
-        public Boolean AumentaRep(String userName)
+        //recebe uma nota de um usuario calcula e salva a reputacao final do usuario
+        public Boolean AvaliaVendedor(String userName, int avaliacao, long idProd)
         {
-            return _ApplicationUserDAO.AumentaRep(userName);
+            return _ApplicationUserDAO.AvaliaVendedor(userName, avaliacao, idProd);
         }
 
-        //aumenta a reputação do vendedor
-        public Boolean DiminuiRep(String userName)
+        //recebe uma nota de um usuario calcula e salva a reputacao final do usuario
+        public Boolean AvaliaVendedorCompraNegada(String userName)
         {
-            return _ApplicationUserDAO.DiminuiRep(userName);
+            return _ApplicationUserDAO.AvaliaVendedorCompraNegada(userName);
         }
 
         #endregion

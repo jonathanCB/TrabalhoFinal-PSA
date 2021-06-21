@@ -6,14 +6,18 @@
 
 <form asp-controller="ProdutosDisponiveis" asp-action="Index" method="get">
     <p>
-
-        <select asp-for="ProdutosCategoria" asp-items="Model.Categorias">
+        Categorias: <select asp-for="ProdutosCategoria" asp-items="Model.Categorias">
             <option value="">Todos</option>
         </select>
 
         Nome do Produto: <input type="text" asp-for="SearchString" />
-        <input type="submit" value="Filter" />
     </p>
+    <p>
+        Valor Inicial: <input type="text" asp-for="ValIni" />
+
+        Valor Limite: <input type="text" asp-for="ValFinal" />
+    </p>
+    <input type="submit" value="Filter" />
 </form>
 
 <center><h1>Produtos Disponiveis</h1></center>
@@ -38,6 +42,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Produtos[0].NomeVendedor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Produtos[0].EnderecoRemetente)
             </th>
             <th></th>
         </tr>
@@ -65,14 +72,22 @@
                     @Html.DisplayFor(modelItem => item.NomeVendedor)
                 </td>
                 <td>
-                    @if (item.UsuarioIDVendedor != ViewBag.user)
+                    @Html.DisplayFor(modelItem => item.EnderecoRemetente)
+                </td>
+                <td>
+                    @if (ViewBag.user != null)
                     {
-                        <div>
-                            <a asp-action="Details" asp-route-id="@item.ProdutoId">Comprar</a>
-                        </div>                        
+                        @if (item.UsuarioIDVendedor != ViewBag.user.Id)
+                        {
+                            <div>
+                                <a asp-action="Details" asp-route-id="@item.ProdutoId">Comprar</a>
+                                <hr />
+                            </div>                        
+                        }
                     }
                     <div>
                         <a asp-action="Details" asp-route-id="@item.ProdutoId">Detalhes</a>
+                        <hr />
                     </div>
                 </td>
             </tr>

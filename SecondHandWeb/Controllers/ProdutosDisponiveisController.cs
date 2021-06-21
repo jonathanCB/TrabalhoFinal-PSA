@@ -36,19 +36,25 @@ namespace SecondHandWeb.Controllers
 
         // GET: ProdutosDisponiveis
         [AllowAnonymous]
-        public async Task<IActionResult> Index(string ProdutosCategoria, string searchString)
+        public async Task<IActionResult> Index(string ProdutosCategoria, string searchString,
+                                               decimal ValIni, decimal ValFinal)
         {
             var categoriaQuery = _businesFacade.categoriasNomes();
             var produtos = _businesFacade.IQuerDeProdutosDisponiveis();
 
             if (!string.IsNullOrEmpty(searchString))
             {
-                produtos = _businesFacade.ItensPalChavDisponiveis(searchString);
+                produtos = _businesFacade.IqueyItensPalChav(searchString, produtos);
             }
 
             if (!string.IsNullOrEmpty(ProdutosCategoria))
             {
-                produtos = _businesFacade.ItensPorCategoriaDisponiveis(ProdutosCategoria);
+                produtos = _businesFacade.IqueryItensPorCategoria(ProdutosCategoria, produtos);
+            }
+
+            if(ValIni != 0 || ValFinal != 0)
+            {
+                produtos = _businesFacade.IqueryItensFaixaDeValores(ValIni, ValFinal, produtos);
             }
 
             var produtoCategoriaVM = new ProdutoCategoriaViewModel
@@ -56,11 +62,14 @@ namespace SecondHandWeb.Controllers
                 Categorias = new SelectList(categoriaQuery.Distinct().ToList()),
                 Produtos = produtos.ToList()
             };
+
             var usuario = await _userManager.GetUserAsync(HttpContext.User);
+
             if (usuario != null)
             {
-                ViewData["user"] = usuario.Id;
+                ViewData["user"] = usuario;
             }
+
             return View(produtoCategoriaVM);
         }
 
@@ -124,14 +133,13 @@ namespace SecondHandWeb.Controllers
             return View(perfilVendedor);
         }
 
-       
+        //recebe uma pergunta e id de produto e salva a pergunta
         public async Task<IActionResult> SalvaPergunta(long id, String per)
-        {
+        {            
 
-            
-            _businesFacade.SalvaPergunta(id, per);            
-           
-            return View(_businesFacade.ItemPorId((long)id));
+            _businesFacade.SalvaPergunta(id, per);
+
+            return RedirectToAction("Details", "ProdutosDisponiveis", new { Id = id });
 
         }
 

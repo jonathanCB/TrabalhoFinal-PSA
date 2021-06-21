@@ -53,6 +53,7 @@ namespace PL.DAO
             var per = GetPergunta(PerId);
             per.Respostas = Resp;
             per.StatusPergunta = Entities.Models.Enums.StatusPergunta.PerguntaRespondida;
+            _context.Update(per);
             _context.SaveChanges();
         }
     }

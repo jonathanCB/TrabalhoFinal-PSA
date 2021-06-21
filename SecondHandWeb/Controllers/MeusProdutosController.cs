@@ -1,17 +1,16 @@
 ﻿ using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using Entities.Models;
-using PL.Context;
 using BLL;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using System.Linq;
+using SecondHandWeb.Models;
 
 namespace SecondHandWeb.Controllers
 {
@@ -32,16 +31,41 @@ namespace SecondHandWeb.Controllers
 
         [Authorize]
         // GET: MeusProdutos
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string ProdutosCategoria, string searchString,
+                                               decimal ValIni, decimal ValFinal)
         {
             var usuario = await _userManager.GetUserAsync(HttpContext.User);
-            String usu = _businesFacade.getUserID(usuario.UserName);
+            var categoriaQuery = _businesFacade.categoriasNomes();
+            var produtos = _businesFacade.IqueryItensPorStatusUsu(usuario.Id);
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                produtos = _businesFacade.IqueyItensPalChav(searchString, produtos);
+            }
+
+            if (!string.IsNullOrEmpty(ProdutosCategoria))
+            {
+                produtos = _businesFacade.IqueryItensPorCategoria(ProdutosCategoria, produtos);
+            }
+
+            if (ValIni != 0 || ValFinal != 0)
+            {
+                produtos = _businesFacade.IqueryItensFaixaDeValores(ValIni, ValFinal, produtos);
+            }
+
+            var produtoCategoriaVM = new ProdutoCategoriaViewModel
+            {
+                Categorias = new SelectList(categoriaQuery.Distinct().ToList()),
+                Produtos = produtos.ToList()
+            };
+
             if (usuario != null)
             {
                 ViewData["usuario"] = usuario;
             }
-            return View(_businesFacade.ItensPorStatusUsu(usu));
-        }
+
+            return View(produtoCategoriaVM);
+        }        
 
         [Authorize]
         // GET: MeusProdutos/Details/5
@@ -74,6 +98,7 @@ namespace SecondHandWeb.Controllers
             {
                 UsuarioIDVendedor = usuario.Id,
                 NomeVendedor = usuario.UserName,
+                EnderecoRemetente = usuario.Endereco,
                 DataEntrada = DateTime.Now
             };
 
@@ -86,7 +111,7 @@ namespace SecondHandWeb.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Descricao,Estado,Valor,DataEntrada,UsuarioIDVendedor,NomeVendedor,CategoriaID")] Produto produto)
+        public async Task<IActionResult> Create([Bind("Name,Descricao,Estado,Valor,DataEntrada,UsuarioIDVendedor,NomeVendedor,EnderecoRemetente,CategoriaID")] Produto produto)
         { 
 
             if (ModelState.IsValid)
@@ -147,7 +172,7 @@ namespace SecondHandWeb.Controllers
             var usuario = await _userManager.GetUserAsync(HttpContext.User);
 
             var produto = _businesFacade.CompradoNegouVendaProduto((long)id);
-            var rep = _businesFacade.DiminuiRep(usuario.UserName);
+            var rep = _businesFacade.AvaliaVendedorCompraNegada(usuario.UserName);
 
             if (produto == true && rep == true )
             {
@@ -155,6 +180,16 @@ namespace SecondHandWeb.Controllers
             }
 
             return NotFound();
+        }
+
+        //recebe uma resposta e o id de uma pergunta e salva a resposta
+        public async Task<IActionResult> SalvaResposta(long idPer, String res, long idProd)
+        {
+
+            _businesFacade.SalvaResposta(idPer, res);
+
+            return RedirectToAction("Details", "MeusProdutos", new { Id = idProd });
+
         }
 
         //dados do usuario
