@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using BLL;
 using Entities.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -14,13 +15,16 @@ namespace SecondHandWeb.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly BusinesFacade _businesFacade;
 
         public IndexModel(
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager,
+            BusinesFacade _bf)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _businesFacade = _bf;
         }
 
         public string Username { get; set; }
@@ -58,7 +62,7 @@ namespace SecondHandWeb.Areas.Identity.Pages.Account.Manage
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             var cep = Usuario.CEP;
             var endereco = Usuario.Endereco;
-            var reputacao = Usuario.Reputacao;
+            var reputacao = Usuario.ReputacaoFinal;
 
             Username = userName;
             Cep = cep;
@@ -133,6 +137,7 @@ namespace SecondHandWeb.Areas.Identity.Pages.Account.Manage
                     StatusMessage = "Unexpected error when trying to set a endereço.";
                     return RedirectToPage();
                 }
+                _businesFacade.AlteraEndProdutoAvend(user.UserName, user.Endereco);
             }
 
             await _signInManager.RefreshSignInAsync(user);

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PL.Migrations
 {
-    public partial class CreateDB : Migration
+    public partial class CreateDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -30,7 +30,9 @@ namespace PL.Migrations
                     Nome = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: true),
                     CEP = table.Column<string>(type: "nvarchar(9)", maxLength: 9, nullable: true),
                     Endereco = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    Reputacao = table.Column<int>(type: "int", nullable: false),
+                    ReputacaoFinal = table.Column<int>(type: "int", nullable: false),
+                    ReputacaoTotal = table.Column<int>(type: "int", nullable: false),
+                    NroAvaliacoes = table.Column<int>(type: "int", nullable: false),
                     ProdutosAVenda = table.Column<int>(type: "int", nullable: false),
                     ProdutosAguardandoApVenda = table.Column<int>(type: "int", nullable: false),
                     ProdutosVendido = table.Column<int>(type: "int", nullable: false),
@@ -120,8 +122,8 @@ namespace PL.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
@@ -165,8 +167,8 @@ namespace PL.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>

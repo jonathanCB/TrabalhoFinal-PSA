@@ -64,14 +64,15 @@ namespace SecondHandWeb.Controllers
             }
 
             Boolean prod = _businesFacade.ProdutoEntregue((long)id);
-            var rep = _businesFacade.AumentaRep(_businesFacade.ItemPorId((long)id).NomeVendedor);
 
-            if (prod == true && rep == true)
+            if (prod == true)
             {
                 return View(_businesFacade.ItemPorId((long)id));
             }
-
-            return NotFound();
+            else
+            {
+                return NotFound();
+            }
         }
 
         public async Task<IActionResult> Entrega(long? id)

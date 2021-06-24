@@ -13,9 +13,11 @@ namespace Entities.Models
         [Required]
         public long PerguntaId { get; set; }
 
+        [Display(Name = "Pergunta")]
         [Required]
         public String Perguntas { get; set; }
-        
+
+        [Display(Name = "Resposta")]
         public String Respostas { get; set; }
                 
         public StatusPergunta StatusPergunta { get;set;}

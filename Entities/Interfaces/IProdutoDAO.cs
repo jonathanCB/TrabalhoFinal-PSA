@@ -47,23 +47,31 @@ namespace Entities.Interfaces
         //relatorio de itens por uma determinada categoria
         public List<Produto> ItensPorCategoria(String cat);
 
-        //relatorio de itens disponiveis por uma determinada categoria
-        public IQueryable<Produto> ItensPorCategoriaDisponiveis(String cat);
+        //recebe uma categoria e uma lista de produtos
+        //retorna todos os produtos dessa categoria
+        public IQueryable<Produto> IqueryItensPorCategoria(String cat, IQueryable<Produto> prods);
 
         //recebe uma palavra chave e retorna um produto
         public List<Produto> ItensPalChav(string palChave);
 
-        //recebe uma palavra chave e retorna produtos disponiveis
-        public IQueryable<Produto> ItensPalChavDisponiveis(string palChave);
+        //recebe uma palavra chave e um iquery de produtos retorna um iquery de produtos
+        //que contenham em seu nome a palavra fornecida
+        public IQueryable<Produto> IqueyItensPalChav(string palChave, IQueryable<Produto> prods);
 
         //relatorio de itens por uma determinada categoria e palavra
         public List<Produto> ItensPalChavCat(String palChave, String cat);
 
-        //relatorio de itens por uma determinada faixa de valores
-        public List<Produto> ItensFaixaDeValores(decimal valIni, decimal valFin);
+        //recebe dois valores e um iquery de produto retorna
+        //uma lista de produtos dentro desses valores
+        public IQueryable<Produto> IqueryItensFaixaDeValores(decimal valIni, decimal valFin,
+                                                                IQueryable<Produto> prods);
 
         //relatorio de itens por Status do produto de um determinado usuario
         public List<Produto> ItensPorStatusUsu(String usu);
+
+        //recebe um id de usuario e retorna um iquery de todos os produtos
+        //de um usuario ordenados pelo status
+        public IQueryable<Produto> IqueryItensPorStatusUsu(String usu);
 
         ////relatorio do total de vendas em um determinado periodo de tempo
         public IQueryable<TotalVendaPorPeriodo> NroTotalVendaPeriodo(DateTime dtIni, DateTime dtFin);
@@ -73,7 +81,7 @@ namespace Entities.Interfaces
 
         //recebe um id do comprador e retorna uma lista de todos os produtos
         //comprados por ele ordenados pelo status
-        public List<Produto> ItensDoComprador(String usu);
+        public IQueryable<Produto> IqueyItensDoComprador(String usu);
 
         //retorna uma lista de produtos prontos para serem entregados
         public List<Produto> ItensParaEntrega();
@@ -87,5 +95,11 @@ namespace Entities.Interfaces
 
         //recebe o id de um produto e confirma sua entrega
         public Boolean ProdutoEntregue(long id);
+
+        //altera o endereco dos produtos a venda de um usuario
+        public void AlteraEndProdutoAvend(String userName, String endereco);
+
+        //recebe o id de um produto e muda o status dele para avaliado
+        public void ProdutoAvaliado(long id);
     }
 }
