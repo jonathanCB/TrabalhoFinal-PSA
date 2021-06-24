@@ -101,13 +101,13 @@ namespace ConsoleTests
             decimal valFin = 500.0m;
             Console.WriteLine("Faixa de valores\nDe: [{0}] a: [{1}]\n", valIni, valFin);
 
-            foreach (Produto p in _bll.ItensFaixaDeValores(valIni, valFin))
+            /*foreach (Produto p in _bll.ItensFaixaDeValores(valIni, valFin))
             {
                 Console.WriteLine("Produto: {0}\nDescrição: {1}\nStatus: {2}\nValor: {3}\n" +
                                     "Categoria: {4}\n",
                                     p.Name, p.Descricao, p.Estado, p.Valor, p.Categoria);
             }
-            Console.WriteLine("\n\n");
+            Console.WriteLine("\n\n");*/
 
 
             Console.WriteLine("4 - Itens anunciados por um determinado vendedor agrupados pelo status da venda\n");
