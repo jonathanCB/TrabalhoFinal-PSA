@@ -333,7 +333,7 @@ namespace PL.DAO
         public IQueryable<TotalVendaPorPeriodo> NroTotalVendaPeriodo(DateTime dtIni, DateTime dtFin)
         {
             var consulta5 = from p in _context.Produtos
-                            where p.Estado == StatusProduto.Vendido
+                            where p.Estado == StatusProduto.Vendido || p.Estado == StatusProduto.ProdutoAvaliado
                             where p.DataVenda >= dtIni && p.DataVenda <= dtFin
                             select p.Valor;
 
