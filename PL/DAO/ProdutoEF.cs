@@ -333,7 +333,7 @@ namespace PL.DAO
         public IQueryable<TotalVendaPorPeriodo> NroTotalVendaPeriodo(DateTime dtIni, DateTime dtFin)
         {
             var consulta5 = from p in _context.Produtos
-                            where p.Estado == StatusProduto.Vendido
+                            where p.Estado == StatusProduto.Vendido || p.Estado == StatusProduto.ProdutoAvaliado
                             where p.DataVenda >= dtIni && p.DataVenda <= dtFin
                             select p.Valor;
 
@@ -452,5 +452,37 @@ namespace PL.DAO
             _context.Update(prod);
             _context.SaveChanges();
         }
+
+        //retorna o total de produtos bloqueados no banco de dados
+        public long totalProdBloqueados(DateTime dtIni, DateTime dtFin)
+        {
+            var consulta1 = (_context.Produtos
+                            .Where (p => p.DataVenda >= dtIni && p.DataVenda <= dtFin)
+                            .Where (p => p.Estado == StatusProduto.Bloqueado)).Count();
+
+            return consulta1;
+        }
+
+        //retorna o total de produtos entregues no banco de dados
+        public long totalProdEntregues(DateTime dtIni, DateTime dtFin)
+        {
+            var consulta1 = (_context.Produtos
+                            .Where(p => p.DataVenda >= dtIni && p.DataVenda <= dtFin)
+                            .Where(p => p.Estado == StatusProduto.Entregue 
+                                   || p.Estado == StatusProduto.ProdutoAvaliado)).Count();
+
+            return consulta1;
+        }
+
+        //retorna o total de produtos anunciados no site
+        public long totalProdAnunciados(DateTime dtIni, DateTime dtFin)
+        {
+            var consulta1 = (_context.Produtos
+                            .Where(p => p.DataEntrada >= dtIni && p.DataEntrada <= dtFin)).Count();
+
+            return consulta1;
+        }
+
+
     }
 }

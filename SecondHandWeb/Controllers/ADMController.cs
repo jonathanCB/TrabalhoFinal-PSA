@@ -64,6 +64,57 @@ namespace SecondHandWeb.Controllers
             return View(TotalVendaPorPeriodo);
         }
 
+        // GET: ADM/NumVendEntreguesPeriodo/
+        [Authorize]
+        public async Task<IActionResult> NumVendEntreguesPeriodo(DateTime dtIni, DateTime dtFim)
+        {
+            if (dtIni > dtFim)
+            {
+                return NotFound();
+            }           
+
+            var numVendPorPeriodo = new NumeroVendaPorPeriodoViewModel
+            {
+                numVendasPeriodo = _businesFacade.totalProdEntregues(dtIni, dtFim),
+            };
+
+            return View(numVendPorPeriodo);
+        }
+
+        // GET: ADM/NumBloqPeriodo/
+        [Authorize]
+        public async Task<IActionResult> NumBloqPeriodo(DateTime dtIni, DateTime dtFim)
+        {
+            if (dtIni > dtFim)
+            {
+                return NotFound();
+            }
+
+            var TotalBloqPorPeriodo = new NumeroBloqueiosPorPeriodoViewModel
+            {
+                numBloqPeriodo = _businesFacade.totalProdBloqueados(dtIni, dtFim),
+            };
+
+            return View(TotalBloqPorPeriodo);
+        }
+
+        // GET: ADM/NumBloqPeriodo/
+        [Authorize]
+        public async Task<IActionResult> NumeroAnunciosPorPeriodo(DateTime dtIni, DateTime dtFim)
+        {
+            if (dtIni > dtFim)
+            {
+                return NotFound();
+            }
+
+            var TotalAnunciosPorPeriodo = new NumeroAnunciosPorPeriodoViewModel
+            {
+                numAnunciosPeriodo = _businesFacade.totalProdAnunciados(dtIni, dtFim),
+            };
+
+            return View(TotalAnunciosPorPeriodo);
+        }
+
         // GET: ADM/Create
         public IActionResult Create()
         {

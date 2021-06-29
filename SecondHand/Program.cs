@@ -106,8 +106,8 @@ namespace ConsoleTests
                 Console.WriteLine("Produto: {0}\nDescrição: {1}\nStatus: {2}\nValor: {3}\n" +
                                     "Categoria: {4}\n",
                                     p.Name, p.Descricao, p.Estado, p.Valor, p.Categoria);
-            }*/
-            Console.WriteLine("\n\n");
+            }
+            Console.WriteLine("\n\n");*/
 
 
             Console.WriteLine("4 - Itens anunciados por um determinado vendedor agrupados pelo status da venda\n");
