@@ -4,7 +4,7 @@
     ViewData["Title"] = "Compras Realizadas";
 }
 
-<form asp-controller="MeusProdutosComprados" asp-action="Index" method="get">
+<form asp-controller="MeusProdutosComprados" asp-action="Index" method="get" class="bg-warning">
     <table class="table">
         <tr>
             <td>
@@ -23,7 +23,7 @@
             </td>
             <td>
                 <br>
-                <input type="submit" value="Filtrar" />
+                <input type="submit" value="Filtrar" class="btn btn-danger text-warning"/>
             </td>
         </tr>
     </table>
@@ -91,14 +91,14 @@
             </td>
             <td>
                 <div>
-                    <a asp-action="Details" asp-route-id="@item.ProdutoId">Details</a>
+                    <a asp-action="Details" asp-route-id="@item.ProdutoId" class="btn btn-danger text-warning" >Details</a>
                     <hr />
                 </div>
                 @if (item.Estado == Entities.Models.Enums.StatusProduto.Aguardando_Aprovacao)
                 {
                 <div>
                 <span>
-                    <a asp-action="Details" asp-route-id="@item.ProdutoId">Cancelar pedido</a>
+                    <a asp-action="Details" asp-route-id="@item.ProdutoId" class="btn btn-danger text-warning" >Cancelar pedido</a>
                 </span>
                 <hr />
                 </div>  
@@ -107,7 +107,7 @@
                 {
                 <div>
                 <span>
-                    <a asp-action="Avaliar" asp-route-id="@item.ProdutoId">Avaliar Vendedor</a>
+                    <a asp-action="Avaliar" asp-route-id="@item.ProdutoId" class="btn btn-danger text-warning" >Avaliar Vendedor</a>
                 </span>
                 <hr />
                 </div>  

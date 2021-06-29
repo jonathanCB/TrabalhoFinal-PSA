@@ -13,9 +13,9 @@
     {
         <span>
             se
-            <a asp-area="Identity" asp-page="/Account/Register" title="Manage">Registrar </a>
+            <a asp-area="Identity" asp-page="/Account/Register" title="Manage" class="btn btn-danger text-warning" >Registrar </a>
             ou Realizar
-            <a asp-area="Identity" asp-page="/Account/Login" title="Manage">login</a>
+            <a asp-area="Identity" asp-page="/Account/Login" title="Manage" class="btn btn-danger text-warning" >login</a>
             para Comprar
         </span>
         <hr />
@@ -35,9 +35,9 @@
             }
             else
             {
-                <a asp-action="Compra" asp-route-id="@Model.ProdutoId">Comprar</a>
+                <a asp-action="Compra" asp-route-id="@Model.ProdutoId" class="btn btn-danger text-warning" >Comprar</a>
                 <hr />
-                <a asp-action="PerfilVendedor" asp-route-id="@Model.ProdutoId">Perfil do vendedor</a>
+                <a asp-action="PerfilVendedor" asp-route-id="@Model.ProdutoId" class="btn btn-danger text-warning" >Perfil do vendedor</a>
                 <hr />
             }
         }
@@ -85,7 +85,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Voltar</a>
+    <a asp-action="Index" class="btn btn-danger text-warning" >Voltar</a>
 </div>
 
 <div>
@@ -94,9 +94,9 @@
         <hr />
         <span>
             se
-            <a asp-area="Identity" asp-page="/Account/Register" title="Manage">Registrar </a>
+            <a asp-area="Identity" asp-page="/Account/Register" title="Manage" class="btn btn-danger text-warning" >Registrar </a>
             ou Realizar
-            <a asp-area="Identity" asp-page="/Account/Login" title="Manage">login</a>
+            <a asp-area="Identity" asp-page="/Account/Login" title="Manage" class="btn btn-danger text-warning" >login</a>
             para fazer uma pergunta
         </span>
 

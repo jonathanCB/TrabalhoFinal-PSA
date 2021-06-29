@@ -4,7 +4,7 @@
     ViewData["Title"] = "Produtos Disponiveis";
 }
 
-<form asp-controller="ProdutosDisponiveis" asp-action="Index" method="get">
+<form asp-controller="ProdutosDisponiveis" asp-action="Index" method="get" class="bg-warning">
     <table class="table">
         <tr>
             <td>
@@ -22,7 +22,7 @@
                 Valor Limite: <input type="text" asp-for="ValFinal" />
             </td>
             <td><br>
-                <input type="submit" value="Filtrar" />
+                <input type="submit" value="Filtrar" class="btn btn-danger text-warning" />
             </td>
         </tr>
     </table>
@@ -88,13 +88,13 @@
                         @if (item.UsuarioIDVendedor != ViewBag.user.Id)
                         {
                             <div>
-                                <a asp-action="Details" asp-route-id="@item.ProdutoId">Comprar</a>
+                                <a asp-action="Details" asp-route-id="@item.ProdutoId" class="btn btn-danger text-warning">Comprar</a>
                                 <hr />
                             </div>                        
                         }
                     }
                     <div>
-                        <a asp-action="Details" asp-route-id="@item.ProdutoId">Detalhes</a>
+                        <a asp-action="Details" asp-route-id="@item.ProdutoId" class="btn btn-danger text-warning">Detalhes</a>
                         <hr />
                     </div>
                 </td>

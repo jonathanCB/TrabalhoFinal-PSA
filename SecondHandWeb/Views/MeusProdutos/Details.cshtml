@@ -65,13 +65,13 @@
     <hr />
     @if (Model.Estado == Entities.Models.Enums.StatusProduto.Aguardando_Aprovacao)
     {
-        <a asp-action="ResponderCompra" asp-route-id="@Model.ProdutoId">Responder Solicitação de Compra</a>
+        <a asp-action="ResponderCompra" asp-route-id="@Model.ProdutoId" class="btn btn-danger text-warning" >Responder Solicitação de Compra</a>
         <hr />
     }
 </div>
 
 <div>
-    <a asp-action="Index">Voltar</a>
+    <a asp-action="Index" class="btn btn-danger text-warning" >Voltar</a>
 </div>
 
     <div>
@@ -140,7 +140,7 @@
             </dd>
         </dl>
 
-        <input type="submit" value="Enviar arquivos" class="btn btn-primary" />
+        <input type="submit" value="Enviar arquivos" class="btn btn-danger text-warning" />
         <div style="margin-top:15px">
             <output name="result"></output>
         </div>}

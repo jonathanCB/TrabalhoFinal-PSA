@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<form asp-controller="MeusProdutos" asp-action="Index" method="get">
+<form asp-controller="MeusProdutos" asp-action="Index" method="get" class="bg-warning">
     <table class="table">
         <tr>
             <td>
@@ -23,7 +23,7 @@
             </td>
             <td>
                 <br>
-                <input type="submit" value="Filtrar" />
+                <input type="submit" value="Filtrar" class="btn btn-danger text-warning" />
             </td>
         </tr>
     </table>
@@ -44,11 +44,8 @@
     {        
         <div>
             <div>
-                <a asp-action="Create">Vender</a>
-                novo Produto
-            </div>
-            <div>
-                Sua Reputação atual: @ViewBag.usuario.ReputacaoFinal
+                <a asp-action="Create" class="btn btn-danger text-warning">Vender novo Produto</a>
+                <p class="font-weight-bold text-justify text-danger">Sua Reputação atual: @ViewBag.usuario.ReputacaoFinal</p>
             </div>
         </div >
     }
@@ -131,18 +128,18 @@
                             {
                                 @if (per.StatusPergunta == Entities.Models.Enums.StatusPergunta.PerguntaAguardando)
                                 {
-                                    <a asp-action="Details" asp-route-id="@item.ProdutoId">Responder Pergunta</a>
+                                    <a asp-action="Details" asp-route-id="@item.ProdutoId" class="btn btn-danger text-warning">Responder Pergunta</a>
                                     <hr />
                                     break;
                                 }
                             }
                         }
                     }
-                    <a asp-action="Details" asp-route-id="@item.ProdutoId">Details</a>
+                    <a asp-action="Details" asp-route-id="@item.ProdutoId" class="btn btn-danger text-warning" >Details</a>
                     <hr />
                     @if (item.Estado == Entities.Models.Enums.StatusProduto.Aguardando_Aprovacao)
                     {
-                        <a asp-action="ResponderCompra" asp-route-id="@item.ProdutoId">Responder Solicitação de Compra</a>
+                        <a asp-action="ResponderCompra" asp-route-id="@item.ProdutoId" class="btn btn-danger text-warning" >Responder Solicitação de Compra</a>
                         <hr />
                     }
                 </td>

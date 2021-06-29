@@ -9,7 +9,7 @@
     <hr />
     @if (Model.Estado == Entities.Models.Enums.StatusProduto.Aguardando_Aprovacao)
     {
-<a asp-action="Cancel" asp-route-id="@Model.ProdutoId">Cancelar pedido</a>
+<a asp-action="Cancel" asp-route-id="@Model.ProdutoId" class="btn btn-danger text-warning" >Cancelar pedido</a>
                 <hr />}
 
     @if (Model.Estado == Entities.Models.Enums.StatusProduto.Bloqueado)
@@ -76,7 +76,7 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Index">Voltar para Compras Realizadas</a>
+    <a asp-action="Index" class="btn btn-danger text-warning" >Voltar para Compras Realizadas</a>
 </div>
 
 @if (Model.Estado == Entities.Models.Enums.StatusProduto.Aguardando_Aprovacao)

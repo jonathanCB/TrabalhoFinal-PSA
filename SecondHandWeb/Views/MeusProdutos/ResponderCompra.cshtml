@@ -10,11 +10,11 @@
         @if (Model.Estado == Entities.Models.Enums.StatusProduto.Aguardando_Aprovacao)
         {
         <div>
-            <a asp-action="AceitarCompra" asp-route-id="@Model.ProdutoId">Aceitar a Compra</a>
+            <a asp-action="AceitarCompra" asp-route-id="@Model.ProdutoId" class="btn btn-danger text-warning">Aceitar a Compra</a>
             <hr />
         </div>
         <div>
-            <a asp-action="NegarCompra" asp-route-id="@Model.ProdutoId">Negar a Compra</a>
+            <a asp-action="NegarCompra" asp-route-id="@Model.ProdutoId" class="btn btn-danger text-warning">Negar a Compra</a>
             <hr />
         </div>
         }
@@ -72,7 +72,7 @@
 </div>
 
 <div>    
-    <a asp-action="Index">Voltar</a>
+    <a asp-action="Index" class="btn btn-danger text-warning">Voltar</a>
 </div>
 
 <html>
