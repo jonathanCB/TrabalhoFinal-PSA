@@ -34,11 +34,9 @@
 
     @if (ViewBag.usuario.CEP == null || ViewBag.usuario.Endereco == null)
     {
-        <span>
-            Cadastre um 
-            <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Endereco e Cep</a>
-            para Vender
-        </span>
+<span>
+    Insira seu Numero Celular, CEP e Endereço no link ao lado para conseguir vender seus produtos <a class="btn btn-primary bg-danger text-white" href="https://localhost:44325/Identity/Account/Manage" role="button">Link</a>
+</span>
     }
     else
     {        
@@ -51,9 +49,9 @@
     }
 
 
-<table class="table">
+<table class="table" align="center" border="1">
     <thead>
-        <tr>
+        <tr class="bg-danger text-warning" align="center">
             <th>
                 @Html.DisplayNameFor(model => model.Produtos[0].Name)
             </th>
