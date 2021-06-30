@@ -111,7 +111,7 @@ namespace SecondHandWeb.Controllers
 
             _businesFacade.SalvaPergunta(id, per);
 
-            return RedirectToAction("Details", "ProdutosDisponiveis", new { Id = id });
+            return RedirectToAction("Details", "MeusProdutosComprados", new { Id = id });
 
         }
 

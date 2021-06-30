@@ -1,6 +1,6 @@
 ﻿@model Entities.Models.Produto
 
-    <center><h1>Responder Solicitação de Compra</h1></center>
+    <center><h1>Responder Solicitação de Compra do Produto</h1></center>
 
 <div>
     <center><h4>@Model.Name</h4></center>
@@ -72,7 +72,7 @@
 </div>
 
 <div>    
-    <a asp-action="Index" class="btn btn-danger text-warning">Voltar</a>
+    <a asp-action="Details" asp-route-id="@Model.ProdutoId" class="btn btn-danger text-warning">Voltar</a>
 </div>
 
 <html>
@@ -93,6 +93,7 @@
         }
     </style>
 </head>
+
 
 <body>
     <div>
